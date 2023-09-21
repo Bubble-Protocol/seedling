@@ -1,0 +1,124 @@
+.App {
+  font-family: "Work Sans", Helvetica;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px none;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.App .header {
+  flex: 0;
+  align-items: center;
+  align-self: stretch;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: #e2e2e2;
+  display: flex;
+  gap: 32px;
+  height: auto;
+  mix-blend-mode: normal;
+  padding: 8px 32px;
+  position: relative;
+}
+
+.header .logo {
+  width: 48px;
+  height: 48px;
+}
+
+.App .header-link {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.56px;
+  line-height: normal;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.App .mobile {
+  display: none;
+}
+
+.App .header-link:hover {
+  color: #ccc;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.text-button {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #225398;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.text-button:hover {
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 50%;
+}
+
+.disabled:hover {
+  cursor: initial;
+}
+
+.App .app-content {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.App .p {
+  align-self: stretch;
+  color: #666666;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 22px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.App .expander {
+  align-self: stretch;
+  height: 1px;
+  position: relative;
+  flex: 1 1;
+}
+
+@media only screen and (max-width: 800px) {
+
+  .App .mobile {
+    display: inherit;
+  }
+  
+  .App .no-mobile {
+    display: none;
+  }
+  
+  .App .header {
+    padding: 8px 16px;
+    gap: 16px;
+  }
+
+}
