@@ -11,7 +11,7 @@ export const ArticleSummary = ({article, onClick}) => {
   return (
     <div className="article-summary" onClick={onClick} >
       <div className="summary">
-        <img className="summary-image" src={article.image || defaultArticleImage}></img>
+        <img className="summary-image" src={article.image.url || defaultArticleImage}></img>
         <div className="summary-content">
           <div className="summary-title">{article.title}</div>
           <div className="summary-description">{article.description}</div>

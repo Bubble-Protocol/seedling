@@ -64,9 +64,12 @@ export function extractSummary(markdownContent) {
 
 
 export function extractImage(markdownContent, markdownUrl) {
+
+  const caption = getFrontMatterField(markdownContent, 'image-caption');
+
   // Step 1: Check for a metadata header with description
   const frontMatterField = getFrontMatterField(markdownContent, 'image');
-  if (frontMatterField) return new URL(frontMatterField, markdownUrl).href;
+  if (frontMatterField) return {url: new URL(frontMatterField, markdownUrl).href, caption};
 
   // Regular expression to match markdown image syntax ![alt text](url)
   let imageRegex = /!\[.*?\]\((.*?)\)/;
@@ -74,7 +77,7 @@ export function extractImage(markdownContent, markdownUrl) {
   
   // If a match is found, return the URL of the first image
   if (match && match[1]) {
-    return new URL(match[1], markdownUrl).href;
+    return {url: new URL(match[1], markdownUrl).href, caption}
   }
 
   // Regular expression to match html image syntax <img src="url">
@@ -83,11 +86,11 @@ export function extractImage(markdownContent, markdownUrl) {
   
   // If a match is found, return the URL of the first image
   if (match && match[1]) {
-    return new URL(match[1], markdownUrl).href;
+    return {url: new URL(match[1], markdownUrl).href, caption};
   }
 
   // If no image is found, return null or an empty string
-  return null;
+  return {url: undefined, caption: undefined};
 }
 
 

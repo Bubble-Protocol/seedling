@@ -26,8 +26,8 @@ export const Article = ({article}) => {
         {/* Image & Title */}
         {article.image && 
           <div className="image-box">
-            <img src={article.image}></img>
-            {article.imageCaption && <span className="caption">{article.imageCaption}</span>}
+            <img src={article.image.url}></img>
+            {article.image.caption && <span className="caption">{article.image.caption}</span>}
           </div>
         }
         <span className="title">{article.title}</span>
