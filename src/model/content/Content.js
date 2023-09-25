@@ -1,5 +1,5 @@
 import GraphClient from "./TheGraph";
-import { extractImage, extractSummary, extractTitle } from "../utils/markdown-utils";
+import { expandRelativeLinks, extractImage, extractSummary, extractTitle } from "../utils/markdown-utils";
 
 export class Content {
 
@@ -20,9 +20,10 @@ export class Content {
 
   async _fetchContentAndAuthor(metadata) {
     const result = {...metadata};
-    result.expandedUrl = this.parseContentUrl(result.url).href;
+    const {url, relLinkUrl} = this.parseContentUrl(result.url);
+    result.expandedUrl = url;
     const [content, author] = await Promise.all([
-      this._fetchContent(result.id, result.expandedUrl),
+      this._fetchContent(result.id, url, relLinkUrl),
       this._fetchUser(result.author.username)
     ]);
     result.markdown = content.markdown;
@@ -35,14 +36,14 @@ export class Content {
     return result;
   }
 
-  async _fetchContent(id, urlStr) {
-    const url = this.parseContentUrl(urlStr);
+  async _fetchContent(id, url, relativeLinkUrl) {
     return this._fetch(url)
       .then(content => {
+        content = expandRelativeLinks(content, relativeLinkUrl.href);
         return {
           title: extractTitle(content, url.pathname), 
           description: extractSummary(content), 
-          image: extractImage(content, urlStr), 
+          image: extractImage(content, url.href), 
           markdown: content
         };
       })
@@ -65,9 +66,11 @@ export class Content {
   }
 
   parseContentUrl(urlStr) {
+    console.debug('parseContentUrl', urlStr)
     let url = new URL(urlStr);
     if (urlStr.startsWith('github:')) url = new URL(url.pathname, 'https://raw.githubusercontent.com/');
-    return url;
+    let relLinkUrl = new URL(url.href.slice(0, url.href.lastIndexOf('/')));
+    return {url, relLinkUrl};
   }
 
   getUserIconUrl(username) {

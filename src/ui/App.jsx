@@ -21,7 +21,7 @@ export const App = () => {
         <ConnectButton showBalance={false} chainStatus="none" />
       </div>
       {screen === 'home' && !selectedArticle && <HomeScreen setSelectedArticle={setSelectedArticle}/>}
-      {screen === 'home' && selectedArticle && <Article />}
+      {screen === 'home' && selectedArticle && <Article article={selectedArticle} />}
     </div>
   );
 };

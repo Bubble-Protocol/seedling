@@ -1,3 +1,29 @@
+export function expandRelativeLinks(markdownContent, baseUrl) {
+  
+  // Ensure baseUrl ends with a "/"
+  if (!baseUrl.endsWith("/")) {
+    baseUrl = `${baseUrl}/`;
+  }
+  
+  // Regular expression to match Markdown links and images
+  const markdownLinkRegex = /\]\(([^)]+)\)/g;
+  const markdownImageRegex = /!\[([^]]+)\]\(([^)]+)\)/g;
+
+  // Replace relative URLs in links
+  const expandedLinksContent = markdownContent.replace(markdownLinkRegex, (_, relativeUrl) => {
+    const expandedUrl = new URL(relativeUrl, baseUrl).toString();
+    return `](${expandedUrl})`;
+  });
+
+  // Replace relative URLs in images
+  const expandedContent = expandedLinksContent.replace(markdownImageRegex, (_, altText, relativeUrl) => {
+    const expandedUrl = new URL(relativeUrl, baseUrl).toString();
+    return `![${altText}](${expandedUrl})`;
+  });
+
+  return expandedContent;
+}
+
 export function extractTitle(markdownContent, pathname) {
   // Attempt to extract title from Front Matter
   const frontMatterField = getFrontMatterField(markdownContent, 'title');
