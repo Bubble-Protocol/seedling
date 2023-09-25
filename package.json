@@ -13,6 +13,8 @@
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.7",
     "react-scripts": "5.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "remark-gfm": "^3.0.1",
     "viem": "^1.10.7",
     "wagmi": "^1.4.1",
     "web-vitals": "^2.1.4"

@@ -3,6 +3,7 @@ import React from "react";
 import "./style.css";
 import "./markdown.css";
 import ReactMarkdown from "react-markdown";
+import gfm from 'remark-gfm';  // if you want to support GitHub flavored markdown
 
 export const Article = ({article}) => {
 
@@ -15,7 +16,7 @@ export const Article = ({article}) => {
   return (
     <div className="app-content" >
       <div className="article">
-        <ReactMarkdown className="markdown" components={components}>
+        <ReactMarkdown className="markdown" remarkPlugins={[gfm]} components={components}>
           {article.markdown}
         </ReactMarkdown>
       </div>
