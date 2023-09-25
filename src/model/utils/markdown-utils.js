@@ -30,7 +30,8 @@ export function extractTitle(markdownContent, pathname) {
   if (frontMatterField) return frontMatterField;
 
   // Fallback to the first H1 heading
-  const headingMatch = markdownContent.match(/(?:^|\s|\n)# (.+)$/m);
+  const firstH1Regex = /(?:^|\s|\n)# (.+)$/m;
+  const headingMatch = markdownContent.match(firstH1Regex);
   if (headingMatch) {
     return headingMatch[1];
   }

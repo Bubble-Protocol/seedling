@@ -8,14 +8,19 @@
   flex: 1 0 0;
 }
 
-.article .image-box {
+.article image-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   align-self: stretch;
   max-height: 574px;
-  align-self: stretch;
+}
+
+.article img {
+  max-width: 1024px;
+  max-height: 574px;
+  align-self: center;
 }
 
 .article .caption {
@@ -25,4 +30,13 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.article .title {
+  font-family: Mukta;
+  font-style: normal;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 40px;
+  width: 680px;
 }

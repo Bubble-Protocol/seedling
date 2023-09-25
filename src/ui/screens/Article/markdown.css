@@ -8,57 +8,57 @@
   width: 680px;
 }
 
-title, h1, h2, h3, h4, h5, h6, h7, h8 {
+.markdown title, .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6, .markdown h7, .markdown h8 {
   font-family: Mukta;
   font-style: normal;
 }
 
-title {
+.markdown title {
   font-size: 36px;
   font-weight: 700;
   line-height: 40px;
 }
 
-h1 {
+.markdown h1 {
   font-size: 32px;
   font-weight: 700;
   line-height: 40px;
 }
 
-h2 {
+.markdown h2 {
   font-size: 24px;
   font-weight: 700;
   line-height: 30px;
 }
 
-h3 {
+.markdown h3 {
   font-size: 20px;
   font-weight: 700;
   line-height: 25px;
 }
 
-img {
+.markdown img {
   max-width: 680px;
 }
 
-a {
+.markdown a {
   color: #242424;
   font-weight: 700;
   text-decoration: underline;
 }
 
-a:visited {
+.markdown a:visited {
   color: #242424;
 }
 
-code {
+.markdown code {
   font-size: 16px;
   background-color: #f6f8fa;
   padding: 1px 4px;
   font-weight: 200;
 }
 
-pre {
+.markdown pre {
   font-size: 16px;
   font-weight: 200;
   display: block;
