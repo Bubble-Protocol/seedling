@@ -1,13 +1,13 @@
 {
-  "name": "seedling-content",
+  "name": "seedling",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ seedling-content",
-    "create-local": "graph create --node http://localhost:8020/ seedling-content",
-    "remove-local": "graph remove --node http://localhost:8020/ seedling-content",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 seedling-content",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ seedling",
+    "create-local": "graph create --node http://localhost:8020/ seedling",
+    "remove-local": "graph remove --node http://localhost:8020/ seedling",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 seedling",
     "test": "graph test"
   },
   "dependencies": {
