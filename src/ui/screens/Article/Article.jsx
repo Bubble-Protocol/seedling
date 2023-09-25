@@ -4,23 +4,15 @@ import "./style.css";
 import "./markdown.css";
 import ReactMarkdown from "react-markdown";
 import gfm from 'remark-gfm';
+import { Footer } from "../../components/Footer";
+import anonymousUserIcon from '../../../assets/img/user.png';
+import tipButtonIcon from '../../../assets/img/tip-button.png';
+import shareIcon from '../../../assets/img/share-icon.png';
+import moreIcon from '../../../assets/img/more-icon.png';
+import { formatArticleDate } from "../../utils/date-utils";
 
 export const Article = ({article}) => {
 
-  // Helper function to remove duplicate title
-  const removeDuplicateTitle = (markdown, title) => {
-    const titleRegex = new RegExp(`^#\\s+${title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\n`, "i");
-    console.debug(`"${article.title}"`, article.markdown);
-  
-    return markdown.replace(titleRegex, '');
-  };
-
-  // Process markdown content once on component mount/update
-  const processedMarkdown = useMemo(() => {
-    return removeDuplicateTitle(article.markdown, article.title);
-  }, [article.markdown, article.title]);
-  
-  
   const components = {
     a: ({node, ...props}) => (
       <a {...props} target="_blank" rel="noopener noreferrer" />
@@ -30,6 +22,8 @@ export const Article = ({article}) => {
   return (
     <div className="app-content" >
       <div className="article">
+
+        {/* Image & Title */}
         {article.image && 
           <div className="image-box">
             <img src={article.image}></img>
@@ -37,9 +31,43 @@ export const Article = ({article}) => {
           </div>
         }
         <span className="title">{article.title}</span>
+
+        {/* Author Section */}
+        <div className="author-section">
+          <img className="contact-icon" src={article.author.icon || anonymousUserIcon}></img>
+          <div className="selectorContent">
+            <div className="selector-title-row">
+              <span className="selector-title">{article.author.name}</span>
+              <span className="selector-follow-link">Follow</span>
+            </div>
+            <div className="selector-title-row">
+              <span className="selector-time">{formatArticleDate(article.publishedAt)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="activity-bar">
+          <img className="tip-button" src={tipButtonIcon}></img>
+          <span className="tips">{article.tips || 0}</span>
+          <div className="expander"></div>
+          <img className="icon-button" src={shareIcon}></img>
+          <img className="icon-button" src={moreIcon}></img>
+        </div>
+
+        {/* Markdown */}
         <ReactMarkdown className="markdown" remarkPlugins={[gfm]} components={components}>
-          {processedMarkdown}
+          {article.markdown}
         </ReactMarkdown>
+
+        {/* Footer Section */}
+        <div className="activity-bar">
+          <img className="tip-button" src={tipButtonIcon}></img>
+          <span className="tips">{article.tips || 0}</span>
+          <div className="expander"></div>
+          <img className="icon-button" src={shareIcon}></img>
+          <img className="icon-button" src={moreIcon}></img>
+        </div>
+        <Footer/>
       </div>
     </div>
   );

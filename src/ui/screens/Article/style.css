@@ -35,8 +35,98 @@
 .article .title {
   font-family: Mukta;
   font-style: normal;
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
-  line-height: 40px;
+  line-height: 52px;
   width: 680px;
+}
+
+.article .author-section {
+  display: flex;
+  width: 680px;
+  padding: 12px 0px;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.article .contact-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 24px;
+}
+
+.article .selector-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1 0 0;
+}
+
+.article .selector-title-row {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.article .selector-title {
+  color: #0F1217;
+  font-family: Work Sans;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.article .selector-follow-link {
+  color: #0280D9;
+  font-family: Work Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.article .selector-time {
+  color: #666;
+  font-family: Work Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.article .activity-bar {
+  display: flex;
+  width: 680px;
+  height: 24px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.article .tip-button {
+  width: 20px;
+  height: 17.647px;
+  flex-shrink: 0;
+}
+
+.article .tips {
+  color: #666;
+  font-family: Work Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.article .icon-button {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
