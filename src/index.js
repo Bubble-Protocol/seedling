@@ -4,6 +4,8 @@ import { rainbowKitConfig } from "./ui/utils/rainbow-kit";
 import { WagmiConfig } from "wagmi";
 import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import { App } from "./ui/App";
+import { Model } from "./model/Model";
+
 
 //
 // Application
@@ -31,6 +33,10 @@ console.debug = DEBUG_ON ? Function.prototype.bind.call(console.info, console, "
 //   })
 //   .catch(console.error);
 
+
+const model = new Model();
+model.initialise()
+  .catch(console.error);
 
 //
 // UI
