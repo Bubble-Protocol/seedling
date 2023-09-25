@@ -1,0 +1,50 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: UserRegistry
+    network: base-testnet
+    source:
+      address: "0xfF4211E20d693112867AaBa88A8D3b91C189B4eE"
+      abi: UserRegistry
+      startBlock: 10219852
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - UserRegistered
+        - UserDeregistered
+      abis:
+        - name: UserRegistry
+          file: ./abis/UserRegistry.json
+      eventHandlers:
+        - event: UserRegistered(indexed bytes32,string,indexed address)
+          handler: handleRegisteredUser
+        - event: UserDeregistered(indexed bytes32)
+          handler: handleDeregisteredUser
+      file: ./src/user-registry.ts
+  - kind: ethereum
+    name: ContentRegistry
+    network: base-testnet
+    source:
+      address: "0xcA1138cC718FC42330173062dF4a9F9A4EFDfFe4"
+      abi: ContentRegistry
+      startBlock: 10219852
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DeletedContent
+        - PublishedContent
+      abis:
+        - name: ContentRegistry
+          file: ./abis/ContentRegistry.json
+      eventHandlers:
+        - event: DeletedContent(indexed bytes32)
+          handler: handleContentDeleted
+        - event: PublishedContent(indexed bytes32,string,indexed bytes32)
+          handler: handleContentPublished
+      file: ./src/content-registry.ts

@@ -1,0 +1,15 @@
+
+type Content @entity {
+  id: ID!
+  contentHash: Bytes!
+  url: String!
+  author: User!
+  publishedAt: BigInt!
+}
+
+type User @entity {
+  id: ID!
+  username: String!
+  address: Bytes!
+  registeredAt: BigInt!
+}

@@ -1,0 +1,8 @@
+{
+  "base-testnet": {
+    "ContentRegistry": {
+      "address": "0x0D7caBA1d60c320C8EedE0e560c014AB3AB5D2cD",
+      "startBlock": 10184608
+    }
+  }
+}
