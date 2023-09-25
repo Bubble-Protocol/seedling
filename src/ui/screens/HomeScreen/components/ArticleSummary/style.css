@@ -8,6 +8,10 @@
   border-bottom: 1px solid rgba(36, 36, 36, 0.20);
 }
 
+.article-summary:hover {
+  cursor: pointer;
+}
+
 .article-summary .summary {
   display: flex;
   align-items: center;

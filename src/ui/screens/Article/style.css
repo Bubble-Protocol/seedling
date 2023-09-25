@@ -1,0 +1,28 @@
+.article {
+  display: flex;
+  width: 1024px;
+  padding: 48px 0px;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  flex: 1 0 0;
+}
+
+.article .image-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  max-height: 574px;
+  align-self: stretch;
+}
+
+.article .caption {
+  color: rgba(0, 0, 0, 0.50);
+  font-family: Inria Serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

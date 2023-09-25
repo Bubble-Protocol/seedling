@@ -6,10 +6,10 @@ import anonymousUserIcon from '../../../../../assets/img/user.png';
 import tipButtonIcon from '../../../../../assets/img/tip-button.png';
 import { formatArticleDate } from "../../../../utils/date-utils";
 
-export const ArticleSummary = ({article}) => {
+export const ArticleSummary = ({article, onClick}) => {
 
   return (
-    <div className="article-summary" >
+    <div className="article-summary" onClick={onClick} >
       <div className="summary">
         <img className="summary-image" src={article.image || defaultArticleImage}></img>
         <div className="summary-content">
@@ -32,6 +32,7 @@ export const ArticleSummary = ({article}) => {
 };
 
 ArticleSummary.propTypes = {
-  article: PropTypes.object.isRequired
+  article: PropTypes.object.isRequired,
+  onClick: PropTypes.func
 };
 

@@ -1,5 +1,4 @@
 import GraphClient from "./TheGraph";
-import anonymousUserIcon from "../../assets/img/user.png";
 import { extractImage, extractSummary, extractTitle } from "../utils/markdown-utils";
 
 export class Content {
