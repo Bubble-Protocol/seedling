@@ -1,5 +1,6 @@
 import GraphClient from "./TheGraph";
 import anonymousUserIcon from "../../assets/img/user.png";
+import { extractImage, extractSummary, extractTitle } from "../utils/markdown-utils";
 
 export class Content {
 
@@ -13,35 +14,43 @@ export class Content {
   async latestContent(amount=10, skip=0) {
     return this.theGraph.fetchContent(amount, skip)
       .then(results => {
-        return Promise.all(
-          results.map(content => {
-            return this._fetchContentAndAuthor(content).catch(() => {
-              const error = new Error('Failed to fetch content with id ' + content.id);
-              console.warn(error);
-              return error;
-            })
-          })
-        );
+        return Promise.all(results.map(content => this._fetchContentAndAuthor(content)));
       })
-      .then(results => results.filter(r => !(r instanceof Error)));
+      .then(results => results.filter(r => r.markdown !== undefined));
   }
 
   async _fetchContentAndAuthor(metadata) {
     const result = {...metadata};
     result.expandedUrl = this.parseContentUrl(result.url).href;
     const [content, author] = await Promise.all([
-      this._fetchContent(result.expandedUrl),
+      this._fetchContent(result.id, result.expandedUrl),
       this._fetchUser(result.author.username)
     ]);
-    result.content = content;
+    result.markdown = content.markdown;
+    result.title = content.title;
+    result.description = content.description;
+    result.image = content.image;
+    result.author = {...result.author};
     result.author.name = author.name;
     result.author.icon = author.icon;
     return result;
   }
 
-  async _fetchContent(urlStr) {
+  async _fetchContent(id, urlStr) {
     const url = this.parseContentUrl(urlStr);
-    return this._fetch(url);
+    return this._fetch(url)
+      .then(content => {
+        return {
+          title: extractTitle(content, url.pathname), 
+          description: extractSummary(content), 
+          image: extractImage(content, urlStr), 
+          markdown: content
+        };
+      })
+      .catch (() => {
+        console.warn('Failed to fetch content with id', id);
+        return {title: undefined, description: undefined, image: undefined, markdown: undefined};
+      })
   }
 
   async _fetchUser(username) {
@@ -52,7 +61,7 @@ export class Content {
         return {name: name, icon: icon};
       })
       .catch (() => {
-        return {name: name, icon: anonymousUserIcon};
+        return {name: name, icon: undefined};
       })
   }
 
@@ -93,4 +102,16 @@ export class Content {
 
   }
 
+  _filenameToTitle(filename) {
+    filename = filename.replace(/\..+$/, '');
+    filename = filename.replace(/([a-z])([A-Z])/g, '$1 $2');
+    filename = filename.replace(/[_-]/g, ' ');
+    const title = filename
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+    return title;
+  }
+
 }
+

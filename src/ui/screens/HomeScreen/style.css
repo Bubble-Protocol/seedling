@@ -1,0 +1,56 @@
+.home-screen {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.left-column {
+  display: flex;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;  
+}
+
+.filter-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.filter-button, .filter-button-selected {
+  color: #242424;
+  font-family: Mukta;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.filter-button-selected {
+  font-weight: 700;
+}
+
+.summary-content {
+  display: flex;
+  width: 600px;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  overflow-y: scroll;
+}
+
+.right-column {
+  display: flex;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+}

@@ -6,7 +6,6 @@ import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import { App } from "./ui/App";
 import { Model } from "./model/Model";
 
-
 //
 // Application
 //

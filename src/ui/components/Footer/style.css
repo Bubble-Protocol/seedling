@@ -1,0 +1,22 @@
+.footer {
+  display: flex;
+  padding: 32px 0px;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-button {
+  color: rgba(36, 36, 36, 0.70);
+  font-family: Mukta;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-decoration: none;
+}
+
+a .footer-button:visited {
+  color: rgba(36, 36, 36, 0.70);
+  text-decoration: none;
+}
+
