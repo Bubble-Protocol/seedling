@@ -28,7 +28,7 @@ export class GraphClient {
   }
 
   async fetchContent(amount, skip) {
-    // return Promise.resolve(TEST_DATA.latest10);
+    return TEST_DATA.latest10;
     const query = gql`
       {
         contents(

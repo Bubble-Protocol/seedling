@@ -13,9 +13,17 @@ export class Content {
   async latestContent(amount=10, skip=0) {
     return this.theGraph.fetchContent(amount, skip)
       .then(results => {
-        return Promise.all(results.map(content => this._fetchContentAndAuthor(content)));
+        return Promise.all(
+          results.map(content => {
+            return this._fetchContentAndAuthor(content).catch(() => {
+              const error = new Error('Failed to fetch content with id ' + content.id);
+              console.warn(error);
+              return error;
+            })
+          })
+        );
       })
-      .then(results => results.filter(r => typeof r !== 'Error'));
+      .then(results => results.filter(r => !(r instanceof Error)));
   }
 
   async _fetchContentAndAuthor(metadata) {
@@ -33,51 +41,19 @@ export class Content {
 
   async _fetchContent(urlStr) {
     const url = this.parseContentUrl(urlStr);
-
-    if (this.cache[url]) {
-      console.trace('Fetching from cache:', url);
-      return this.cache[url];
-    }
-
-    try {
-      console.trace('Fetching:', url);
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Network response was not ok ${response.statusText}`);
-      }
-      const data = await response.text();
-      // Cache the fetched data
-      this.cache[url] = data;
-      return data;
-    } catch (error) {
-      throw error;  // Re-throwing the error to be handled by the calling function
-    }
-
+    return this._fetch(url);
   }
 
   async _fetchUser(username) {
     const name = this.getUserName(username);
     const iconUrl = this.getUserIconUrl(username);
-    
-    if (this.cache[iconUrl]) {
-      console.trace('Fetching from cache:', iconUrl);
-      return {name: name, icon: this.cache[iconUrl]};
-    }
-
-    try {
-      console.trace('Fetching:', iconUrl);
-      const response = await fetch(iconUrl);
-      if (!response.ok) {
-        throw new Error(`Network response was not ok ${response.statusText}`);
-      }
-      const data = await response.text();
-      // Cache the fetched data
-      this.cache[iconUrl] = data;
-      return {name: name, icon: data};
-    } catch (error) {
-      return {name: name, icon: anonymousUserIcon};
-    }
-
+    return this._fetch(iconUrl)
+      .then(icon => {
+        return {name: name, icon: icon};
+      })
+      .catch (() => {
+        return {name: name, icon: anonymousUserIcon};
+      })
   }
 
   parseContentUrl(urlStr) {
@@ -97,6 +73,24 @@ export class Content {
     if (name.startsWith('github:')) name = name.slice(7);
     name = name.replace('-', ' ');
     return name;
+  }
+
+  async _fetch(url) {
+    if (this.cache[url]) {
+      console.trace('Fetching from cache:', url);
+      return this.cache[url];
+    }
+
+    console.trace('Fetching:', url);
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Network response was not ok ${response.statusText}`);
+    }
+    const data = await response.text();
+    // Cache the fetched data
+    this.cache[url] = data;
+    return data;
+
   }
 
 }
