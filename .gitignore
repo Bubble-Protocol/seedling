@@ -22,5 +22,16 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# solidity
+artifacts
+.deps
+
+# the graph
+# dependencies
+/src/model/contracts/the-graph/build
+/src/model/contracts/the-graph/generated
+/src/model/contracts/the-graph/node_modules
+
+# others
 scratch
 .vscode
