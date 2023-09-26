@@ -30,7 +30,7 @@ export class Content {
         return Promise.all(results.map(content => this._fetchContentAndAuthor(content)));
       })
       .then(results => {
-        results.filter(r => r.markdown !== undefined);
+        results = results.filter(r => r.markdown !== undefined);
         results.forEach(r => this.cache[r.id] = r);
         return results;
       });
@@ -51,6 +51,7 @@ export class Content {
     result.author = {...result.author};
     result.author.name = author.name;
     result.author.icon = author.icon;
+    result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
     return result;
   }
 

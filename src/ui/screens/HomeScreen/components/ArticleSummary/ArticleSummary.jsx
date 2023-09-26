@@ -5,6 +5,7 @@ import defaultArticleImage from '../../../../../assets/img/article-image.png';
 import anonymousUserIcon from '../../../../../assets/img/user.png';
 import tipButtonIcon from '../../../../../assets/img/tip-button.png';
 import { formatArticleDate } from "../../../../utils/date-utils";
+import { formatTip } from "../../../../utils/tip-utils";
 
 export const ArticleSummary = ({article, onClick}) => {
 
@@ -24,7 +25,7 @@ export const ArticleSummary = ({article, onClick}) => {
           <div className="summary-bar-date">{formatArticleDate(article.publishedAt)}</div>
           <div className="expander"></div>
           <img className="summary-bar-tip-button" src={tipButtonIcon}></img>
-          <div className="summary-bar-tips">{article.tips || 0}</div>
+          <div className="summary-bar-tips">{formatTip(article.totalTips)}</div>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import shareIcon from '../../../assets/img/share-icon.png';
 import moreIcon from '../../../assets/img/more-icon.png';
 import { formatArticleDate } from "../../utils/date-utils";
 import { stateManager } from "../../../state-context";
+import { formatTip } from "../../utils/tip-utils";
 
 export const Article = () => {
   const { id } = useParams();
@@ -52,6 +53,8 @@ export const Article = () => {
     )
   }
 
+  const tip = formatTip(article.totalTips);
+
   return (
     <div className="app-content" >
       <div className="article">
@@ -81,7 +84,7 @@ export const Article = () => {
 
         <div className="activity-bar">
           <img className="tip-button" src={tipButtonIcon}></img>
-          <span className="tips">{article.tips || 0}</span>
+          <span className="tips">{tip}</span>
           <div className="expander"></div>
           <img className="icon-button" src={shareIcon}></img>
           <img className="icon-button" src={moreIcon}></img>
@@ -95,7 +98,7 @@ export const Article = () => {
         {/* Footer Section */}
         <div className="activity-bar">
           <img className="tip-button" src={tipButtonIcon}></img>
-          <span className="tips">{article.tips || 0}</span>
+          <span className="tips">{tip}</span>
           <div className="expander"></div>
           <img className="icon-button" src={shareIcon}></img>
           <img className="icon-button" src={moreIcon}></img>

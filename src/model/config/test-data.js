@@ -12,7 +12,16 @@ export const TEST_DATA = {
             "address": "0x5d4a0ed69dfd97f40262c3909494ec740648918a",
             "registeredAt": "1695633580"
         },
-        "publishedAt": "1695633768"
+        "publishedAt": "1695633768",
+        "tips": [
+            {
+              "id": "0x041e68994bf081a37906d3d46b031a9f3df85454e78b5f1e6e532a019c6dd42b-20000000000000",
+              "tipper": "0x5d4a0ed69dfd97f40262c3909494ec740648918a",
+              "amount": "20000000000000",
+              "total": "20000000000000",
+              "tippedAt": "1695741668"
+            }
+          ]
     },
     {
         "__typename": "Content",
@@ -26,7 +35,8 @@ export const TEST_DATA = {
             "address": "0x5d4a0ed69dfd97f40262c3909494ec740648918a",
             "registeredAt": "1695633580"
         },
-        "publishedAt": "1695633768"
+        "publishedAt": "1695633768",
+        "tips": []
     },
     {
         "__typename": "Content",
@@ -40,7 +50,8 @@ export const TEST_DATA = {
             "address": "0x5d4a0ed69dfd97f40262c3909494ec740648918a",
             "registeredAt": "1695633580"
         },
-        "publishedAt": "1695633768"
+        "publishedAt": "1695633768",
+        "tips": []
     },
     {
         "__typename": "Content",
@@ -54,7 +65,8 @@ export const TEST_DATA = {
             "address": "0x5d4a0ed69dfd97f40262c3909494ec740648918a",
             "registeredAt": "1695633580"
         },
-        "publishedAt": "1695633768"
+        "publishedAt": "1695633768",
+        "tips": []
     },
     {
         "__typename": "Content",
@@ -68,7 +80,8 @@ export const TEST_DATA = {
             "address": "0x5d4a0ed69dfd97f40262c3909494ec740648918a",
             "registeredAt": "1695633580"
         },
-        "publishedAt": "1695633768"
+        "publishedAt": "1695633768",
+        "tips": []
     }
   ]
 }

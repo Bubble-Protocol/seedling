@@ -27,6 +27,13 @@ export class GraphClient {
             registeredAt
           }
           publishedAt
+          tips {
+            id
+            tipper
+            amount
+            total
+            tippedAt
+          }
         }
       }
     `;
@@ -55,6 +62,13 @@ export class GraphClient {
             registeredAt
           }
           publishedAt
+          tips {
+            id
+            tipper
+            amount
+            total
+            tippedAt
+          }
         }
       }
     `;
