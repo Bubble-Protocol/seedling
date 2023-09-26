@@ -9,6 +9,9 @@ export class Model {
   constructor() {
     this.contentManager = new Content(DEFAULT_CONFIG.graphUri);
     stateManager.register('latest-content', []);
+    stateManager.register('query-functions', {
+      getArticleById: this.contentManager.fetchArticle.bind(this.contentManager)
+    });
   }
 
   async initialise() {

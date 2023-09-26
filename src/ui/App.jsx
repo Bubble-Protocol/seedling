@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./style.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../assets/img/logo.png";
@@ -9,19 +10,21 @@ import { Article } from "./screens/Article";
 export const App = () => {
 
   const { isConnected } = useAccount()
-  const [screen, setScreen] = useState('home');
-  const [selectedArticle, setSelectedArticle] = useState();
+  const navigate = useNavigate();
+
 
   return (
     <div className="App" >
       <div className="header">
-        <img className="logo clickable" src={logo} onClick={() => setScreen('home') | setSelectedArticle(null)} ></img>
+        <img className="logo clickable" src={logo} onClick={() => navigate('/')} ></img>
         <span className="expander"></span>
         {isConnected && <span className="header-link">Publish</span>}
         <ConnectButton showBalance={false} chainStatus="none" />
       </div>
-      {screen === 'home' && !selectedArticle && <HomeScreen setSelectedArticle={setSelectedArticle}/>}
-      {screen === 'home' && selectedArticle && <Article article={selectedArticle} />}
+      <Routes>
+        <Route path='/' element={<HomeScreen/>} />
+        <Route path='/article/:id' element={<Article />} />
+      </Routes>
     </div>
   );
 };

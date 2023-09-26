@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import React, { useMemo } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./style.css";
 import "./markdown.css";
 import ReactMarkdown from "react-markdown";
@@ -10,14 +11,46 @@ import tipButtonIcon from '../../../assets/img/tip-button.png';
 import shareIcon from '../../../assets/img/share-icon.png';
 import moreIcon from '../../../assets/img/more-icon.png';
 import { formatArticleDate } from "../../utils/date-utils";
+import { stateManager } from "../../../state-context";
 
-export const Article = ({article}) => {
+export const Article = () => {
+  const { id } = useParams();
+
+  const { getArticleById } = stateManager.useStateData("query-functions")();
+  const [article, setArticle] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const fetchedArticle = await getArticleById(id);
+        setArticle(fetchedArticle);
+      }
+      catch(error) {
+        console.warn('Failed to fetch article:', error);
+        if (error.code === 'content-not-found') setError('Article Not Found!');
+        else setError('Article Unavailable');
+      }
+    };
+    fetchArticle();
+  }, [id]);
 
   const components = {
     a: ({node, ...props}) => (
       <a {...props} target="_blank" rel="noopener noreferrer" />
     ),
   };
+
+  if (!article) {
+    return (
+      <div className="app-content" >
+        <div className="article-loading">
+          {!error && <div className="loader"></div>}
+          {error && <div className="error-text">{error.message || error}</div>}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="app-content" >
@@ -72,8 +105,4 @@ export const Article = ({article}) => {
     </div>
   );
 
-};
-
-Article.propTypes = {
-  article: PropTypes.object.isRequired
 };

@@ -10,7 +10,31 @@ export class GraphClient {
     });
   }
 
-  async fetchContent(amount, skip) {
+  async fetchContent(id) {
+    const query = gql`
+      query GetContentById($id: ID!) {
+        contents(
+          where: {id: $id}
+        ) 
+        {
+          id
+          contentHash
+          url
+          author {
+            id
+            username
+            address
+            registeredAt
+          }
+          publishedAt
+        }
+      }
+    `;
+    return this._fetch(query, {id});
+  }
+
+  
+  async fetchLatestContent(amount, skip) {
     return TEST_DATA.latest10;
     const query = gql`
       {
@@ -34,15 +58,19 @@ export class GraphClient {
         }
       }
     `;
+    return this._fetch(query);
+  }
 
+  async _fetch(query, variables) {
     try {
-      const result = await this.client.query({ query });
+      const result = await this.client.query({ query, variables });
       return result.data.contents;
     } catch (error) {
       console.error('Error fetching content:', error);
       throw error;
     }
   }
+
 }
 
 export default GraphClient;

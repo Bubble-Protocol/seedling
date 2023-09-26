@@ -10,12 +10,30 @@ export class Content {
     this.theGraph = new GraphClient(graphUri);
   }
 
+  async fetchArticle(id) {
+    if (this.cache[id]) return Promise.resolve(this.cache[id]);
+    return this.theGraph.fetchContent(id)
+      .then(results => {
+        if (results.length === 0) throw {code: 'content-not-found', message: 'content not found'};
+        if (results.length !== 1) throw {code: 'unexpected-error', message: 'multiple records found'};
+        return this._fetchContentAndAuthor(results[0]);
+      })
+      .then(content => {
+        this.cache[id] = content;
+        return content;
+      })
+  }
+
   async latestContent(amount=10, skip=0) {
-    return this.theGraph.fetchContent(amount, skip)
+    return this.theGraph.fetchLatestContent(amount, skip)
       .then(results => {
         return Promise.all(results.map(content => this._fetchContentAndAuthor(content)));
       })
-      .then(results => results.filter(r => r.markdown !== undefined));
+      .then(results => {
+        results.filter(r => r.markdown !== undefined);
+        results.forEach(r => this.cache[r.id] = r);
+        return results;
+      });
   }
 
   async _fetchContentAndAuthor(metadata) {
@@ -66,7 +84,6 @@ export class Content {
   }
 
   parseContentUrl(urlStr) {
-    console.debug('parseContentUrl', urlStr)
     let url = new URL(urlStr);
     if (urlStr.startsWith('github:')) url = new URL(url.pathname, 'https://raw.githubusercontent.com/');
     let relLinkUrl = new URL(url.href.slice(0, url.href.lastIndexOf('/')));
@@ -95,6 +112,7 @@ export class Content {
     console.trace('Fetching:', url);
     const response = await fetch(url);
     if (!response.ok) {
+      console.warn('Failed to fetch', url.href, ':', response);
       throw new Error(`Network response was not ok ${response.statusText}`);
     }
     const data = await response.text();

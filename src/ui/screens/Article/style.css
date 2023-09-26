@@ -1,3 +1,28 @@
+.article-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.article-loading .error-text {
+  color:#c8c8c8;
+  font-family: Mukta;
+  font-style: normal;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38px;
+  max-width: 680px;
+}
+
+.article-loading .loader {
+  width: 48px;
+  height: 48px;
+}
+
 .article {
   display: flex;
   width: 1024px;

@@ -3,6 +3,7 @@ import ReactDOMClient from "react-dom/client";
 import { rainbowKitConfig } from "./ui/utils/rainbow-kit";
 import { WagmiConfig } from "wagmi";
 import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
+import { BrowserRouter } from "react-router-dom";
 import { App } from "./ui/App";
 import { Model } from "./model/Model";
 
@@ -48,7 +49,9 @@ function render(params={}) {
   root.render(
     <WagmiConfig config={rainbowKitConfig.wagmiConfig}>
       <RainbowKitProvider chains={rainbowKitConfig.chains} theme={lightTheme({borderRadius: 'small'})} >
-        <App connect={params.connect} />
+        <BrowserRouter>
+          <App connect={params.connect} />
+        </BrowserRouter>
       </RainbowKitProvider>
     </WagmiConfig>
   );
