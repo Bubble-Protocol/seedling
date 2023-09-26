@@ -1,4 +1,4 @@
-import * as tipJarAbi from "../contracts/the-graph/abis/TipJar.json";
+import * as tipJarAbi from "../../contracts/the-graph/abis/TipJar.json";
 
 export const DEFAULT_CONFIG = {
   graphUri: "https://api.studio.thegraph.com/query/53709/seedling/v0.0.9",

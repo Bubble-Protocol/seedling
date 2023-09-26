@@ -28,9 +28,9 @@ artifacts
 
 # the graph
 # dependencies
-/src/model/contracts/the-graph/build
-/src/model/contracts/the-graph/generated
-/src/model/contracts/the-graph/node_modules
+/src/contracts/the-graph/build
+/src/contracts/the-graph/generated
+/src/contracts/the-graph/node_modules
 
 # others
 scratch
