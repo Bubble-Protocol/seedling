@@ -13,6 +13,7 @@ import moreIcon from '../../../assets/img/more-icon.png';
 import { formatArticleDate } from "../../utils/date-utils";
 import { stateManager } from "../../../state-context";
 import { formatTip } from "../../utils/tip-utils";
+import { TipModal } from "../../components/TipModal";
 
 export const Article = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ export const Article = () => {
   const { getArticleById } = stateManager.useStateData("query-functions")();
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
+  const [tipModal, setTipModal] = useState();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -42,6 +44,11 @@ export const Article = () => {
     ),
   };
 
+  function openTipModal(event) {
+    const rect = event.target.getBoundingClientRect();
+    setTipModal({y: rect.top, x: rect.right + 8});
+  }
+
   if (!article) {
     return (
       <div className="app-content" >
@@ -57,6 +64,7 @@ export const Article = () => {
 
   return (
     <div className="app-content" >
+      {tipModal && <TipModal x={tipModal.x} y={tipModal.y} article={article} onClose={() => setTipModal(null)} /> }
       <div className="article">
 
         {/* Image & Title */}
@@ -83,7 +91,7 @@ export const Article = () => {
         </div>
 
         <div className="activity-bar">
-          <img className="tip-button" src={tipButtonIcon}></img>
+          <img className="tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
           <span className="tips">{tip}</span>
           <div className="expander"></div>
           <img className="icon-button" src={shareIcon}></img>
@@ -97,7 +105,7 @@ export const Article = () => {
 
         {/* Footer Section */}
         <div className="activity-bar">
-          <img className="tip-button" src={tipButtonIcon}></img>
+          <img className="tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
           <span className="tips">{tip}</span>
           <div className="expander"></div>
           <img className="icon-button" src={shareIcon}></img>

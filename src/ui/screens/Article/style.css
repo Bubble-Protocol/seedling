@@ -141,6 +141,10 @@
   flex-shrink: 0;
 }
 
+.article .tip-button:hover {
+  cursor: pointer;
+}
+
 .article .tips {
   color: #666;
   font-family: Work Sans;
