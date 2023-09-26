@@ -13,3 +13,12 @@ type User @entity {
   address: Bytes!
   registeredAt: BigInt!
 }
+
+type Tip @entity {
+  id: ID!
+  contentId: Bytes!
+  tipper: Bytes!
+  amount: BigInt!
+  total: BigInt!
+  tippedAt: BigInt!
+}

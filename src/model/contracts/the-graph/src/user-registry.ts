@@ -6,7 +6,7 @@ import {
 } from "../generated/UserRegistry/UserRegistry"
 import { User } from "../generated/schema"
 
-// Handler for the ContentPublished event
+// Handler for the UserRegistered event
 export function handleRegisteredUser(event: UserRegisteredEvent): void {
   let user = new User(event.params.id.toHex())
   user.address = event.params.user
@@ -15,7 +15,7 @@ export function handleRegisteredUser(event: UserRegisteredEvent): void {
   user.save();
 }
 
-// Handler for the ContentDeleted event
+// Handler for the UserDeregistered event
 export function handleDeregisteredUser(event: UserDeregisteredEvent): void {
   let user = User.load(event.params.id.toHex())
   if (user != null) {
