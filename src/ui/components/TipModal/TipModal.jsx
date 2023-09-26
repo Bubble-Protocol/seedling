@@ -11,6 +11,9 @@ import { stateManager } from "../../../state-context";
 
 export const TipModal = ({x, y, article, onClose}) => {
 
+  // TODO allow tipping in ETH and dollars
+  // TODO allow tipping in ETH only if no dollar exchange rate is available
+
   const { tipDollars } = stateManager.useStateData("tip-functions")();
   const [tip, setTipNum] = useState("2");
   const popup = useRef();

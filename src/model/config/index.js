@@ -9,7 +9,7 @@ export const DEFAULT_CONFIG = {
     },
     exchangeRateLookupServices: [
       async () => { return fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD").then(response => response.json()).then(data => data["USD"])},
-      async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=ETH").then(response => response.json()).then(data => {console.debug('coinbase data', data); return parseFloat(data["data"]["rates"]["USD"])}) }
+      async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=ETH").then(response => response.json()).then(data => parseFloat(data["data"]["rates"]["USD"])) }
     ]
   }
 }

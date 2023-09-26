@@ -14,13 +14,11 @@ export class TipManager {
 
   async initialise() {
     try {
-      console.debug(this.config)
       const rates = await Promise.all(this.config.exchangeRateLookupServices.map(service => service()));
-      console.debug('rates', rates)
+      console.trace('fetched dollar exchange rates', rates);
       if (rates.length < 2) throw new Error('Cannot rely on an exchange rate from only', rates.length, 'source(s)');
       const mean = rates.reduce((acc, rate) => acc + rate, 0) / rates.length;
-      console.debug('mean', mean, Math.max(rates[0], mean), Math.min(rates[0], mean), Math.max(rates[0], mean) / Math.min(rates[0], mean))
-      if (Math.max(rates[0], mean) / Math.min(rates[0], mean) > 1.01) throw new Error('Exchange rates read from lookup services do not match sufficiently to calculate a reliable exchange rate', rates);
+      if (Math.max(rates[0], mean) / Math.min(rates[0], mean) > 1.01) throw new Error('Exchange rates read from lookup services do not match sufficiently to calculate a reliable exchange rate');
       this.dollarExchangeRate = Number(parseEther((1.0/mean).toString(), 'gwei'));
       console.trace('dollar exchange rate set to', mean, this.dollarExchangeRate);
     }
