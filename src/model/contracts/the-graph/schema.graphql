@@ -5,6 +5,7 @@ type Content @entity {
   url: String!
   author: User!
   publishedAt: BigInt!
+  tips: [Tip!]! @derivedFrom(field: "content")
 }
 
 type User @entity {
@@ -16,7 +17,7 @@ type User @entity {
 
 type Tip @entity {
   id: ID!
-  contentId: Bytes!
+  content: Content!
   tipper: Bytes!
   amount: BigInt!
   total: BigInt!

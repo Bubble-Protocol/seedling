@@ -6,7 +6,7 @@ import { Tip } from "../generated/schema"
 export function handleTip(event: TipEvent): void {
   let id = event.params.contentId.toHex() + "-" + event.params.total.toString();
   let tip = new Tip(id);
-  tip.contentId = event.params.contentId;
+  tip.content = event.params.contentId.toHex();
   tip.tipper = event.params.tipper;
   tip.amount = event.params.amount;
   tip.total = event.params.total;
