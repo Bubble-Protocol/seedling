@@ -11,5 +11,12 @@ export const DEFAULT_CONFIG = {
       async () => { return fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD").then(response => response.json()).then(data => data["USD"])},
       async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=ETH").then(response => response.json()).then(data => parseFloat(data["data"]["rates"]["USD"])) }
     ]
+  },
+  oauth: {
+    github: {
+      uri: "https://github.com/login/oauth/authorize",
+      clientId: "71b2165c311205b56efb",
+      redirectUri: "https://vault.bubbleprotocol.com/github-callback",
+    }
   }
 }

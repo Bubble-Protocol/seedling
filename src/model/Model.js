@@ -21,7 +21,7 @@ export class Model {
     stateManager.register('latest-content', []);
     stateManager.register('account-functions', {
       connectToGithub: () => this.session && this.session.connectToGithub(),
-      createAccount: () => this.session && this.session.createAccount()
+      setUsername: this.setUsername.bind(this)
     });
     stateManager.register('query-functions', {
       getArticleById: this.contentManager.fetchArticle.bind(this.contentManager)
@@ -38,6 +38,12 @@ export class Model {
     const latestContent = await this.contentManager.latestContent();
     console.trace('latestContent', latestContent);
     stateManager.dispatch('latest-content', latestContent);
+  }
+
+  setUsername(username) {
+    if (!this.session) throw new Error('wallet not connected');
+    this.session.setUsername(username);
+    stateManager.dispatch('username', this.session.username);
   }
 
   _handleAccountChanged(account) {

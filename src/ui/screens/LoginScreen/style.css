@@ -1,9 +1,12 @@
+
+
 .login-screen {
   display: flex;
-  width: 680px;
+  max-width: 680px;
   padding: 48px 0px;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 32px;
   flex: 1 0 0;
   font-family: Asar;
@@ -51,4 +54,25 @@
 
 .login-screen .text-link:hover {
   cursor: pointer;
+}
+
+.login-screen .user-connected-row {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.login-screen .tick {
+  width: 40px;
+  height: 40px;
+}
+
+.login-screen .username {
+  font-family: Mukta;
+  font-size: 22px;
+  font-weight: 700px;
+}
+
+.login-screen .error-text {
+  color:rgb(217, 2, 2);
 }
