@@ -6,11 +6,13 @@ import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./ui/App";
 import { Model } from "./model/Model";
+import { initialiseLocalStorage } from "./model/utils/LocalStorage";
 
 //
 // Application
 //
 
+const APP_ID = 'Seedling-DApp';
 const TRACE_ON = true;
 const DEBUG_ON = true;
 
@@ -18,7 +20,7 @@ console.stackTrace = console.trace;
 console.trace = TRACE_ON ? Function.prototype.bind.call(console.info, console, "[trace]") : function() {};
 console.debug = DEBUG_ON ? Function.prototype.bind.call(console.info, console, "[debug]") : function() {};
 
-// await initialiseLocalStorage('SeedlingDApp');
+await initialiseLocalStorage(APP_ID);
 
 // stateManager.register('url-params');
 

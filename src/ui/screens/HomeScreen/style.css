@@ -6,7 +6,7 @@
   align-self: stretch;
 }
 
-.left-column {
+.home-screen .left-column {
   display: flex;
   padding: 48px 32px;
   flex-direction: column;
@@ -15,14 +15,14 @@
   flex: 1 0 0;  
 }
 
-.filter-menu {
+.home-screen .filter-menu {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
 }
 
-.filter-button, .filter-button-selected {
+.home-screen .filter-button, .home-screen .filter-button-selected {
   color: #242424;
   font-family: Mukta;
   font-size: 18px;
@@ -31,11 +31,11 @@
   line-height: normal;
 }
 
-.filter-button-selected {
+.home-screen .filter-button-selected {
   font-weight: 700;
 }
 
-.summary-content {
+.home-screen .summary-content {
   display: flex;
   width: 680px;
   padding: 48px 32px;
@@ -46,7 +46,7 @@
   overflow-y: scroll;
 }
 
-.right-column {
+.home-screen .right-column {
   display: flex;
   padding: 48px 32px;
   flex-direction: column;

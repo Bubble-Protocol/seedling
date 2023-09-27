@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 
-const DB_VERSION = 4;
+const DB_VERSION = 1;
 
 let localStorage = {
   name: "null-storage",
@@ -18,9 +18,6 @@ export async function initialiseLocalStorage(id) {
   localStorage.read = storage.read.bind(storage);
   localStorage.write = storage.write.bind(storage);
   localStorage.remove = storage.remove.bind(storage);
-  localStorage.writeMessage = storage.writeMessage.bind(storage);
-  localStorage.queryMessagesByConversation = storage.queryMessagesByConversation.bind(storage);
-  localStorage.deleteMessagesByConversation = storage.deleteMessagesByConversation.bind(storage);
   return storage.initialise();
 }
 
@@ -63,14 +60,6 @@ class IndexedDbStorage {
             const msgStore = db.createObjectStore(this.messageTable, {keyPath: 'id'});
             msgStore.createIndex("by_conversation", "conversationId");
             break;
-          case 3:
-            Object.keys(this.values).forEach(key => {
-              const parts = key.split('-');
-              if (parts === 2 && parts[1].slice(0,2) == '0x' && parts[1].length === 42 && this.values[parts[1]] === undefined) {
-                this.values[parts[1]] = this.values[key];
-                this.values[key] = undefined;
-              }
-            })
         }
       }
 
@@ -102,18 +91,6 @@ class IndexedDbStorage {
     this._save();
   }
 
-  writeMessage(value) {
-    return this._writeMessage(value);
-  }
-  
-  queryMessagesByConversation(conversationId) {
-    return this._queryMessages("by_conversation", conversationId);
-  }
-  
-  deleteMessagesByConversation(conversationId) {
-    return this._deleteMessages("by_conversation", conversationId);
-  }
-  
   _load(resolve, reject) {
     try {
       const transaction = this.db.transaction(this.storeName, 'readwrite');
@@ -162,83 +139,4 @@ class IndexedDbStorage {
     }
   }
   
-  _writeMessage(value) {
-    return new Promise((resolve, reject) => {
-      const transaction = this.db.transaction(this.messageTable, 'readwrite');
-      transaction.onerror = (event) => reject(event.target.error);
-      const store = transaction.objectStore(this.messageTable);
-      try {
-        const request = store.put(value);
-        request.onerror = event => reject(event.target.error);
-        request.onsuccess = resolve;
-      }
-      catch (error) {
-        console.error('indexedDB store.put failed', error);
-      }
-    })
-  }
-
-  _queryMessages(index, value) {
-    return new Promise((resolve, reject) => {
-      let transaction = this.db.transaction(this.messageTable, 'readonly');
-      transaction.onerror = (event) => reject(event.target.error);
-      let request = transaction.objectStore(this.messageTable).index(index).openCursor(IDBKeyRange.only(value));
-      let messages = [];
-
-      request.onsuccess = function() {
-          let cursor = request.result;
-          if (cursor) {
-              messages.push(cursor.value);
-              cursor.continue();
-          } else {
-              resolve(messages);
-          }
-      };
-
-      request.onerror = event => reject(event.target.error);
-    })
-  };
-
-  _deleteMessages(index, value) {
-    return new Promise((resolve, reject) => {
-      let transaction = this.db.transaction(this.messageTable, 'readwrite');
-      transaction.onerror = (event) => reject(event.target.error);
-      let request = transaction.objectStore(this.messageTable).index(index).openCursor(IDBKeyRange.only(value));
-
-      request.onsuccess = function() {
-          let cursor = request.result;
-          if (cursor) {
-              cursor.delete();
-              cursor.continue();
-          } else {
-              resolve();
-          }
-      };
-
-      request.onerror = event => reject(event.target.error);
-    })
-  }
-  
-}
-
-
-function upgradeMessages(transaction, transform) {
-  let messageStore = transaction.objectStore("messages");
-  let cursorRequest = messageStore.openCursor();
-
-  cursorRequest.onsuccess = function(e) {
-    let cursor = e.target.result;
-    if (cursor) {
-      let request = cursor.update(transform(cursor.value));
-      request.onsuccess = function() {
-        cursor.continue();
-      };
-      request.onerror = function() {
-        throw new Error("Error upgrading IndexedDB", {cause: request.error});
-      };
-    }
-  };
-  cursorRequest.onerror = function(e) {
-    throw new Error("Error upgrading IndexedDB", {cause: e.target.error});
-  };
 }
