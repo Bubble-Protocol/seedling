@@ -22,8 +22,10 @@ export class Model {
       connectToGithub: () => this.session && this.session.connectToGithub(),
       setUsername: this.setUsername.bind(this)
     });
-    stateManager.register('query-functions', {
-      getArticleById: this.contentManager.fetchArticle.bind(this.contentManager)
+    stateManager.register('content-functions', {
+      getArticleById: this.contentManager.fetchArticle.bind(this.contentManager),
+      getPreview: this.getPreview.bind(this),
+      publish: this.publish.bind(this)
     });
     stateManager.register('tip-functions', {
       tip: this.tipManager.tip.bind(this.tipManager),
@@ -44,6 +46,19 @@ export class Model {
     if (account !== this.session.id) throw new Error('incorrect account');
     this.session.setUsername(username);
     stateManager.dispatch('user', {account, username: this.session.username});
+  }
+
+  async getPreview(urlStr) {
+    const user = this.session ? {username: this.session.username} : {username: 'Barney Rubble'}
+    return this.contentManager.fetchPreview(urlStr, user)
+  }
+
+  async publish(urlStr) {
+    if (!this.session) throw new Error('wallet not connected');
+    const user = {account: this.session.id, username: this.session.username};
+    // return this.contentManager.publish(urlStr, user)
+    // TODO
+    return Promise.resolve();
   }
 
   _handleAccountChanged(account) {

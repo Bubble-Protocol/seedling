@@ -43,7 +43,7 @@ export const TipModal = ({x, y, article, onClose}) => {
       <div className="tip-frame" ref={popup} onClick={e => {e.stopPropagation()}}>
         <div className="top-frame">
           <div className="firework" ref={firework}></div>
-          <TextBox text={'$'+tip} centered={true} onChange={setTip} />
+          <TextBox className="tip-textbox" text={'$'+tip} centered={true} onChange={setTip} />
           <div className="tip-icons">
             <img className="tip-icon" src={changeIcon} onClick={() => setTip('1')} />
             <img className="tip-icon" src={coffeeIcon} onClick={() => setTip('2')} />

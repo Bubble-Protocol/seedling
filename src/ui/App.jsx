@@ -8,6 +8,7 @@ import { useAccount } from "wagmi";
 import { Article } from "./screens/Article";
 import { LoginScreen } from "./screens/LoginScreen";
 import { stateManager } from "../state-context";
+import { Publish } from "./screens/Publish";
 
 export const App = () => {
 
@@ -22,13 +23,15 @@ export const App = () => {
       <div className="header">
         <img className="logo clickable" src={logo} onClick={() => navigate('/')} ></img>
         <span className="expander"></span>
-        {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : null}}>Publish</span>}
+        {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : navigate('/publish') }}>Publish</span>}
         <ConnectButton showBalance={false} chainStatus="none" />
       </div>
       <Routes>
         <Route path='/' element={<HomeScreen/>} />
         <Route path='/login' element={<LoginScreen/>} />
         <Route path='/article/:id' element={<Article />} />
+        <Route path='/preview/:preview' element={<Article />} />
+        <Route path='/publish' element={<Publish />} />
       </Routes>
     </div>
   );

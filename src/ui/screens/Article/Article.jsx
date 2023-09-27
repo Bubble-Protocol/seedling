@@ -16,17 +16,17 @@ import { formatTip } from "../../utils/tip-utils";
 import { TipModal } from "../../components/TipModal";
 
 export const Article = () => {
-  const { id } = useParams();
+  const { id, preview } = useParams();
 
-  const { getArticleById } = stateManager.useStateData("query-functions")();
+  const { getArticleById, getPreview } = stateManager.useStateData("content-functions")();
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
   const [tipModal, setTipModal] = useState();
 
   useEffect(() => {
-    const fetchArticle = async () => {
+    const fetchArticle = async asPreview => {
       try {
-        const fetchedArticle = await getArticleById(id);
+        const fetchedArticle = asPreview ? await getPreview(decodeURIComponent(preview)) : await getArticleById(id);
         setArticle(fetchedArticle);
       }
       catch(error) {
@@ -35,7 +35,7 @@ export const Article = () => {
         else setError('Article Unavailable');
       }
     };
-    fetchArticle();
+    fetchArticle(!!preview);
   }, [id]);
 
   const components = {
@@ -45,6 +45,7 @@ export const Article = () => {
   };
 
   function openTipModal(event) {
+    if (!id) return; // preview only
     const rect = event.target.getBoundingClientRect();
     setTipModal({y: rect.top, x: rect.right + 8});
   }

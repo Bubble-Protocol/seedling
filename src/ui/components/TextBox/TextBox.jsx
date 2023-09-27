@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import "./style.css";
 
-export const TextBox = ({ text, onChange=()=>{}, disabled=false, valid=true, centered=false }) => {
+export const TextBox = ({ className, text, onChange=()=>{}, placeholder, disabled=false, valid=true, centered=false }) => {
   return (
-    <div className="textbox">
-      <input type="text" className={"text" + (!valid ? " invalid" : "") + (centered ? " centered" : "")} value={text} onChange={e => onChange(e.target.value)} disabled={disabled} />
+    <div className={"textbox " + className}>
+      <input type="text" className={"text" + (!valid ? " invalid" : "") + (centered ? " centered" : "")} value={text} placeholder={placeholder} onChange={e => onChange(e.target.value)} disabled={disabled} />
     </div>
   );
 };

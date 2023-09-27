@@ -24,6 +24,24 @@ export class Content {
       })
   }
 
+  async fetchPreview(urlStr, user) {
+    const {url, relLinkUrl} = this.parseContentUrl(urlStr);
+    return this._fetchContent('preview', url, relLinkUrl)
+      .then(content => {
+        return {
+          ...content,
+          url: urlStr,
+          expandedUrl: url.toString(),
+          author: {
+            name: user.name || this.getUserName(user.username),
+            icon: user.icon
+          },
+          publishedAt: Date.now() / 1000,
+          totalTips: 0
+        }
+      })
+  }
+
   async latestContent(amount=10, skip=0) {
     return this.theGraph.fetchLatestContent(amount, skip)
       .then(results => {

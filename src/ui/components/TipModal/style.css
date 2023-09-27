@@ -67,6 +67,13 @@
   cursor: pointer;
 }
 
+.tip-frame .tip-textbox {
+  font-size: 24px;
+  font-weight: 500;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 /* Firework Animation */
 
 .firework {
