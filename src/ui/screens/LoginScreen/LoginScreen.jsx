@@ -8,27 +8,31 @@ export const LoginScreen = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const usernameParam = searchParams.get('username');
+  const accountParam = searchParams.get('account');
   const errorParam = searchParams.get('error');
+  const user = stateManager.useStateData("user")();
   const { connectToGithub, setUsername } = stateManager.useStateData("account-functions")();
-  const [connecting, setConnecting] = useState(false);
+  const [connecting, setConnecting] = useState(!!usernameParam);
   const [error, setError] = useState(errorParam);
 
   
   useEffect(() => {
-    if (usernameParam) {
+    if (user.account && user.account === accountParam && usernameParam) {
       try {
-        setUsername(usernameParam);
+        setUsername(accountParam, usernameParam);
+        navigate('/');
       }
       catch(error) {
         setError(error);
       }
-      navigate('/');
     }
-  }, []);
+  }, [user]);
 
   function connect() {
     setConnecting(true);
-    connectToGithub().catch(error => setError(error));
+    connectToGithub()
+      .catch(error => setError(error))
+      .finally(() => setConnecting(false));
   }
 
   return (

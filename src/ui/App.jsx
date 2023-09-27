@@ -12,16 +12,17 @@ import { stateManager } from "../state-context";
 export const App = () => {
 
   const { isConnected } = useAccount()
-  const userId = stateManager.useStateData("userId")();
+  const user = stateManager.useStateData("user")();
   const navigate = useNavigate();
 
+  console.debug('user', user)
 
   return (
     <div className="App" >
       <div className="header">
         <img className="logo clickable" src={logo} onClick={() => navigate('/')} ></img>
         <span className="expander"></span>
-        {isConnected && <span className="header-link" onClick={() => !userId ? navigate('/login') : null}>Publish</span>}
+        {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : null}}>Publish</span>}
         <ConnectButton showBalance={false} chainStatus="none" />
       </div>
       <Routes>

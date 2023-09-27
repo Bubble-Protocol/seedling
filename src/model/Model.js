@@ -16,8 +16,7 @@ export class Model {
     this.wallet.on('connected', this._handleAccountChanged.bind(this));
     this.contentManager = new Content(DEFAULT_CONFIG.graphUri);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
-    stateManager.register('username');
-    stateManager.register('userId');
+    stateManager.register('user', {});
     stateManager.register('latest-content', []);
     stateManager.register('account-functions', {
       connectToGithub: () => this.session && this.session.connectToGithub(),
@@ -40,17 +39,19 @@ export class Model {
     stateManager.dispatch('latest-content', latestContent);
   }
 
-  setUsername(username) {
+  setUsername(account, username) {
     if (!this.session) throw new Error('wallet not connected');
+    if (account !== this.session.id) throw new Error('incorrect account');
     this.session.setUsername(username);
-    stateManager.dispatch('username', this.session.username);
+    stateManager.dispatch('user', {account, username: this.session.username});
   }
 
   _handleAccountChanged(account) {
+    console.trace('wallet account changed to', account);
     if (this.session) this.session.close();
     this.session = new Session(account);
-    stateManager.dispatch('username', this.session.username);
-    stateManager.dispatch('userId', this.session.userId);
+    console.debug('this.session.username', this.session.username)
+    stateManager.dispatch('user', {account, username: this.session.username});
   }
 
 }
