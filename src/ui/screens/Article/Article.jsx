@@ -92,7 +92,7 @@ export const Article = () => {
 
         <div className="activity-bar">
           <img className="tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
-          <span className="tips">{tip}</span>
+          <span className="tips">{tip} mETH</span>
           <div className="expander"></div>
           <img className="icon-button" src={shareIcon}></img>
           <img className="icon-button" src={moreIcon}></img>
@@ -106,7 +106,7 @@ export const Article = () => {
         {/* Footer Section */}
         <div className="activity-bar">
           <img className="tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
-          <span className="tips">{tip}</span>
+          <span className="tips">{tip} mETH</span>
           <div className="expander"></div>
           <img className="icon-button" src={shareIcon}></img>
           <img className="icon-button" src={moreIcon}></img>
