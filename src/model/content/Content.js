@@ -1,13 +1,17 @@
 import GraphClient from "./TheGraph";
 import { expandRelativeLinks, extractImage, extractSummary, extractTitle } from "../utils/markdown-utils";
+import { keccak256 } from "viem";
+import { Blockchain } from "./Blockchain";
 
 export class Content {
 
   theGraph;
+  blockchain;
   cache = [];
 
-  constructor(graphUri) {
+  constructor(graphUri, blockchainConfig, wallet) {
     this.theGraph = new GraphClient(graphUri);
+    this.blockchain = new Blockchain(blockchainConfig, wallet);
   }
 
   async fetchArticle(id) {
@@ -52,6 +56,14 @@ export class Content {
         results.forEach(r => this.cache[r.id] = r);
         return results;
       });
+  }
+
+  async publish(urlStr) {
+    const {url, relLinkUrl} = this.parseContentUrl(urlStr);
+    const {username, contentPath} = this.getUsernameAndContentPath(url);
+    const content = await this._fetchContent('publish', url, relLinkUrl);
+    const contentHash = keccak256(content.markdown);
+    return this.blockchain.publishContent(contentHash, username, contentPath);
   }
 
   async _fetchContentAndAuthor(metadata) {
@@ -105,8 +117,18 @@ export class Content {
   parseContentUrl(urlStr) {
     let url = new URL(urlStr);
     if (urlStr.startsWith('github:')) url = new URL(url.pathname, 'https://raw.githubusercontent.com/');
-    let relLinkUrl = new URL(url.href.slice(0, url.href.lastIndexOf('/')));
+    const relLinkUrl = new URL(url.href.slice(0, url.href.lastIndexOf('/')));
     return {url, relLinkUrl};
+  }
+
+  getUsernameAndContentPath(url) {
+    const paths = url.pathname.split('/');
+    const username = paths[1];
+    const contentPath = paths.slice(2).join('/');
+    switch (url.hostname) {
+      case 'raw.githubusercontent.com': return {username: 'github:'+username, contentPath};
+      default: throw new Error('Unsupported url host');
+    }
   }
 
   getUserIconUrl(username) {

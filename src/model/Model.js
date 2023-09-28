@@ -14,7 +14,7 @@ export class Model {
   constructor() {
     this.wallet = new RainbowKitWallet();
     this.wallet.on('connected', this._handleAccountChanged.bind(this));
-    this.contentManager = new Content(DEFAULT_CONFIG.graphUri);
+    this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG.contentRegistry, this.wallet);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
     stateManager.register('user', {});
     stateManager.register('latest-content', []);
@@ -55,10 +55,7 @@ export class Model {
 
   async publish(urlStr) {
     if (!this.session) throw new Error('wallet not connected');
-    const user = {account: this.session.id, username: this.session.username};
-    // return this.contentManager.publish(urlStr, user)
-    // TODO
-    return Promise.resolve();
+    return this.contentManager.publish(urlStr, this.session.username)
   }
 
   _handleAccountChanged(account) {

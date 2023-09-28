@@ -1,6 +1,7 @@
 import { getAccount, getNetwork, watchAccount, getWalletClient, getPublicClient, disconnect, switchNetwork } from 'wagmi/actions';
 import { EventManager } from '../utils/EventManager';
 import * as assert from '../utils/assertions';
+import { AppError } from '../utils/errors';
 
 const WALLET_STATE = {
   disconnected: 'disconnected',
@@ -81,12 +82,13 @@ export class RainbowKitWallet {
     const chainId = this.getChain();
     const publicClient = getPublicClient({chainId});
 
-    return await publicClient.readContract({
+    return publicClient.readContract({
       address: contractAddress,
       abi: abi,
       functionName: method,
       args: params
     })
+    .catch(parseRevertError);
   }
 
   async switchChain(chainId, chainName) {
@@ -117,4 +119,20 @@ export class RainbowKitWallet {
     }
   }
 
+}
+
+
+function parseRevertError(error) {
+  if (!error || !error.message) throw error;
+  const match = error.message.match(/reverted with the following reason:\s*(.*)\s/);
+  if (match && match[1]) {
+    const code =
+      match[1] === 'user not registered or incorrect username' ? 'user-error' :
+      match[1] === 'hash is zero' ? 'internal-error' :
+      match[1] === 'content already published' ? 'already-published' :
+      match[1] === 'content path already published' ? 'already-published' :
+      'contract-reverted';
+    throw new AppError(match[1], {code: code, cause: error.message});
+  }
+  throw error;
 }

@@ -16,8 +16,6 @@ export const App = () => {
   const user = stateManager.useStateData("user")();
   const navigate = useNavigate();
 
-  console.debug('user', user)
-
   return (
     <div className="App" >
       <div className="header">

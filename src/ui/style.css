@@ -108,6 +108,10 @@
   flex: 1 1;
 }
 
+.App .error-text {
+  color:rgb(195, 4, 4);
+}
+
 @media only screen and (max-width: 800px) {
 
   .App .mobile {
