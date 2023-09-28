@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./style.css";
@@ -28,7 +27,8 @@ export const Article = () => {
     const fetchArticle = async asPreview => {
       try {
         const fetchedArticle = asPreview ? await getPreview(decodeURIComponent(preview)) : await getArticleById(id);
-        setArticle(fetchedArticle);
+        if (!fetchedArticle.markdown) setError('Article Not Found!');
+        else setArticle(fetchedArticle);
       }
       catch(error) {
         console.warn('Failed to fetch article:', error);
@@ -53,11 +53,12 @@ export const Article = () => {
 
   if (!article) {
     return (
-      <div className="app-content" >
+      <div className="article" >
         <div className="article-loading">
           {!error && <div className="loader"></div>}
           {error && <div className="error-text">{error.message || error}</div>}
         </div>
+        <Footer/>
       </div>
     )
   }
@@ -65,9 +66,8 @@ export const Article = () => {
   const tip = formatTip(article.totalTips);
 
   return (
-    <div className="app-content" >
-      {tipModal && <TipModal x={tipModal.x} y={tipModal.y} article={article} onClose={() => setTipModal(null)} /> }
       <div className="article">
+      {tipModal && <TipModal x={tipModal.x} y={tipModal.y} article={article} onClose={() => setTipModal(null)} /> }
 
         {/* Image & Title */}
         {article.image && 
@@ -115,7 +115,6 @@ export const Article = () => {
         </div>
         <Footer/>
       </div>
-    </div>
   );
 
 };

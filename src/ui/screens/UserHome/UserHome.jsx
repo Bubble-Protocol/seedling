@@ -5,6 +5,7 @@ import { stateManager } from "../../../state-context";
 import { ArticleSummary } from "./components/ArticleSummary";
 import anonymousUserIcon from '../../../assets/img/user.png';
 import { formatArticleDate } from "../../utils/date-utils";
+import { Footer } from "../../components/Footer";
 
 export const UserHome = () => {
   const { platform, username } = useParams();
@@ -42,7 +43,7 @@ export const UserHome = () => {
 
 
   return (
-    <div className="user-home app-content" >
+    <div className="user-home" >
       <div className="left-column"></div>
       <div className="summary-content">
 
@@ -66,7 +67,9 @@ export const UserHome = () => {
         {error && <div className="info-text">{error.message || error}</div>}
         {!error && !loading && content.length === 0 && <div className="info-text">User hasn't published anything yet</div>}
         {content.map(article => <ArticleSummary key={article.id} article={article} onClick={() => navigate(`/article/${article.id}`)} />)}
-        
+
+        <Footer/>
+
       </div>
       <div className="right-column"></div>
     </div>

@@ -4,6 +4,7 @@
   gap: 16px;
   flex: 1 0 0;
   align-self: stretch;
+  height: 100%;
 }
 
 .user-home .left-column {
@@ -110,7 +111,7 @@
   height: 48px;
 }
 
-.info-text {
+.user-home .info-text {
   color:#c8c8c8;
   font-family: Mukta;
   font-style: normal;

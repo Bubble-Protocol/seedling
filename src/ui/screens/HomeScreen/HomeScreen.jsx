@@ -11,13 +11,13 @@ export const HomeScreen = () => {
   const content = stateManager.useStateData("latest-content")();
 
   return (
-    <div className="home-screen app-content" >
+    <div className="home-screen" >
       <div className="left-column">
         <div className="filter-menu">
           <div className="filter-button-selected">Latest</div>
         </div>
       </div>
-      <div className="summary-content">
+      <div className="content-column">
         {content.map(article => 
           <ArticleSummary key={article.id} 
             article={article} 

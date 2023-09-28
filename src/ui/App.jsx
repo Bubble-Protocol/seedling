@@ -25,14 +25,16 @@ export const App = () => {
         {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : navigate('/publish') }}>Publish</span>}
         <ConnectButton showBalance={false} chainStatus="none" />
       </div>
-      <Routes>
-        <Route path='/' element={<HomeScreen/>} />
-        <Route path='/user/:platform/:username' element={<UserHome/>} />
-        <Route path='/login' element={<LoginScreen/>} />
-        <Route path='/article/:id' element={<Article />} />
-        <Route path='/preview/:preview' element={<Article />} />
-        <Route path='/publish' element={<Publish />} />
-      </Routes>
+      <div className="app-content">
+        <Routes>
+          <Route path='/' element={<HomeScreen/>} />
+          <Route path='/user/:platform/:username' element={<UserHome/>} />
+          <Route path='/login' element={<LoginScreen/>} />
+          <Route path='/article/:id' element={<Article />} />
+          <Route path='/preview/:preview' element={<Article />} />
+          <Route path='/publish' element={<Publish />} />
+        </Routes>
+      </div>
     </div>
   );
 };
