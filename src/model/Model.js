@@ -25,7 +25,9 @@ export class Model {
     stateManager.register('content-functions', {
       getArticleById: this.contentManager.fetchArticle.bind(this.contentManager),
       getPreview: this.getPreview.bind(this),
-      publish: this.publish.bind(this)
+      publish: this.publish.bind(this),
+      getUser: this.contentManager.fetchUserByUsername.bind(this.contentManager),
+      getUserContent: this.contentManager.fetchContentByUserId.bind(this.contentManager)
     });
     stateManager.register('tip-functions', {
       tip: this.tipManager.tip.bind(this.tipManager),

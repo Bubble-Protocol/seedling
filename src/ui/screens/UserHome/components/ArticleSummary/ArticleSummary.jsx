@@ -8,7 +8,7 @@ import { formatArticleDate } from "../../../../utils/date-utils";
 import { formatTip } from "../../../../utils/tip-utils";
 import { TipModal } from "../../../../components/TipModal";
 
-export const ArticleSummary = ({article, onClick, onUserClick}) => {
+export const ArticleSummary = ({article, onClick}) => {
 
   const [tipModal, setTipModal] = useState();
 
@@ -28,9 +28,7 @@ export const ArticleSummary = ({article, onClick, onUserClick}) => {
         </div>
       </div>
       <div className="summary-author-bar">
-        <img className="contact-icon" src={article.author.icon || anonymousUserIcon} onClick={onUserClick}></img>
         <div className="summary-bar">
-          <div className="summary-bar-name" onClick={onUserClick}>{article.author.name}</div>
           <div className="summary-bar-date">{formatArticleDate(article.publishedAt)}</div>
           <div className="expander"></div>
           <img className="summary-bar-tip-button" src={tipButtonIcon} onClick={openTipModal}></img>

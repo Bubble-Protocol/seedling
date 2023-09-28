@@ -9,6 +9,7 @@ import { Article } from "./screens/Article";
 import { LoginScreen } from "./screens/LoginScreen";
 import { stateManager } from "../state-context";
 import { Publish } from "./screens/Publish";
+import { UserHome } from "./screens/UserHome";
 
 export const App = () => {
 
@@ -26,6 +27,7 @@ export const App = () => {
       </div>
       <Routes>
         <Route path='/' element={<HomeScreen/>} />
+        <Route path='/user/:platform/:username' element={<UserHome/>} />
         <Route path='/login' element={<LoginScreen/>} />
         <Route path='/article/:id' element={<Article />} />
         <Route path='/preview/:preview' element={<Article />} />

@@ -81,6 +81,10 @@
   border-radius: 24px;
 }
 
+.article .contact-icon:hover, .article .author-name:hover {
+  cursor: pointer;
+}
+
 .article .selector-content {
   display: flex;
   flex-direction: column;

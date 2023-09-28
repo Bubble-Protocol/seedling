@@ -18,7 +18,12 @@ export const HomeScreen = () => {
         </div>
       </div>
       <div className="summary-content">
-        {content.map(article => <ArticleSummary key={article.id} article={article} onClick={() => navigate(`/article/${article.id}`)} />)}
+        {content.map(article => 
+          <ArticleSummary key={article.id} 
+            article={article} 
+            onClick={() => navigate(`/article/${article.id}`)}
+            onUserClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}
+          />)}
         <Footer/>
       </div>
       <div className="right-column"></div>

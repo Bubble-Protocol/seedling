@@ -1,0 +1,121 @@
+.user-home {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.user-home .left-column {
+  display: flex;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;  
+}
+
+.user-home .summary-content {
+  display: flex;
+  width: 680px;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  overflow-y: scroll;
+}
+
+.user-home .author-section {
+  display: flex;
+  width: 680px;
+  padding: 18px 0px;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid #242424;
+  border-bottom: 1px solid #242424;
+}
+
+.user-home .contact-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 24px;
+}
+
+.user-home .contact-icon:hover, .article .author-name:hover {
+  cursor: pointer;
+}
+
+.user-home .selector-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1 0 0;
+}
+
+.user-home .selector-title-row {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.user-home .selector-title {
+  color: #0F1217;
+  font-family: Work Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.user-home .selector-follow-link {
+  display: flex;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: #0280D9;
+  color: #FFF;
+  font-family: Work Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.user-home .selector-time {
+  color: #666;
+  font-family: Work Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.user-home .right-column {
+  display: flex;
+  padding: 48px 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+}
+
+.user-home .loader {
+  width: 48px;
+  height: 48px;
+}
+
+.info-text {
+  color:#c8c8c8;
+  font-family: Mukta;
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  max-width: 680px;
+}

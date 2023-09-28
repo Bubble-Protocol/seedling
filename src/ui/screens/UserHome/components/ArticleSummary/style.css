@@ -71,10 +71,6 @@
   border-radius: 21px;
 }
 
-.article-summary .contact-icon:hover {
-  cursor: pointer;
-}
-
 .article-summary .summary-bar {
   display: flex;
   align-items: center;
@@ -89,10 +85,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-}
-
-.article-summary .summary-bar-name:hover {
-  cursor: pointer;
 }
 
 .article-summary .summary-bar-date {

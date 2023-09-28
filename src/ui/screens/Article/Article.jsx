@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./style.css";
 import "./markdown.css";
 import ReactMarkdown from "react-markdown";
@@ -17,6 +17,7 @@ import { TipModal } from "../../components/TipModal";
 
 export const Article = () => {
   const { id, preview } = useParams();
+  const navigate = useNavigate();
 
   const { getArticleById, getPreview } = stateManager.useStateData("content-functions")();
   const [article, setArticle] = useState(null);
@@ -79,10 +80,10 @@ export const Article = () => {
 
         {/* Author Section */}
         <div className="author-section">
-          <img className="contact-icon" src={article.author.icon || anonymousUserIcon}></img>
+          <img className="contact-icon" src={article.author.icon || anonymousUserIcon} onClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}></img>
           <div className="selectorContent">
             <div className="selector-title-row">
-              <span className="selector-title">{article.author.name}</span>
+              <span className="selector-title author-name" onClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}>{article.author.name}</span>
               <span className="selector-follow-link">Follow</span>
             </div>
             <div className="selector-title-row">

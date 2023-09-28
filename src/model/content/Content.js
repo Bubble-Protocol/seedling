@@ -58,6 +58,24 @@ export class Content {
       });
   }
 
+  async fetchUserByUsername(username) {
+    return this._fetchUserByUsername(username);
+  }
+
+  async fetchContentByUserId(userId, amount=10, skip=0) {
+    console.trace('fetching content for user', userId);
+    const user = await this._fetchUserById(userId);
+    return this.theGraph.fetchUserContent(user.id, amount, skip)
+      .then(results => {
+        return Promise.all(results.map(r => this._fetchContentOnly(user, r)));
+      })
+      .then(results => {
+        results = results.filter(r => r.markdown !== undefined);
+        results.forEach(r => this.cache[r.id] = r);
+        return results;
+      });
+  }
+
   async publish(urlStr) {
     const {url, relLinkUrl} = this.parseContentUrl(urlStr);
     const {username, contentPath} = this.getUsernameAndContentPath(url);
@@ -72,7 +90,7 @@ export class Content {
     result.expandedUrl = url;
     const [content, author] = await Promise.all([
       this._fetchContent(result.id, url, relLinkUrl),
-      this._fetchUser(result.author.username)
+      this._fetchUserByMetadata(result.author)
     ]);
     result.markdown = content.markdown;
     result.title = content.title;
@@ -81,6 +99,20 @@ export class Content {
     result.author = {...result.author};
     result.author.name = author.name;
     result.author.icon = author.icon;
+    result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
+    return result;
+  }
+
+  async _fetchContentOnly(author, metadata) {
+    const result = {...metadata};
+    const {url, relLinkUrl} = this.parseContentUrl(result.url);
+    result.expandedUrl = url;
+    const content = await this._fetchContent(result.id, url, relLinkUrl);
+    result.markdown = content.markdown;
+    result.title = content.title;
+    result.description = content.description;
+    result.image = content.image;
+    result.author = author;
     result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
     return result;
   }
@@ -102,16 +134,32 @@ export class Content {
       })
   }
 
-  async _fetchUser(username) {
-    const name = this.getUserName(username);
-    const iconUrl = this.getUserIconUrl(username);
+  async _fetchUserByUsername(username) {
+    return this._fetchUserById(keccak256(username.toLowerCase()));
+  }
+
+  async _fetchUserById(id) {
+    if (this.cache[id]) return this.cache[id];
+    console.trace('fetching user with id', id);
+    const results = await this.theGraph.fetchUser(id);
+    console.debug(results);
+    if (results.length === 0) throw new Error('user not found');
+    if (results.length > 1) console.warn('more than one user found with id', id, results);
+    return this._fetchUserByMetadata({...results[0]});
+  }
+
+  async _fetchUserByMetadata(metadata) {
+    const user = {...metadata};
+    if (this.cache[user.id]) return this.cache[user.id];
+    user.name = this.getUserName(user.username);
+    const iconUrl = this.getUserIconUrl(user.username);
     return this._fetch(iconUrl)
-      .then(icon => {
-        return {name: name, icon: icon};
-      })
-      .catch (() => {
-        return {name: name, icon: undefined};
-      })
+      .then(icon => user.icon = icon)
+      .catch(() => {})
+      .then(() => {
+        this.cache[user.id] = user;
+        return user;
+      });
   }
 
   parseContentUrl(urlStr) {
