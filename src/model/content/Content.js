@@ -152,10 +152,11 @@ export class Content {
     const user = {...metadata};
     if (this.cache[user.id]) return this.cache[user.id];
     user.name = this.getUserName(user.username);
-    const iconUrl = this.getUserIconUrl(user.username);
-    return this._fetch(iconUrl)
+    return this.getUserIconUrl(user.username)
+      .then(iconUrl => this._fetch(iconUrl, 'blob'))
+      .then(URL.createObjectURL)
       .then(icon => user.icon = icon)
-      .catch(() => {})
+      .catch(console.warn)
       .then(() => {
         this.cache[user.id] = user;
         return user;
@@ -179,10 +180,16 @@ export class Content {
     }
   }
 
-  getUserIconUrl(username) {
+  async getUserIconUrl(username) {
     let url = new URL(username);
-    if (username.startsWith('github:')) url = new URL(url.pathname+'.png', 'https://github.com/');
-    return url;
+    if (username.startsWith('github:')) {
+      return this._fetch("https://api.github.com/users/"+url.pathname)
+        .then(json => {
+          const githubMetadata = JSON.parse(json);
+          return githubMetadata['avatar_url'].replace(/\?.*/, '')+'?size=48';
+        })
+    }
+    return Promise.resolve(url);
   }
 
   getUserName(username) {
@@ -192,7 +199,7 @@ export class Content {
     return name;
   }
 
-  async _fetch(url) {
+  async _fetch(url, asType='text') {
     if (this.cache[url]) {
       console.trace('Fetching from cache:', url);
       return this.cache[url];
@@ -204,7 +211,7 @@ export class Content {
       console.warn('Failed to fetch', url.href, ':', response);
       throw new Error(`Network response was not ok ${response.statusText}`);
     }
-    const data = await response.text();
+    const data = asType === 'blob' ? await response.blob() : await response.text();
     // Cache the fetched data
     this.cache[url] = data;
     return data;
