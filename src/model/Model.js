@@ -17,7 +17,6 @@ export class Model {
     this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG.contentRegistry, this.wallet);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
     stateManager.register('user', {});
-    stateManager.register('latest-content', []);
     stateManager.register('account-functions', {
       connectToGithub: () => this.session && this.session.connectToGithub(),
       setUsername: this.setUsername.bind(this)
@@ -27,7 +26,8 @@ export class Model {
       getPreview: this.getPreview.bind(this),
       publish: this.publish.bind(this),
       getUser: this.contentManager.fetchUserByUsername.bind(this.contentManager),
-      getUserContent: this.contentManager.fetchContentByUserId.bind(this.contentManager)
+      getUserContent: this.contentManager.fetchContentByUserId.bind(this.contentManager),
+      getLatestContent: this.contentManager.fetchLatestContent.bind(this.contentManager)
     });
     stateManager.register('tip-functions', {
       tip: this.tipManager.tip.bind(this.tipManager),
@@ -38,9 +38,6 @@ export class Model {
 
   async initialise() {
     this.tipManager.initialise();
-    const latestContent = await this.contentManager.latestContent();
-    console.trace('latestContent', latestContent);
-    stateManager.dispatch('latest-content', latestContent);
   }
 
   setUsername(account, username) {

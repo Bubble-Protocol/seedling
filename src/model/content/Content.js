@@ -46,7 +46,7 @@ export class Content {
       })
   }
 
-  async latestContent(amount=10, skip=0) {
+  async fetchLatestContent(amount=10, skip=0) {
     return this.theGraph.fetchLatestContent(amount, skip)
       .then(results => {
         return Promise.all(results.map(content => this._fetchContentAndAuthor(content)));
