@@ -7,10 +7,16 @@ pragma solidity ^0.8.9;
 interface IUserRegistry {
 
   /**
-   * Returns the address associated with the given user id.
-   * Reverts if the user is not registered.
+   * Returns the address associated with the given user id.  
+   * Caller should check for address(0) to confirm the user is registered.
    */
   function getUserAddress(bytes32 _usernameHash) external view returns (address);
+
+  /**
+   * Returns the address associated with the given username.  
+   * Caller should check for address(0) to confirm the user is registered.
+   */
+  function getUserAddress(string memory _username) external view returns (address);
 
   /**
    * Returns true if the given id has been registered

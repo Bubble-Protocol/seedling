@@ -38,9 +38,11 @@ contract UserRegistry is IUserRegistry, AccessControl {
   }
 
   function getUserAddress(bytes32 _usernameHash) external view override returns (address) {
-    address userAddress = users[_usernameHash];
-    require( userAddress != address(0), 'user not registered');
-    return userAddress;
+    return users[_usernameHash];
+  }
+
+  function getUserAddress(string memory _username) external view override returns (address) {
+    return users[keccak256(bytes(_username))];
   }
 
   function isRegistered(bytes32 _usernameHash) external view override returns (bool) {
