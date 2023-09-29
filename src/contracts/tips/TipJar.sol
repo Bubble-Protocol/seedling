@@ -3,8 +3,33 @@ pragma solidity ^0.8.21;
 
 import "../content/ContentRegistry.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/proxy/Proxy.sol";
+import "../EternalStorage.sol";
 
-contract TipJar is Ownable {
+
+abstract contract TipJarStorage is EternalStorage {
+
+  mapping (bytes32 => uint) public tipRegistry;
+
+  bytes32 _endOfStorage = END_OF_STORAGE;
+
+}
+
+
+contract TipJar is TipJarStorage, Proxy {
+
+  constructor() {
+    _initialiseStorageContract();
+  }
+
+  function _implementation() internal view override returns (address) {
+    return implementationContract;
+  }
+
+}
+
+
+contract TipJarImplementation is TipJarStorage {
 
   event Tip (
     bytes32 contentId,
@@ -19,11 +44,6 @@ contract TipJar is Ownable {
   ContentRegistry public content;
 
   /**
-   * Total amount of tips per content id
-   */
-  mapping (bytes32 => uint) tipRegistry;
-
-  /**
    * Recipient address for all protocol fees
    */
   address payable public protocolFeeRecipient;
@@ -34,22 +54,25 @@ contract TipJar is Ownable {
   uint256 public protocolFeeRate;
 
 
-  constructor (ContentRegistry _contentRegistry, uint256 _protocolFeeRate) {
+  function _initialise(ContentRegistry _contentRegistry, uint256 _protocolFeeRate) external onlyOwner onlyProxy {
+    _verifyEternalStorage(_endOfStorage);
+    require(!initialised, 'already initialised');
     content = _contentRegistry;
     protocolFeeRecipient = payable(msg.sender);
     protocolFeeRate = _protocolFeeRate;
+    initialised = true;
   }
 
-  function setProtocolFeeRecipient(address payable _recipient) public onlyOwner {
+  function setProtocolFeeRecipient(address payable _recipient) external onlyOwner onlyProxy {
     protocolFeeRecipient = _recipient;
   }
 
-  function setProtocolFeeRate(uint256 _protocolFeeRate) public onlyOwner {
+  function setProtocolFeeRate(uint256 _protocolFeeRate) external onlyOwner onlyProxy {
     require(_protocolFeeRate <= 1000, "invalid rate");
     protocolFeeRate = _protocolFeeRate; 
   }
 
-  function tip(bytes32 _contentHash) external payable {
+  function tip(bytes32 _contentHash) external payable onlyProxy {
     require(content.isRegistered(_contentHash), 'content does not exist');
     address payable authorAddress = payable(content.getAuthorAddress(_contentHash));
     uint256 protocolFee = msg.value * protocolFeeRate / 1000;
