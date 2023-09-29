@@ -17,6 +17,7 @@ export class Session {
 
   connectToGithub() {
     if (this.username) return Promise.reject(new Error('already connected'));
+    console.trace('connecting to GitHub as', this.id);
     const config = DEFAULT_CONFIG.oauth.github;
     this.activeOauthConnect = 'github';
     this._saveState();
