@@ -35,13 +35,12 @@
   box-sizing: border-box;
 }
 
-.article image-box {
+.article .image-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   align-self: stretch;
-  max-height: 574px;
 }
 
 .article img {
@@ -53,7 +52,7 @@
 .article .caption {
   color: rgba(0, 0, 0, 0.50);
   font-family: Inria Serif;
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
