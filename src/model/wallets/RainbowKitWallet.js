@@ -91,6 +91,22 @@ export class RainbowKitWallet {
     .catch(parseRevertError);
   }
 
+  async estimateGas(contractAddress, abi, method, params=[]) {
+    if (this.state !== WALLET_STATE.connected) throw {code: 'wallet-unavailable', message: 'wallet is not available'};
+
+    const chainId = this.getChain();
+    const publicClient = getPublicClient({chainId});
+
+    return publicClient.estimateContractGas({
+      account: this.getAccount(),
+      address: contractAddress,
+      abi: abi,
+      functionName: method,
+      args: params
+    })
+    .catch(parseRevertError);
+  }
+
   async switchChain(chainId, chainName) {
     if (assert.isString(chainId)) chainId = parseInt(chainId);
     try {
@@ -132,6 +148,7 @@ function parseRevertError(error) {
       match[1] === 'content already published' ? 'already-published' :
       match[1] === 'content path already published' ? 'already-published' :
       'contract-reverted';
+    console.warn(error);
     throw new AppError(match[1], {code: code, cause: error.message});
   }
   throw error;
