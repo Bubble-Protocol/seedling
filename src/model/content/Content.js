@@ -1,5 +1,5 @@
 import GraphClient from "./TheGraph";
-import { expandRelativeLinks, extractImage, extractSummary, extractTitle } from "../utils/markdown-utils";
+import { expandRelativeLinks, extractImage, extractSummary, extractTitle, stripMetadata } from "../utils/markdown-utils";
 import { keccak256 } from "viem";
 import { Blockchain } from "./Blockchain";
 
@@ -80,22 +80,17 @@ export class Content {
     const {url, relLinkUrl} = this.parseContentUrl(urlStr);
     const {username, contentPath} = this.getUsernameAndContentPath(url);
     const content = await this._fetchContent('publish', url, relLinkUrl);
-    const contentHash = keccak256(content.markdown);
-    return this.blockchain.publishContent(contentHash, username, contentPath);
+    return this.blockchain.publishContent(content.contentHash, username, contentPath);
   }
 
   async _fetchContentAndAuthor(metadata) {
-    const result = {...metadata};
-    const {url, relLinkUrl} = this.parseContentUrl(result.url);
-    result.expandedUrl = url;
+    const {url, relLinkUrl} = this.parseContentUrl(metadata.url);
     const [content, author] = await Promise.all([
-      this._fetchContent(result.id, url, relLinkUrl),
-      this._fetchUserByMetadata(result.author)
+      this._fetchContent(metadata.id, url, relLinkUrl),
+      this._fetchUserByMetadata(metadata.author)
     ]);
-    result.markdown = content.markdown;
-    result.title = content.title;
-    result.description = content.description;
-    result.image = content.image;
+    const result = {...metadata, ...content};
+    result.expandedUrl = url;
     result.author = {...result.author};
     result.author.name = author.name;
     result.author.icon = author.icon;
@@ -104,14 +99,10 @@ export class Content {
   }
 
   async _fetchContentOnly(author, metadata) {
-    const result = {...metadata};
-    const {url, relLinkUrl} = this.parseContentUrl(result.url);
+    const {url, relLinkUrl} = this.parseContentUrl(metadata.url);
+    const content = await this._fetchContent(metadata.id, url, relLinkUrl);
+    const result = {...metadata, ...content};
     result.expandedUrl = url;
-    const content = await this._fetchContent(result.id, url, relLinkUrl);
-    result.markdown = content.markdown;
-    result.title = content.title;
-    result.description = content.description;
-    result.image = content.image;
     result.author = author;
     result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
     return result;
@@ -120,12 +111,14 @@ export class Content {
   async _fetchContent(id, url, relativeLinkUrl) {
     return this._fetch(url)
       .then(content => {
+        const contentHash = keccak256(content);
         content = expandRelativeLinks(content, relativeLinkUrl.href);
         return {
           title: extractTitle(content, url.pathname), 
           description: extractSummary(content), 
-          image: extractImage(content, url.href), 
-          markdown: content
+          image: extractImage(content, url.href),
+          contentHash,
+          markdown: stripMetadata(content)
         };
       })
       .catch (() => {

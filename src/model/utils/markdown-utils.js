@@ -49,7 +49,7 @@ export function extractSummary(markdownContent) {
   if (frontMatterField) return frontMatterField;
 
   // Step 2: Fallback to first non-heading paragraph
-  const lines = markdownContent.split('\n');
+  const lines = stripMetadata(markdownContent).split('\n');
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     // Skip empty lines, headings, and metadata lines
@@ -91,6 +91,11 @@ export function extractImage(markdownContent, markdownUrl) {
 
   // If no image is found, return null or an empty string
   return {url: undefined, caption: undefined};
+}
+
+
+export function stripMetadata(markdownContent) {
+  return markdownContent.replace(/---\n([\s\S]*?)\n---/, '');
 }
 
 
