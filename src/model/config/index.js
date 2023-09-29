@@ -2,10 +2,10 @@ import * as tipJarAbi from "../../contracts/the-graph/abis/TipJar.json";
 import * as contentRegistryAbi from "../../contracts/the-graph/abis/ContentRegistry.json";
 
 export const DEFAULT_CONFIG = {
-  graphUri: "https://api.studio.thegraph.com/query/53709/seedling/v0.0.9",
+  graphUri: "https://api.studio.thegraph.com/query/53709/seedling/v0.1.0",
   tipJar: {
     contract: {
-      address: "0x855a734b38C4fBE8FA00cA5Fc0e60c5F7d6FbB2A",
+      address: "0x778629c02e8Fe1Eb10e2149e017a20D519e55D6e",
       abi: tipJarAbi.default
     },
     exchangeRateLookupServices: [
@@ -15,7 +15,7 @@ export const DEFAULT_CONFIG = {
   },
   contentRegistry: {
     contract: {
-      address: "0xcA1138cC718FC42330173062dF4a9F9A4EFDfFe4",
+      address: "0x038ADdfd80f722E4826A467690Ab50EEbE1cfFb7",
       abi: contentRegistryAbi.default
     }
   },

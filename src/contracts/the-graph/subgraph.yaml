@@ -6,9 +6,9 @@ dataSources:
     name: UserRegistry
     network: base-testnet
     source:
-      address: "0xfF4211E20d693112867AaBa88A8D3b91C189B4eE"
+      address: "0x04C2973Ab533B1eBe60ba608C026B37799BC5983"
       abi: UserRegistry
-      startBlock: 10219852
+      startBlock: 10406103
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -29,9 +29,9 @@ dataSources:
     name: ContentRegistry
     network: base-testnet
     source:
-      address: "0xcA1138cC718FC42330173062dF4a9F9A4EFDfFe4"
+      address: "0x038ADdfd80f722E4826A467690Ab50EEbE1cfFb7"
       abi: ContentRegistry
-      startBlock: 10219852
+      startBlock: 10406103
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -52,9 +52,9 @@ dataSources:
     name: TipJar
     network: base-testnet
     source:
-      address: "0x855a734b38C4fBE8FA00cA5Fc0e60c5F7d6FbB2A"
+      address: "0x778629c02e8Fe1Eb10e2149e017a20D519e55D6e"
       abi: TipJar
-      startBlock: 10219852
+      startBlock: 10406103
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
