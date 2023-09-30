@@ -1,4 +1,5 @@
 import { DEFAULT_CONFIG } from "./config";
+import { FollowManager } from "./follow/FollowManager";
 import localStorage from "./utils/LocalStorage";
 
 export class Session {
@@ -9,6 +10,7 @@ export class Session {
   constructor(id) {
     this.id = id;
     this._loadState();
+    this.following = new FollowManager(id);
   }
 
   hasAccount() {

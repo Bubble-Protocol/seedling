@@ -63,6 +63,19 @@ export class Content {
       });
   }
 
+  async fetchAuthorsContentByUsername(usernames, amount=10, skip=0) {
+    const ids = usernames.map(u => keccak256(u));
+    return this.theGraph.fetchAuthorsContent(ids, amount, skip)
+      .then(results => {
+        return Promise.all(results.map(content => this._fetchContentAndAuthor(content)));
+      })
+      .then(results => {
+        results = results.filter(r => r.markdown !== undefined);
+        results.forEach(r => this.cache[r.id] = r);
+        return results;
+      });
+  }
+
   async fetchUserByUsername(username) {
     return this._fetchUserByUsername(username);
   }
@@ -140,7 +153,6 @@ export class Content {
     if (this.cache[id]) return this.cache[id];
     console.trace('fetching user with id', id);
     const results = await this.theGraph.fetchUser(id);
-    console.debug(results);
     if (results.length === 0) throw new Error('user not found');
     if (results.length > 1) console.warn('more than one user found with id', id, results);
     return this._fetchUserByMetadata({...results[0]});

@@ -78,6 +78,41 @@ export class GraphClient {
     return this._fetch('contents', query);
   }
 
+  async fetchAuthorsContent(authorIds, amount, skip) {
+    // return TEST_DATA.following10;
+    const query = gql`
+      query GetContentByUsers($authorIds: [ID!]!) {
+        contents(
+          where: {author_in: $authorIds},
+          first: ${amount},
+          skip: ${skip},
+          orderBy: publishedAt,
+          orderDirection: desc
+        ) 
+        {
+          id
+          contentHash
+          url
+          author {
+            id
+            username
+            address
+            registeredAt
+          }
+          publishedAt
+          tips {
+            id
+            tipper
+            amount
+            total
+            tippedAt
+          }
+        }
+      }
+    `;
+    return this._fetch('contents', query, {authorIds});
+  }
+
   async fetchUser(id) {
     const query = gql`
       query GetUserById($id: ID!) {

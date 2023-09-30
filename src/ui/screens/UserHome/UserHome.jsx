@@ -11,9 +11,11 @@ export const UserHome = () => {
   const { platform, username } = useParams();
 
   const navigate = useNavigate();
+  const localUser = stateManager.useStateData("user")();
   const { getUserContent, getUser } = stateManager.useStateData("content-functions")();
   const [user, setUser] = useState();
   const [content, setContent] = useState([]);
+  const [following, setFollowing] = useState(false);
   const [loading, setLoading] = useState('timer');
   const [error, setError] = useState(true);
   const timerRef = useRef(null);
@@ -27,6 +29,7 @@ export const UserHome = () => {
     getUser(platform+':'+username)
       .then(userData => {
         setUser(userData);
+        if (localUser.followingFunctions) setFollowing(localUser.followingFunctions.isFollowing(userData.username));
         return getUserContent(userData.id);
       })
       .then(setContent)
@@ -40,6 +43,29 @@ export const UserHome = () => {
       });
 
   }, []);
+
+
+  // Set following status if user changes
+  useEffect(() => {
+    if (user && localUser.followingFunctions) setFollowing(localUser.followingFunctions.isFollowing(user.username));
+    else setFollowing(false);
+  }, [localUser]);
+
+  const canFollow = !!localUser.followingFunctions;
+
+  function follow() {
+    if (canFollow) {
+      localUser.followingFunctions.follow(user.username);
+      setFollowing(true);
+    }
+  }
+
+  function unfollow() {
+    if (canFollow) {
+      localUser.followingFunctions.unfollow(user.username);
+      setFollowing(false);
+    }
+  }
 
 
   return (
@@ -58,7 +84,8 @@ export const UserHome = () => {
               {user && <span className="selector-time">Member Since: {formatArticleDate(user.registeredAt)}</span>}
             </div>
           </div>
-          {user && <span className="selector-follow-link">Follow</span>}
+          {user && !following && <span className={"selector-follow-link" + (canFollow ? '' : ' disabled')} onClick={follow}>Follow</span>}
+          {user && following && <span className="selector-follow-link" onClick={unfollow}>Unfollow</span>}
         </div>
         <div></div>
 

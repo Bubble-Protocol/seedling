@@ -18,8 +18,10 @@ export const Article = () => {
   const { id, preview } = useParams();
   const navigate = useNavigate();
 
+  const user = stateManager.useStateData("user")();
   const { getArticleById, getPreview } = stateManager.useStateData("content-functions")();
   const [article, setArticle] = useState(null);
+  const [following, setFollowing] = useState(false);
   const [error, setError] = useState(null);
   const [tipModal, setTipModal] = useState();
 
@@ -28,7 +30,10 @@ export const Article = () => {
       try {
         const fetchedArticle = asPreview ? await getPreview(decodeURIComponent(preview)) : await getArticleById(id);
         if (!fetchedArticle.markdown) setError('Article Not Found!');
-        else setArticle(fetchedArticle);
+        else {
+          setArticle(fetchedArticle);
+          if (user.followingFunctions) setFollowing(user.followingFunctions.isFollowing(fetchedArticle.author.username));
+        }
       }
       catch(error) {
         console.warn('Failed to fetch article:', error);
@@ -38,6 +43,13 @@ export const Article = () => {
     };
     fetchArticle(!!preview);
   }, [id]);
+
+  // Set following status if user changes
+  useEffect(() => {
+    if (article && user.followingFunctions) setFollowing(user.followingFunctions.isFollowing(article.author.username));
+    else setFollowing(false);
+  }, [user]);
+
 
   const components = {
     a: ({node, ...props}) => (
@@ -63,6 +75,22 @@ export const Article = () => {
     )
   }
 
+  const canFollow = !!user.followingFunctions;
+
+  function follow() {
+    if (canFollow) {
+      user.followingFunctions.follow(article.author.username);
+      setFollowing(true);
+    }
+  }
+
+  function unfollow() {
+    if (canFollow) {
+      user.followingFunctions.unfollow(article.author.username);
+      setFollowing(false);
+    }
+  }
+
   const tip = formatTip(article.totalTips);
 
   return (
@@ -85,7 +113,8 @@ export const Article = () => {
           <div className="selectorContent">
             <div className="selector-title-row">
               <span className="selector-title author-name" onClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}>{article.author.name}</span>
-              <span className="selector-follow-link">Follow</span>
+              {!following && <span className={"selector-follow-link" + (canFollow ? '' : ' disabled')} onClick={follow}>Follow</span>}
+              {following && <span className="selector-follow-link" onClick={unfollow}>Unfollow</span>}
             </div>
             <div className="selector-title-row">
               <span className="selector-time">{formatArticleDate(article.publishedAt)}</span>

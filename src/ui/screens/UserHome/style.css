@@ -88,6 +88,18 @@
   line-height: normal;
 }
 
+.user-home .selector-follow-link:hover {
+  cursor: pointer;
+}
+
+.user-home .disabled {
+  opacity: 50%;
+}
+
+.user-home .disabled:hover {
+  cursor: inherit;
+}
+
 .user-home .selector-time {
   color: #666;
   font-family: Work Sans;

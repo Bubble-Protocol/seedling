@@ -28,8 +28,6 @@ export const App = () => {
     }
   }, [user]);
 
-  console.debug('user', user);
-  
   return (
     <div className="App" >
       <div className="header">

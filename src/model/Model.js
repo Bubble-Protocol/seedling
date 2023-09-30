@@ -18,7 +18,7 @@ export class Model {
     this.wallet.on('account-changed', this._handleAccountChanged.bind(this));
     this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG.contentRegistry, this.wallet);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
-    stateManager.register('user', {});
+    stateManager.register('user', {h:'h'});
     stateManager.register('account-functions', {
       connectToGithub: () => this.session && this.session.connectToGithub(),
       disconnect: this.wallet.disconnect.bind(this.wallet),
@@ -30,7 +30,8 @@ export class Model {
       publish: this.publish.bind(this),
       getUser: this.contentManager.fetchUserByUsername.bind(this.contentManager),
       getUserContent: this.contentManager.fetchContentByUserId.bind(this.contentManager),
-      getLatestContent: this.contentManager.fetchLatestContent.bind(this.contentManager)
+      getLatestContent: this.contentManager.fetchLatestContent.bind(this.contentManager),
+      getFollowingContent: this.contentManager.fetchAuthorsContentByUsername.bind(this.contentManager)
     });
     stateManager.register('tip-functions', {
       tip: this.tipManager.tip.bind(this.tipManager),
@@ -65,7 +66,16 @@ export class Model {
     this.session = undefined;
     if (account) {
       this.session = new Session(account);
-      const user = {account, ...this.contentManager.parseUsername(this.session.username)};
+      const user = {
+        account, 
+        ...this.contentManager.parseUsername(this.session.username),
+        followingFunctions: {
+          follow: this.session.following.follow,
+          unfollow: this.session.following.unfollow,
+          isFollowing: this.session.following.isFollowing,
+          followers: this.session.following.followers
+        }
+      };
       console.trace('user set to', this.session.username, user)
       stateManager.dispatch('user', user);
     }

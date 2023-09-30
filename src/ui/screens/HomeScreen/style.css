@@ -1,22 +1,26 @@
 .home-screen {
   display: flex;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   gap: 16px;
   flex: 1 0 0;
   align-self: stretch;
-  height: 100%;
+  justify-content: stretch;
+  align-items: stretch;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .home-screen .left-column {
+  flex: 1 0 0;
   display: flex;
-  padding: 48px 32px;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  flex: 1 0 0;  
+  padding: 48px 32px;
 }
 
 .home-screen .filter-menu {
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-right: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -34,6 +38,14 @@
 
 .home-screen .filter-button-selected {
   font-weight: 700;
+}
+
+.home-screen .filter-button:hover {
+  cursor: pointer;
+}
+
+.home-screen .indent1 {
+  padding-left: 16px;
 }
 
 .home-screen .content-column {

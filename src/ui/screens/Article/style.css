@@ -139,6 +139,18 @@
   line-height: normal;
 }
 
+.article .selector-follow-link:hover {
+  cursor: pointer;
+}
+
+.article .disabled {
+  opacity: 50%;
+}
+
+.article .disabled:hover {
+  cursor: inherit;
+}
+
 .article .selector-time {
   color: #666;
   font-family: Work Sans;
