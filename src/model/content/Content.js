@@ -14,6 +14,11 @@ export class Content {
     this.blockchain = new Blockchain(blockchainConfig, wallet);
   }
 
+  parseUsername(username) {
+    if (!username) return {};
+    return parseUsername(username);
+  }
+
   async fetchArticle(id) {
     if (this.cache[id]) return Promise.resolve(this.cache[id]);
     return this.theGraph.fetchContent(id)
@@ -37,7 +42,7 @@ export class Content {
           url: urlStr,
           expandedUrl: url.toString(),
           author: {
-            name: user.name || this.getUserName(user.username),
+            name: user.name || parseUsername(user.username).name,
             icon: user.icon
           },
           publishedAt: Date.now() / 1000,
@@ -142,9 +147,8 @@ export class Content {
   }
 
   async _fetchUserByMetadata(metadata) {
-    const user = {...metadata};
+    const user = {...metadata, ...parseUsername(metadata.username)};
     if (this.cache[user.id]) return this.cache[user.id];
-    user.name = this.getUserName(user.username);
     return this.getUserIconUrl(user.username)
       .then(iconUrl => this._fetch(iconUrl, 'blob'))
       .then(URL.createObjectURL)
@@ -185,13 +189,6 @@ export class Content {
     return Promise.resolve(url);
   }
 
-  getUserName(username) {
-    let name = username;
-    if (name.startsWith('github:')) name = name.slice(7);
-    name = name.replace('-', ' ');
-    return name;
-  }
-
   async _fetch(url, asType='text') {
     if (this.cache[url]) {
       console.trace('Fetching from cache:', url);
@@ -222,5 +219,22 @@ export class Content {
     return title;
   }
 
+}
+
+
+function parseUsername(username) {
+  let name = username;
+  if (name.startsWith('github:')) name = name.slice(7);
+  name = name.replace('-', ' ');
+  const result = {
+    username,
+    name
+  }
+  const parts = username.split(':');
+  if (parts.length > 1) {
+    result.platform = parts[0];
+    result.accountName = parts.slice(1).join(':');
+  }
+  return result;
 }
 

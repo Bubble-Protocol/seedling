@@ -14,11 +14,14 @@ export class Model {
   constructor() {
     this.wallet = new RainbowKitWallet();
     this.wallet.on('connected', this._handleAccountChanged.bind(this));
+    this.wallet.on('disconnected', this._handleAccountChanged.bind(this));
+    this.wallet.on('account-changed', this._handleAccountChanged.bind(this));
     this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG.contentRegistry, this.wallet);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
     stateManager.register('user', {});
     stateManager.register('account-functions', {
       connectToGithub: () => this.session && this.session.connectToGithub(),
+      disconnect: this.wallet.disconnect.bind(this.wallet),
       setUsername: this.setUsername.bind(this)
     });
     stateManager.register('content-functions', {
@@ -59,10 +62,16 @@ export class Model {
 
   _handleAccountChanged(account) {
     console.trace('wallet account changed to', account);
-    if (this.session) this.session.close();
-    this.session = new Session(account);
-    console.debug('this.session.username', this.session.username)
-    stateManager.dispatch('user', {account, username: this.session.username});
+    this.session = undefined;
+    if (account) {
+      this.session = new Session(account);
+      const user = {account, ...this.contentManager.parseUsername(this.session.username)};
+      console.trace('user set to', this.session.username, user)
+      stateManager.dispatch('user', user);
+    }
+    else {
+      stateManager.dispatch('user', {account});
+    }
   }
 
 }

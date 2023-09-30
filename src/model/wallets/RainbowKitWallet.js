@@ -13,7 +13,7 @@ export class RainbowKitWallet {
   state = WALLET_STATE.disconnected;
   account;
   closeWatchers = [];
-  listeners = new EventManager(['connected']);
+  listeners = new EventManager(['connected', 'disconnected', 'account-changed']);
 
   constructor() {
     this.closeWatchers.push(watchAccount(this._handleAccountsChanged.bind(this)));
@@ -127,11 +127,13 @@ export class RainbowKitWallet {
       const newConnection = this.state === WALLET_STATE.disconnected;
       this.state = WALLET_STATE.connected;
       if (newConnection) this.listeners.notifyListeners('connected', this.account);
+      else this.listeners.notifyListeners('account-changed', this.account);
     }
     else {
       this.account = undefined;
       console.trace('wallet disconnected');
       this.state = WALLET_STATE.disconnected;
+      this.listeners.notifyListeners('disconnected', this.account);
     }
   }
 

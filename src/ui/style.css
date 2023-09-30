@@ -12,6 +12,15 @@ code {
     monospace;
 }
 
+.screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}
+
 .App {
   margin: 0;
   font-family: "Work Sans", Helvetica;
@@ -57,6 +66,12 @@ code {
   position: relative;
   white-space: nowrap;
   width: fit-content;
+}
+
+.header .user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
 }
 
 .App .mobile {
