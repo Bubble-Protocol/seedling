@@ -1,8 +1,9 @@
 
 .content-list {
+  flex: 1 0 0;
   display: flex;
   width: 680px;
-  padding: 48px 32px 40px;
+  padding: 0;
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -22,6 +23,10 @@
   font-weight: 400;
   line-height: 32px;
   max-width: 680px;
+}
+
+.content-list {
+  flex: 1 0 0;
 }
 
 .content-list .more-button:hover {

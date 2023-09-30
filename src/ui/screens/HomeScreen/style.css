@@ -1,17 +1,13 @@
 .home-screen {
-  display: flex;
-  /* align-items: flex-start; */
-  gap: 16px;
   flex: 1 0 0;
+  display: grid;
+  grid-template-columns: 1fr 680px 1fr;
   align-self: stretch;
-  justify-content: stretch;
-  align-items: stretch;
   max-height: 100%;
   overflow: hidden;
 }
 
 .home-screen .left-column {
-  flex: 1 0 0;
   display: flex;
   flex-direction: column;
   padding: 48px 32px;
@@ -50,8 +46,7 @@
 
 .home-screen .content-column {
   display: flex;
-  width: 680px;
-  padding: 48px 32px 40px;
+  padding: 48px 0 40px;
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -68,11 +63,8 @@
 
 .home-screen .right-column {
   display: flex;
-  padding: 48px 32px;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  flex: 1 0 0;
+  padding: 48px 32px;
 }
 
 .home-screen .loader {
