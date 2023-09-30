@@ -25,8 +25,8 @@
 
 .article {
   display: flex;
-  width: 1024px;
-  padding: 48px 0px;
+  width: 100%;
+  padding: 0 0 48px;
   flex-direction: column;
   align-items: center;
   gap: 32px;
@@ -44,9 +44,28 @@
 }
 
 .article img {
-  max-width: 1024px;
-  max-height: 574px;
+  /* max-height: 574px; */
   align-self: center;
+}
+
+.article .full-width {
+  width: 100%;
+}
+
+.article .medium-width {
+  margin-top: 48px;
+  width: 1024px;
+  max-width: 100%;
+}
+
+.article .default-width {
+  margin-top: 48px;
+  width: 680px;
+  max-width: 100%;
+}
+
+.article .no-image {
+  margin-top: 48px;
 }
 
 .article .caption {

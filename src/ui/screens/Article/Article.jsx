@@ -72,10 +72,11 @@ export const Article = () => {
         {/* Image & Title */}
         {article.image && 
           <div className="image-box">
-            <img src={article.image.url}></img>
+            <img className={article.image.width === 'full' ? 'full-width' : article.image.width === 'medium' ? 'medium-width' : 'default-width'} src={article.image.url}></img>
             {article.image.caption && <span className="caption">{article.image.caption}</span>}
           </div>
         }
+        {!article.image && <div className="no-image"></div>}
         <span className="title">{article.title}</span>
 
         {/* Author Section */}
