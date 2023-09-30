@@ -2,6 +2,7 @@ import GraphClient from "./TheGraph";
 import { expandRelativeLinks, extractImage, extractSummary, extractTitle, stripMetadata } from "../utils/markdown-utils";
 import { keccak256 } from "viem";
 import { Blockchain } from "./Blockchain";
+import { AppError } from "../utils/errors";
 
 export class Content {
 
@@ -153,7 +154,7 @@ export class Content {
     if (this.cache[id]) return this.cache[id];
     console.trace('fetching user with id', id);
     const results = await this.theGraph.fetchUser(id);
-    if (results.length === 0) throw new Error('user not found');
+    if (results.length === 0) throw new AppError('user not found', {code: 'not-a-user'});
     if (results.length > 1) console.warn('more than one user found with id', id, results);
     return this._fetchUserByMetadata({...results[0]});
   }

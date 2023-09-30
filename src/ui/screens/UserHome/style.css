@@ -98,3 +98,14 @@
   font-weight: 400;
   line-height: normal;
 }
+
+.user-home .info-text {
+  color:#c8c8c8;
+  font-family: Mukta;
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  max-width: 680px;
+}
+

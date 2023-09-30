@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./style.css";
 import { stateManager } from "../../../state-context";
 import anonymousUserIcon from '../../../assets/img/user.png';
@@ -12,6 +12,8 @@ export const UserHome = () => {
   const localUser = stateManager.useStateData("user")();
   const { getUser } = stateManager.useStateData("content-functions")();
   const [user, setUser] = useState();
+  const [notMember, setNotMember] = useState(false);
+  const [error, setError] = useState();
   const [following, setFollowing] = useState(false);
 
   useEffect(() => {
@@ -20,6 +22,11 @@ export const UserHome = () => {
         setUser(userData);
         if (localUser.followingFunctions) setFollowing(localUser.followingFunctions.isFollowing(userData.username));
       })
+      .catch(error => {
+        console.warn(error);
+        if (error.code === 'not-a-user') setNotMember(true);
+        setError('Content not available. Try again later');
+      });
   }, []);
 
 
@@ -29,7 +36,7 @@ export const UserHome = () => {
     else setFollowing(false);
   }, [localUser]);
 
-  const canFollow = !!localUser.followingFunctions;
+  const canFollow = user && !!localUser.followingFunctions;
 
   function follow() {
     if (canFollow) {
@@ -55,19 +62,21 @@ export const UserHome = () => {
           <img className="contact-icon" src={ (user && user.icon) || anonymousUserIcon}></img>
           <div className="selector-content">
             <div className="selector-title-row">
-              {user && <span className="selector-title author-name">{user.name}</span>}
+              <span className="selector-title author-name">{user ? user.name : username}</span>
             </div>
             <div className="selector-title-row">
               {user && <span className="selector-time">Member Since: {formatArticleDate(user.registeredAt)}</span>}
+              {!user && notMember && <span className="selector-time">Not A Member</span>}
             </div>
           </div>
-          {user && !following && <span className={"selector-follow-link" + (canFollow ? '' : ' disabled')} onClick={follow}>Follow</span>}
-          {user && following && <span className="selector-follow-link" onClick={unfollow}>Unfollow</span>}
+          {!following && <span className={"selector-follow-link" + (canFollow ? '' : ' disabled')} onClick={follow}>Follow</span>}
+          {following && <span className="selector-follow-link" onClick={unfollow}>Unfollow</span>}
         </div>
         <div></div>
 
         {/* Content Section */}
-        {user && <ContentList contentType='user' user={user} displayUser={false} />}
+        {error && <div className="info-text">{error.message || error}</div>}
+        {!error && user && <ContentList contentType='user' user={user} displayUser={false} />}
 
       </div>
     </div>

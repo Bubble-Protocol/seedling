@@ -22,8 +22,6 @@ export const ContentList = ({contentType, user, visible, displayUser}) => {
 
   useEffect(() => {
 
-    console.debug('fetch', fetchAmount)
-
     if (fetchAmount === 0) return;
     
     clearTimeout(timerRef.current);
@@ -72,7 +70,7 @@ export const ContentList = ({contentType, user, visible, displayUser}) => {
 
   }, [fetchAmount]);
 
-  
+
   return (
     <div className={"content-list" + (visible ? '' : ' hide')}>
       {error && <div className="info-text">{error.message || error}</div>}
