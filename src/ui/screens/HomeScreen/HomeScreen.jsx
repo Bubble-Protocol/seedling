@@ -14,14 +14,16 @@ export const HomeScreen = () => {
   const { getLatestContent, getFollowingContent } = stateManager.useStateData("content-functions")();
   const [content, setContent] = useState([]);
   const [fetchAmount, setFetchAmount] = useState(LOAD_BATCH_SIZE);
+  const [fetchedAll, setFetchedAll] = useState(false);
   const [filter, setFilter] = useState(0);
-  const [error, setError] = useState([]);
+  const [error, setError] = useState();
   const [loading, setLoading] = useState('timer');
   const timerRef = useRef(null);
 
   useEffect(() => {
-
+    
     clearTimeout(timerRef.current);
+    if (fetchAmount > LOAD_BATCH_SIZE) setLoading(true);
 
     timerRef.current = setTimeout(() => {
       setLoading(true);
@@ -44,7 +46,11 @@ export const HomeScreen = () => {
 
     promise
       .then(results => {
-        setContent(content.concat(results));
+        console.debug(results);
+        if (results.length === 0) setFetchedAll(true);
+        else {
+          setContent(content.concat(results));
+        }
       })
       .catch(error => {
         console.warn(error);
@@ -55,13 +61,14 @@ export const HomeScreen = () => {
         clearTimeout(timerRef.current);
         setLoading(false);
       });
-  }, [filter]);
+  }, [filter, fetchAmount]);
 
   function filterContent(filterIndex) {
     if (filterIndex !== filter) {
       setContent([]);
       setError(null);
       setFetchAmount(LOAD_BATCH_SIZE);
+      setFetchedAll(false);
       setFilter(filterIndex);
     }
   }
@@ -80,7 +87,6 @@ export const HomeScreen = () => {
         </div>
       </div>
       <div className="content-column">
-        {loading === true && <div className="loader"></div>}
         {error && <div className="info-text">{error.message || error}</div>}
         {content.map(article => 
           <ArticleSummary key={article.id} 
@@ -88,6 +94,8 @@ export const HomeScreen = () => {
             onClick={() => navigate(`/article/${article.id}`)}
             onUserClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}
           />)}
+        {!error && !loading && !fetchedAll && <div className="more-button" onClick={() => setFetchAmount(fetchAmount+LOAD_BATCH_SIZE)}>Load More...</div>}
+        {loading === true && <div className="loader"></div>}
         <Footer/>
       </div>
       <div className="right-column"></div>

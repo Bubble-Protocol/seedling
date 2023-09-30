@@ -73,7 +73,7 @@
   height: 48px;
 }
 
-.home-screen .info-text {
+.home-screen .info-text, .home-screen .more-button {
   color:#c8c8c8;
   font-family: Mukta;
   font-style: normal;
@@ -81,4 +81,8 @@
   font-weight: 400;
   line-height: 32px;
   max-width: 680px;
+}
+
+.home-screen .more-button:hover {
+  cursor: pointer;
 }
