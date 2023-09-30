@@ -23,7 +23,7 @@ export const HomeScreen = () => {
   useEffect(() => {
     
     clearTimeout(timerRef.current);
-    if (fetchAmount > LOAD_BATCH_SIZE) setLoading(true);
+    setLoading(fetchAmount > LOAD_BATCH_SIZE ? true : 'timer');
 
     timerRef.current = setTimeout(() => {
       setLoading(true);
@@ -94,7 +94,7 @@ export const HomeScreen = () => {
             onClick={() => navigate(`/article/${article.id}`)}
             onUserClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}
           />)}
-        {!error && !loading && !fetchedAll && <div className="more-button" onClick={() => setFetchAmount(fetchAmount+LOAD_BATCH_SIZE)}>Load More...</div>}
+        {!error && loading === false && !fetchedAll && <div className="more-button" onClick={() => setFetchAmount(fetchAmount+LOAD_BATCH_SIZE)}>Load More...</div>}
         {loading === true && <div className="loader"></div>}
         <Footer/>
       </div>
