@@ -57,6 +57,13 @@
   gap: 16px;
   align-self: stretch;
   overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.home-screen .content-column::-webkit-scrollbar {
+  display: none;
 }
 
 .home-screen .right-column {
@@ -86,3 +93,8 @@
 .home-screen .more-button:hover {
   cursor: pointer;
 }
+
+.home-screen .hide {
+  display: none;
+}
+

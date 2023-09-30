@@ -2,46 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./style.css";
 import { stateManager } from "../../../state-context";
-import { ArticleSummary } from "./components/ArticleSummary";
 import anonymousUserIcon from '../../../assets/img/user.png';
 import { formatArticleDate } from "../../utils/date-utils";
-import { Footer } from "../../components/Footer";
+import { ContentList } from "../../components/ContentList";
 
 export const UserHome = () => {
   const { platform, username } = useParams();
 
-  const navigate = useNavigate();
   const localUser = stateManager.useStateData("user")();
-  const { getUserContent, getUser } = stateManager.useStateData("content-functions")();
+  const { getUser } = stateManager.useStateData("content-functions")();
   const [user, setUser] = useState();
-  const [content, setContent] = useState([]);
   const [following, setFollowing] = useState(false);
-  const [loading, setLoading] = useState('timer');
-  const [error, setError] = useState(true);
-  const timerRef = useRef(null);
 
   useEffect(() => {
-
-    timerRef.current = setTimeout(() => {
-      setLoading(true);
-    }, 1000);
-
     getUser(platform+':'+username)
       .then(userData => {
         setUser(userData);
         if (localUser.followingFunctions) setFollowing(localUser.followingFunctions.isFollowing(userData.username));
-        return getUserContent(userData.id);
       })
-      .then(setContent)
-      .catch(error => {
-        console.warn(error);
-        setError('Content not available. Try again later');
-      })
-      .finally(() => {
-        clearTimeout(timerRef.current);
-        setLoading(false);
-      });
-
   }, []);
 
 
@@ -70,8 +48,7 @@ export const UserHome = () => {
 
   return (
     <div className="user-home" >
-      <div className="left-column"></div>
-      <div className="summary-content">
+      <div className="content-column">
 
         {/* Author Section */}
         <div className="author-section">
@@ -90,15 +67,9 @@ export const UserHome = () => {
         <div></div>
 
         {/* Content Section */}
-        {loading === true && <div className="loader"></div>}
-        {error && <div className="info-text">{error.message || error}</div>}
-        {!error && !loading && content.length === 0 && <div className="info-text">User hasn't published anything yet</div>}
-        {content.map(article => <ArticleSummary key={article.id} article={article} onClick={() => navigate(`/article/${article.id}`)} />)}
-
-        <Footer/>
+        {user && <ContentList contentType='user' user={user} displayUser={false} />}
 
       </div>
-      <div className="right-column"></div>
     </div>
   );
 
