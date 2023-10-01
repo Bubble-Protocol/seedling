@@ -149,7 +149,7 @@ export class Content {
   }
 
   async _fetchUserByUsername(username) {
-    return this._fetchUserById(keccak256(username.toLowerCase()));
+    return this._fetchUserById(keccak256(username));
   }
 
   async _fetchUserById(id) {
