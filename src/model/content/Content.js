@@ -103,13 +103,14 @@ export class Content {
   }
 
   async _fetchContentAndAuthor(metadata) {
-    const {url, relLinkUrl} = this.parseContentUrl(metadata.url);
+    const {url, relLinkUrl, sourceUrl} = this.parseContentUrl(metadata.url);
     const [content, author] = await Promise.all([
       this._fetchContent(metadata.id, url, relLinkUrl),
       this._fetchUserByMetadata(metadata.author)
     ]);
     const result = {...metadata, ...content};
     result.expandedUrl = url;
+    result.sourceUrl = sourceUrl;
     result.author = {...result.author};
     result.author.name = author.name;
     result.author.icon = author.icon;
@@ -118,10 +119,11 @@ export class Content {
   }
 
   async _fetchContentOnly(author, metadata) {
-    const {url, relLinkUrl} = this.parseContentUrl(metadata.url);
+    const {url, relLinkUrl, sourceUrl} = this.parseContentUrl(metadata.url);
     const content = await this._fetchContent(metadata.id, url, relLinkUrl);
     const result = {...metadata, ...content};
     result.expandedUrl = url;
+    result.sourceUrl = sourceUrl;
     result.author = author;
     result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
     return result;
@@ -177,8 +179,20 @@ export class Content {
     let url = new URL(urlStr);
     if (urlStr.startsWith('github:')) url = new URL(url.pathname, 'https://raw.githubusercontent.com/');
     const relLinkUrl = new URL(url.href.slice(0, url.href.lastIndexOf('/')));
-    return {url, relLinkUrl};
+    const sourceUrl = this._parseRawContentUrl(url.toString());
+    return {url, relLinkUrl, sourceUrl};
   }
+
+  _parseRawContentUrl(urlStr) {
+    const url = new URL(urlStr);
+    if (url.hostname.toLowerCase() === 'raw.githubusercontent.com') {
+      url.hostname = 'github.com';
+      const paths = url.pathname.split('/').filter(segment => segment);
+      url.pathname = paths.slice(0,2).join('/') + '/blob/' + paths.slice(2).join('/');
+    }
+    return url;
+  }
+  
 
   getUsernameAndContentPath(url) {
     const paths = url.pathname.split('/');

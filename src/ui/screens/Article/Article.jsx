@@ -6,13 +6,10 @@ import ReactMarkdown from "react-markdown";
 import gfm from 'remark-gfm';
 import { Footer } from "../../components/Footer";
 import anonymousUserIcon from '../../../assets/img/user.png';
-import tipButtonIcon from '../../../assets/img/tip-button.png';
-import shareIcon from '../../../assets/img/share-icon.png';
-import moreIcon from '../../../assets/img/more-icon.png';
 import { formatArticleDate } from "../../utils/date-utils";
 import { stateManager } from "../../../state-context";
-import { formatTip } from "../../utils/tip-utils";
 import { TipModal } from "../../components/TipModal";
+import { ActivityBar } from "./components/ActivityBar";
 
 export const Article = () => {
   const { id, preview } = useParams();
@@ -91,8 +88,6 @@ export const Article = () => {
     }
   }
 
-  const tip = formatTip(article.totalTips);
-
   return (
       <div className="article">
       {tipModal && <TipModal x={tipModal.x} y={tipModal.y} article={article} onClose={() => setTipModal(null)} /> }
@@ -121,14 +116,7 @@ export const Article = () => {
             </div>
           </div>
         </div>
-
-        <div className="activity-bar">
-          <img className="tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
-          <span className="tips">{tip} mETH</span>
-          <div className="expander"></div>
-          <img className="icon-button" src={shareIcon}></img>
-          <img className="icon-button" src={moreIcon}></img>
-        </div>
+        <ActivityBar article={article} openTipModal={openTipModal} />
 
         {/* Markdown */}
         <ReactMarkdown className="markdown" remarkPlugins={[gfm]} components={components}>
@@ -136,13 +124,7 @@ export const Article = () => {
         </ReactMarkdown>
 
         {/* Footer Section */}
-        <div className="activity-bar">
-          <img className="tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
-          <span className="tips">{tip} mETH</span>
-          <div className="expander"></div>
-          <img className="icon-button" src={shareIcon}></img>
-          <img className="icon-button" src={moreIcon}></img>
-        </div>
+        <ActivityBar article={article} openTipModal={openTipModal} />
         <Footer/>
       </div>
   );
