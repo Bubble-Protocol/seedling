@@ -1,3 +1,8 @@
+---
+title: About Seedling
+description: Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair content sharing. Seedling is inspired by the simplicity and user-friendly experience of platforms like Medium, but with a decentralized twist.
+image: ./img/seedling.png
+---
 # About Seedling
 
 Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair content sharing. Seedling is inspired by the simplicity and user-friendly experience of platforms like Medium, but with a decentralized twist. It's an arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.

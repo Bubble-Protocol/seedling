@@ -1,3 +1,8 @@
+---
+title: Seedling Privacy Policy
+description: Seedling privacy policy.
+image: ./img/seedling.png
+---
 # Privacy Policy for Seedling
 
 ## Introduction
