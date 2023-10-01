@@ -57,13 +57,13 @@ export const App = () => {
       {/* Content */}
       <div className="app-content">
         <Routes>
-          <Route path='/' element={<HomeScreen key="latest" />} />
           <Route path='/following' element={<HomeScreen key="following" filter="following" />} />
           <Route path='/user/:platform/:username' element={<UserHome/>} />
           <Route path='/login' element={<LoginScreen/>} />
           <Route path='/article/:id' element={<Article />} />
           <Route path='/preview/:preview' element={<Article />} />
           <Route path='/publish' element={<Publish />} />
+          <Route path='*' element={<HomeScreen key="latest" />} />
         </Routes>
       </div>
     </div>
