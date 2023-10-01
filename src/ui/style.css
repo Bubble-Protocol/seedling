@@ -12,13 +12,18 @@ code {
     monospace;
 }
 
-.screen-overlay {
+.screen-overlay, .tinted-screen-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 100;
+}
+
+.tinted-screen-overlay {
+  background-color: #000;
+  opacity: 20%;
 }
 
 .App {
@@ -144,7 +149,7 @@ code {
   color:rgb(195, 4, 4);
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 910px) {
 
   .App .mobile {
     display: inherit;
@@ -155,8 +160,14 @@ code {
   }
   
   .App .header {
-    padding: 8px 16px;
+    padding: 4px;
     gap: 16px;
+  }
+
+  .App .iekbcc0 {
+    font-size: small;
+    /* padding: 2px 8px; */
+    /* height: 24px; */
   }
 
 }
@@ -164,6 +175,7 @@ code {
 
 
 .loader {
+  align-self: center;
   transform: rotateZ(45deg);
   perspective: 1000px;
   border-radius: 50%;

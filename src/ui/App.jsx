@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./style.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -12,6 +12,7 @@ import { Publish } from "./screens/Publish";
 import { UserHome } from "./screens/UserHome";
 import anonymousUserIcon from '../assets/img/user.png';
 import { DropdownMenu } from "./components/DropdownMenu/DropdownMenu";
+import { MobileMenu } from "./components/MobileMenu";
 
 export const App = () => {
 
@@ -20,6 +21,7 @@ export const App = () => {
   const { getUser } = stateManager.useStateData("content-functions")();
   const { disconnect } = stateManager.useStateData("account-functions")();
   const [userDetails, setUserDetails] = useState({});
+  const [menuVisible, setMenuVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,9 +31,14 @@ export const App = () => {
   }, [user]);
 
   return (
-    <div className="App" >
+    <div className="App">
+
+      {/* Mobile Menu */}
+      <MobileMenu visible={menuVisible} onCompletion={() => setMenuVisible(false)} />
+
+      {/* Header */}
       <div className="header">
-        <img className="logo clickable" src={logo} onClick={() => navigate('/')} ></img>
+        <img className="logo clickable" src={logo} onClick={() => window.innerWidth >= 910 ? navigate('/') : setMenuVisible(!menuVisible)} ></img>
         <span className="expander"></span>
         {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : navigate('/publish') }}>Publish</span>}
         {!user.username && <ConnectButton showBalance={false} chainStatus="none" />}
@@ -44,11 +51,14 @@ export const App = () => {
           ]}>
             <img className="user-icon" src={userDetails.icon || anonymousUserIcon}></img>
           </DropdownMenu>   
-        }     
+        }
       </div>
+
+      {/* Content */}
       <div className="app-content">
         <Routes>
-          <Route path='/' element={<HomeScreen/>} />
+          <Route path='/' element={<HomeScreen key="latest" />} />
+          <Route path='/following' element={<HomeScreen key="following" filter="following" />} />
           <Route path='/user/:platform/:username' element={<UserHome/>} />
           <Route path='/login' element={<LoginScreen/>} />
           <Route path='/article/:id' element={<Article />} />

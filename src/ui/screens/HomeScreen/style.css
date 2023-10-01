@@ -48,9 +48,8 @@
   display: flex;
   padding: 48px 0 40px;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 16px;
-  align-self: stretch;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -90,3 +89,45 @@
   display: none;
 }
 
+
+@media only screen and (max-width: 1100px) {
+
+  .home-screen {
+    grid-template-columns: 210px 1fr;
+  }
+
+  .home-screen .right-column {
+    display: none;
+  }
+
+}
+
+
+@media only screen and (max-width: 910px) {
+
+  .home-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-screen .left-column {
+    display: none;
+  }
+
+}
+
+
+@media only screen and (max-width: 712px) {
+
+  .home-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-screen .content-column {
+    padding: 16px;
+  }
+  
+}

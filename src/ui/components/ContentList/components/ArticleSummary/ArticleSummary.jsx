@@ -20,10 +20,19 @@ export const ArticleSummary = ({article, displayUser=true, onClick, onUserClick}
   return (
     <div className="article-summary">
       {tipModal && <TipModal x={tipModal.x} y={tipModal.y} article={article} onClose={() => setTipModal(null)} /> }
-      <div className="summary" onClick={onClick}>
+      <div className="summary no-mobile" onClick={onClick}>
         <img className="summary-image" src={article.image.url || defaultArticleImage}></img>
         <div className="summary-content">
           <div className="summary-title">{article.title}</div>
+          <div className="summary-description">{article.description}</div>
+        </div>
+      </div>
+      <div className="summary mobile" onClick={onClick}>
+        <div className="summary-image-title-row">
+          <img className="summary-image" src={article.image.url || defaultArticleImage}></img>
+          <div className="summary-title">{article.title}</div>
+        </div>
+        <div className="summary-content">
           <div className="summary-description">{article.description}</div>
         </div>
       </div>

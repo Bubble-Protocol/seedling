@@ -3,7 +3,7 @@
   width: 680px;
   padding: 16px 0px;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   border-bottom: 1px solid rgba(36, 36, 36, 0.20);
 }
@@ -12,7 +12,6 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  align-self: stretch;
 }
 
 .article-summary .summary:hover {
@@ -35,7 +34,6 @@
   padding: 0;
   gap: 10px;
   flex: 1 0 0;
-  align-self: stretch;
 }
 
 .article-summary .summary-title {
@@ -58,7 +56,6 @@
 
 .article-summary .summary-author-bar {
   display: flex;
-  width: 506px;
   padding-left: 174px;
   align-items: center;
   gap: 20px;
@@ -106,7 +103,6 @@
 
 .article-summary .summary-bar-tip-button {
   width: 20px;
-  height: 17.647px;
 }
 
 .article-summary .summary-bar-tip-button:hover {
@@ -120,5 +116,80 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+
+.article-summary .mobile {
+  display: none;
+}
+
+.article-summary .no-mobile {
+  display: inherit;
+}
+
+
+@media only screen and (max-width: 712px) {
+
+  .article-summary .mobile {
+    display: inherit;
+  }
+  
+  .article-summary .no-mobile {
+    display: none;
+  }
+  
+  .article-summary {
+    width: auto;
+    align-items: stretch;
+  }
+
+  .article-summary .summary-image-title-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .article-summary .summary-image {
+    width: 50px;
+    height: 50px;
+    margin-top: 4px;
+  }
+
+  .article-summary .summary {
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: stretch;
+    gap: 8px;
+  }
+
+  .article-summary .summary-title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .article-summary .summary-description {
+    font-size: 14px;
+  }
+
+  .article-summary .summary-author-bar {
+    padding: 0;
+  }
+
+  .article-summary .summary-bar-name {
+    font-size: 16px;
+  }
+
+  .article-summary .summary-bar-date {
+    font-size: 14px;
+  }
+
+  .article-summary .summary-bar-tips {
+    font-size: 14px;
+  }
+
+  .article-summary .summary-bar-tip-button {
+    width: 16px;
+  }
+    
 }
 

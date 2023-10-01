@@ -50,7 +50,7 @@ export const Publish = () => {
 
   return (
     <div className="publish-screen" >
-      <div className="summary-title">Publish a New Article</div>
+      <div className="summary-title">Publish {window.innerWidth < 410 && <br/>} a New Article</div>
       <div className="description-section">
         <span>
           To publish an article, add it to your GitHub account and enter the URL below.

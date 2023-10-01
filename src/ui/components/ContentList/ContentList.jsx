@@ -7,8 +7,7 @@ import { Footer } from "../Footer";
 
 const LOAD_BATCH_SIZE = 10;
 
-
-export const ContentList = ({contentType, user, visible, displayUser}) => {
+export const ContentList = ({contentType, user, displayUser}) => {
 
   const navigate = useNavigate();
   const { getUserContent, getLatestContent, getFollowingContent } = stateManager.useStateData("content-functions")();
@@ -18,6 +17,13 @@ export const ContentList = ({contentType, user, visible, displayUser}) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState('timer');
   const timerRef = useRef(null);
+
+  useEffect(() => {
+    setError(null);
+    setContent([]);
+    setFetchAmount(LOAD_BATCH_SIZE);
+    setFetchedAll(false);
+  }, [user]);
 
 
   useEffect(() => {
@@ -36,7 +42,7 @@ export const ContentList = ({contentType, user, visible, displayUser}) => {
     switch (contentType) {
 
       case 'following': 
-        const following = user.followingFunctions ? user.followingFunctions.followers().map(f => f.username) : [];
+        const following = user && user.followingFunctions ? user.followingFunctions.followers().map(f => f.username) : [];
         if (following.length > 0) promise = getFollowingContent(following, fetchAmount, fetchAmount - LOAD_BATCH_SIZE);
         else promise = Promise.reject({code: 'following-none', message: "You are not following anyone"});
         break;
@@ -68,11 +74,10 @@ export const ContentList = ({contentType, user, visible, displayUser}) => {
         setLoading(false);
       });
 
-  }, [fetchAmount]);
-
+  }, [user, fetchAmount]);
 
   return (
-    <div className={"content-list" + (visible ? '' : ' hide')}>
+    <div className="content-list">
       {error && <div className="info-text">{error.message || error}</div>}
       {content.map(article => 
         <ArticleSummary key={article.id} 

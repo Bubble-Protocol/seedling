@@ -2,8 +2,8 @@
 
 .login-screen {
   display: flex;
-  max-width: 680px;
-  padding: 48px 0px;
+  max-width: 712px;
+  padding: 48px 16px;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -21,10 +21,6 @@
 }
 
 .login-screen .summary-title {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
   font-family: Mukta;
   font-size: 40px;
   font-style: normal;

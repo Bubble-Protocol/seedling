@@ -14,13 +14,12 @@
   display: flex;
   padding: 48px 32px 40px;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 16px;
 }
 
 .user-home .author-section {
   display: flex;
-  width: 680px;
   padding: 18px 0px;
   align-items: center;
   gap: 20px;
@@ -110,3 +109,33 @@
   max-width: 680px;
 }
 
+
+@media only screen and (max-width: 712px) {
+
+  .user-home {
+    align-items: stretch;
+  }
+
+  .user-home .content-column {
+    padding: 16px;
+  }
+
+  .user-home .author-section {
+    gap: 10px;
+  }
+
+  .user-home .info-text, .user-home .selector-title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .user-home .selector-time {
+    font-size: 15px;
+  }
+
+  .user-home .selector-follow-link {
+    padding: 2px 8px;
+    font-size: 14px;
+  }
+    
+}

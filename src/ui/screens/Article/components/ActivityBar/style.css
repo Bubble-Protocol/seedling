@@ -1,0 +1,37 @@
+.activity-bar {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 712px;
+  padding: 8px 16px;
+  height: 40px;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.activity-bar .tip-button {
+  width: 20px;
+  height: 17.647px;
+  flex-shrink: 0;
+}
+
+.activity-bar .tip-button:hover {
+  cursor: pointer;
+}
+
+.activity-bar .tips {
+  color: #666;
+  font-family: Work Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.activity-bar .icon-button {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}

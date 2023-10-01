@@ -1,9 +1,10 @@
 .publish-screen {
   display: flex;
-  max-width: 680px;
-  padding: 48px 0px;
+  width: 100%;
+  max-width: 712px;
+  padding: 48px 16px;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   text-align: center;
   gap: 48px;
   flex: 1 0 0;
@@ -19,10 +20,6 @@
 }
 
 .publish-screen .summary-title {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
   font-family: Mukta;
   font-size: 40px;
   font-style: normal;
@@ -79,11 +76,13 @@
 }
 
 .publish-screen .url-textbox {
-  width: 400px;
+  width: 90%;
+  max-width: 432px;
 }
 
 .publish-screen .button-row {
   display: flex;
+  justify-content: center;
   gap: 64px;
 }
 

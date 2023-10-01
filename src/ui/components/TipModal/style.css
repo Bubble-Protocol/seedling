@@ -1,6 +1,7 @@
 .tip-frame {
   position: fixed;
-  display: inline-flex;
+  display: flex;
+  box-sizing: border-box;
   padding: 16px;
   flex-direction: column;
   align-items: center;
@@ -8,11 +9,12 @@
   border-radius: 16px;
   background: #fff;
   z-index: 101;
-  /* border: 2px solid black; */
   box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.25);
+  max-width: 96%;
 }
 
 .tip-frame .top-frame {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +66,20 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+
+
+@media only screen and (max-width: 712px) {
+
+  .tip-frame {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* Centers the popup */
+  }
+
+}
+
+
 
 /* Firework Animation */
 

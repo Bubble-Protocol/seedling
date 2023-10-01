@@ -2,12 +2,10 @@
 .content-list {
   flex: 1 0 0;
   display: flex;
-  width: 680px;
   padding: 0;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 16px;
-  align-self: stretch;
 }
 
 .content-list .loader {
@@ -22,7 +20,7 @@
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
-  max-width: 680px;
+  text-align: center;
 }
 
 .content-list {
@@ -35,5 +33,21 @@
 
 .content-list .hide {
   display: none;
+}
+
+
+
+@media only screen and (max-width: 712px) {
+
+  .content-list {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .content-list .info-text, .content-list .more-button {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
 }
 
