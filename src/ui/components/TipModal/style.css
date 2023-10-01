@@ -67,6 +67,12 @@
   padding-bottom: 0;
 }
 
+.tip-frame .loader {
+  width: 23px;
+  height: 23px;
+  padding: 2px;
+}
+
 
 @media only screen and (max-width: 712px) {
 

@@ -16,6 +16,7 @@ export const TipModal = ({x, y, article, onClose}) => {
 
   const { tipDollars } = stateManager.useStateData("tip-functions")();
   const [tip, setTipNum] = useState("2");
+  const [loading, setLoading] = useState(false);
   const popup = useRef();
   const firework = useRef();
 
@@ -25,9 +26,13 @@ export const TipModal = ({x, y, article, onClose}) => {
   }
 
   function sendTip() {
+    setLoading(true);
     tipDollars(article.id, parseFloat(tip))
     .catch(console.warn)
-    .finally(onClose);
+    .finally(() => {
+      setLoading(false);
+      onClose();
+    });
   }
 
   useEffect(() => {
@@ -53,7 +58,8 @@ export const TipModal = ({x, y, article, onClose}) => {
             <img className="tip-icon" src={lamboIcon} onClick={() => triggerFirework(firework) && setTip('100')} />
           </div>
         </div>
-        <div className={"tip-button"+(!tipIsValid ? " disabled" : '')} onClick={() => tipIsValid && sendTip()}>Tip</div>
+        {!loading && <div className={"tip-button"+(!tipIsValid ? " disabled" : '')} onClick={() => tipIsValid && sendTip()}>Tip</div>}
+        {loading && <div className="loader"></div>}
       </div>
     </div>
   );
