@@ -1,3 +1,8 @@
+---
+title: Seedling Terms Of Service
+description: Seedling terms of service and privacy policy.
+image: ./seedling.png
+---
 # Terms and Conditions
 
 ## Introduction
