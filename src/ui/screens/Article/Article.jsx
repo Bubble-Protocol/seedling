@@ -4,6 +4,7 @@ import "./style.css";
 import "./markdown.css";
 import ReactMarkdown from "react-markdown";
 import gfm from 'remark-gfm';
+import remarkEmoji from 'remark-emoji';
 import { Footer } from "../../components/Footer";
 import anonymousUserIcon from '../../../assets/img/user.png';
 import { formatArticleDate } from "../../utils/date-utils";
@@ -119,7 +120,7 @@ export const Article = () => {
         <ActivityBar article={article} openTipModal={openTipModal} />
 
         {/* Markdown */}
-        <ReactMarkdown className="markdown" remarkPlugins={[gfm]} components={components}>
+        <ReactMarkdown className="markdown" remarkPlugins={[gfm, remarkEmoji]} components={components}>
           {article.markdown}
         </ReactMarkdown>
 

@@ -71,7 +71,18 @@
   overflow-x: scroll;
 }
 
+.markdown table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: max-content;
+  max-width: 100%;
+  overflow: scroll;
+}
 
+.markdown tbody, td, tfoot, th, thead, tr {
+  border: 1px solid #c8c8c8;
+  padding: 2px 12px;
+}
 
 @media only screen and (max-width: 712px) {
 
