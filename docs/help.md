@@ -4,7 +4,7 @@ description: How to create your account, publish content and tip authors.
 image: ./img/seedling3.png
 image-width: medium
 ---
-# Seedling Help
+# What Is Seedling?
 
 Seedling is a decentralised platform for publishing, discovering and engaging with written content. It is designed to directly link readers to authors and their content without a central organisation in the middle, creating an open arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
 
@@ -56,7 +56,7 @@ Content on Seedling is written in markdown and hosted in a public GitHub reposit
 It may take a few minutes before your published content is visible in the app.
  
 | :gear: **How It Works** |
-|-|
+|:-|
 | *Your content URL is published to Seedling's on-chain Content Registry, a smart contract that confirms you are the registered owner of the GitHub account in the URL and that neither the content nor URL has been previously published, before recording your publication on the blockchain. Your publication record is an event consisting of the keccak256 hash of your content, the content URL and your author id. The Seedling app uses [The Graph](https://thegraph.com) to query and discover content records and loads the content itself from GitHub when you view it.* |
 
 ### Updating Published Content
@@ -73,7 +73,7 @@ Any user who has published content can be followed.  Use the **Follow** link whe
 
 
 | :gear: **How It Works** |
-|-|
+|:-|
 | *Follows are saved to local storage in your browser.* |
 
 ## Tipping
@@ -85,7 +85,7 @@ Tips are made from the reader's wallet in the blockchain's native **ETH** curren
 As an author, anytime a reader tips your content, your registered wallet account will be automatically credited.
 
 | :gear: **How It Works** |
-|-|
+|:-|
 | *Tips are sent to Seedling's on-chain TipJar smart contract, which identifies the content's registered author and forwards the tip to their wallet account, minus the platform fee.* |
 
 ## More Information
