@@ -33,7 +33,7 @@ Creating an account is a two step process:
     *Seedling requests only the most basic access to your public profile so that it can read your GitHub username.*
 
 | :gear: **How It Works** |
-|-|
+|:-|
 | *The secure Seedling OAuth server is trusted to register your username with Seedling's on-chain User Registry, linking your username with your wallet address. Once registered, you can use your wallet to publish content, held in any of your GitHub repositories, to Seedling's on-chain Content Registry.  The *Content Registry* prevents anyone else from publishing urls from your GitHub account.* |
 
 
@@ -80,15 +80,15 @@ Any user who has published content can be followed.  Use the **Follow** link whe
 
 To show appreciation for content and reward its author, readers can tip an article by clicking the ![tip button](./img/tip-button.png) symbol wherever it is found. Next to the symbol is a number representing the total amount of tipped ETH the article has received (displayed in mETH).
 
-Tips are made from the reader's wallet in the blockchain's native **ETH** currency and are sent to the wallet account of the content's registered author, minus a small platform fee of 10%.
+Tips are made from the reader's wallet in the blockchain's native ETH currency and are sent to the wallet account of the content's registered author, minus a small platform fee of 10%.
 
-As an author, anytime a reader tips your content, your registered wallet account will be automatically credited.
+As an author, anytime a reader tips your content your registered wallet account will be automatically credited.
 
 | :gear: **How It Works** |
 |:-|
 | *Tips are sent to Seedling's on-chain TipJar smart contract, which identifies the content's registered author and forwards the tip to their wallet account, minus the platform fee.* |
 
-## More Information
+# More Information
 
 For more information, questions, feedback or suggestions, feel free to contact us on the [Bubble Protocol Discord server](https://discord.gg/sSnvK5C) or at support@seedling-d.app.
 
