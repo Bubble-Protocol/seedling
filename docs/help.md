@@ -1,14 +1,92 @@
 ---
-title: About Seedling
-description: Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair content sharing. Seedling is inspired by the simplicity and user-friendly experience of platforms like Medium, but with a decentralized twist.
+title: Seedling Help
+description: How to create your account, publish content and tip authors.
 image: ./img/seedling3.png
 image-width: medium
 ---
 # Seedling Help
 
-Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair content sharing. Seedling is inspired by the simplicity and user-friendly experience of platforms like Medium, but with a decentralized twist. It's an arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
+Seedling is a decentralised platform for publishing, discovering and engaging with written content. It is designed to directly link readers to authors and their content without a central organisation in the middle, creating an open arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
 
-...TODO
+In this version all content is public, hosted by its author in their account on GitHub.  Content is written in [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) and made discoverable by publishing its url on the blockchain under the author's Seedling account. Seedling's smart contracts ensure that only authors with verified GitHub accounts can publish and take credit for their content.
+
+The Seedling app and smart contracts are open source and available [here](https://github.com/Bubble-Protocol/seedling).
+
+## Creating Your Account
+
+Seedling is free to browse and read content without an account, however if you want to follow users, tip authors or publish content then you will need to at least connect your wallet.  You only need to verify your GitHub account if you want to publish content.
+
+Creating an account is a two step process:
+
+1. **Connect Your Wallet**
+
+    *By connecting a Web3 wallet you will be able to follow users and engage with authors by tipping their content.*
+  
+    :point_right: Click the 'Connect Wallet' button and follow the instructions to download a wallet and connect to the app. 
+
+2. **Verify Your GitHub Account**
+
+    *By verifying you own a GitHub account you can publish content held in that account.*
+
+    :point_right: Click the *Publish* button on the top of the screen and you will be directed to a login screen.  Click *Connect* and you will be directed to GitHub to connect your account.  Once connected, the *Publish* button will take you to a publish screen.
+
+    *Seedling requests only the most basic access to your public profile so that it can read your GitHub username.*
+
+| :gear: **How It Works** |
+|-|
+| *The secure Seedling OAuth server is trusted to register your username with Seedling's on-chain User Registry, linking your username with your wallet address. Once registered, you can use your wallet to publish content, held in any of your GitHub repositories, to Seedling's on-chain Content Registry.  The *Content Registry* prevents anyone else from publishing urls from your GitHub account.* |
+
+
+## Publishing Content
+
+Content on Seedling is written in markdown and hosted in a public GitHub repository within your GitHub account.  Publishing requires a blockchain transaction from your wallet, so you will need a small amount of funds in your wallet account.  Seedling does not charge a fee for publishing content.
+
+1. **Write Your Content** in [GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+
+2. **Publish Your Content** in a ***public*** repository in your GitHub account.
+
+3. **Create a Seedling Account** by connecting your wallet and verifying you are the owner of your GitHub account. You should now see your GitHub avatar in the top right corner of the app.
+
+4. **Click the *Publish* Button** to open the publish page.
+
+5. **Copy & Paste Your Content URL** from GitHub to the publish page. Seedling will accept the URL of the content's main page or its raw URL link.
+
+6. **Click Publish** to use your wallet to publish your content URL to the blockchain.  Optionally use the *Preview* button to see how your content will look before publishing. 
+
+It may take a few minutes before your published content is visible in the app.
+ 
+| :gear: **How It Works** |
+|-|
+| *Your content URL is published to Seedling's on-chain Content Registry, a smart contract that confirms you are the registered owner of the GitHub account in the URL and that neither the content nor URL has been previously published, before recording your publication on the blockchain. Your publication record is an event consisting of the keccak256 hash of your content, the content URL and your author id. The Seedling app uses [The Graph](https://thegraph.com) to query and discover content records and loads the content itself from GitHub when you view it.* |
+
+### Updating Published Content
+
+The Seedling app reads content directly from GitHub whenever it is viewed. This means any updates to your content in GitHub will be authomatically available to readers without needing to republish the content URL.
+
+## Sharing Content
+
+All content on Seedling is public and can be read by anyone, without a wallet or GitHub account.  When viewing an article, use the share link in the activity bar to copy the content's URL.  Use the *more* button to copy the content's GitHub links.
+
+## Following Authors
+
+Any user who has published content can be followed.  Use the **Follow** link when viewing an article to follow its author.  Follows are not published to the blockchain or made public in any way so remain private to you.
+
+
+| :gear: **How It Works** |
+|-|
+| *Follows are saved to local storage in your browser.* |
+
+## Tipping
+
+To show appreciation for content and reward its author, readers can tip an article by clicking the ![tip button](./img/tip-button.png) symbol wherever it is found. Next to the symbol is a number representing the total amount of tipped ETH the article has received (displayed in mETH).
+
+Tips are made from the reader's wallet in the blockchain's native **ETH** currency and are sent to the wallet account of the content's registered author, minus a small platform fee of 10%.
+
+As an author, anytime a reader tips your content, your registered wallet account will be automatically credited.
+
+| :gear: **How It Works** |
+|-|
+| *Tips are sent to Seedling's on-chain TipJar smart contract, which identifies the content's registered author and forwards the tip to their wallet account, minus the platform fee.* |
 
 ## More Information
 
