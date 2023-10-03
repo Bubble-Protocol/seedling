@@ -34,11 +34,11 @@ Seedling is currently in beta and runs on the Base Goerli testnet.
 
 Feel free to browse the content already available on the [Seedling App](https://seedling-d.app).
 
-To learn how to write and publish content or to find out how Seedling works, see the [Help Article](/article/0xe190ea61cd19683e4b18fac89d2511de737dab598c6b7853531c94aa05a5119b) here on Seedling.
+To learn how to write and publish content or to find out how Seedling works, see the [Help Article](https://seedling-d.app/article/0xe190ea61cd19683e4b18fac89d2511de737dab598c6b7853531c94aa05a5119b) here on Seedling.
 
 ## Beta Phase
 
-Seedling is currently in a Beta phase, which means we're testing the waters, ironing out bugs, and continually enhancing the platform. The beta version runs on the Base Goerli testnet. New features are in the pipeline to support GitHub organisations and to allow users to create publications with free or paid subscriptions.
+Seedling is currently in a Beta phase, which means we're testing the waters, ironing out bugs, and continually enhancing the platform. The beta version runs on the Base Goerli testnet. New features are in the pipeline to support GitHub organisations and to allow users to create publications with free or paid subscriptions and options for tip sharing.
 
 We're excited to invite users to explore Seedling, share feedback, and help us create a truly decentralized content-sharing space.
 
