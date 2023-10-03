@@ -1,38 +1,40 @@
 ---
 title: About Seedling
-description: Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair content sharing. Seedling is inspired by the simplicity and user-friendly experience of platforms like Medium, but with a decentralized twist.
+description: Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair sharing of written content. Seedling is inspired by the simplicity and user-friendly experience of content discovery platforms like Medium, but with a decentralized twist.
 image: ./img/seedling2.png
 image-width: full
 ---
 # About Seedling
 
-Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair content sharing. Seedling is inspired by the simplicity and user-friendly experience of platforms like Medium, but with a decentralized twist. It's an arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
+Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair sharing of written content. Seedling is inspired by the simplicity and user-friendly experience of content discovery platforms like Medium, but with a decentralized twist. It's an arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
 
-## How It Works
+Seedling is currently in beta and runs on the Base Goerli testnet.
 
-Seedling marries blockchain technology with the effortless content creation and sharing experience you love. Here's a snapshot of how it operates:
+## Features
 
-1. **Publishing**: 
-   - Writers craft their stories, insights, or articles in [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) and store them in their GitHub accounts.
-   - Through Seedling, they publish the public URLs of their articles, which are then recorded on the blockchain, making them easily discoverable by other users.
+1. **Direct Publishing From GitHub**: 
+   
+   With Seedling, all content is directly hosted by authors on their GitHub accounts. Writers use the familiar [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) format to create their articles. Once written, the article URL is published on the blockchain making it discoverable by other users.  Seedling's smart contracts ensure only verified GitHub account holders can claim and publish their work.
 
 2. **Reading**: 
-   - Anyone can browse through the latest articles on a sleek, user-friendly interface reminiscent of Medium.
-   - No account or wallet is needed to browse the content.
+
+   *No wallet?  No GitHub account? No worries! Seedling is open for everyone to browse!* 
+   
+   All content on Seedling is public. Seedling's purpose is to present content in a clean and common format and to make articles discoverable through its user interface.  Future publications will allow editors to curate content for readers to follow and subscribe.
 
 3. **Engagement**:
-   - Connect your wallet to follow and tip users. Follows are held privately in the browser, hidden from other users.
-   - Follow your favourite authors to keep up with their latest publications.
-   - Share your favourite content on social media using the share links provided.
-   - Express your appreciation by tipping authors with cryptocurrency. A modest 10% platform fee is levied on tips to support the maintenance and further development of Seedling.
+  
+   By connecting their wallet, readers can follow their favourite authors and tip them to show appreciation.  These microtransactions directly reward authors for their valuable content.
 
-4. **Decentralization**:
-   - Your content remains yours, stored securely in your [GitHub](https://github.com) account, with Seedling acting as a window for others to discover and engage with your work.
-   - Seedling operates on robust smart contracts which ensure a fair, transparent, and decentralized process for every action on the platform.
-     - A [User Registry contract](https://goerli.basescan.org/address/0x04C2973Ab533B1eBe60ba608C026B37799BC5983) holds a mapping of GitHub accounts to user wallet addresses.
-     - A [Content Registry contract](https://goerli.basescan.org/address/0x038ADdfd80f722E4826A467690Ab50EEbE1cfFb7) accepts published urls, accepting only content located on the user's registered GitHub account.  The content's hash is recorded alongside the url allowing future verification.
-     - A [Tip Jar contract](https://goerli.basescan.org/address/0x778629c02e8Fe1Eb10e2149e017a20D519e55D6e) lets users tip content directly, automatically forwarding the tip to the content's author minus a small platform fee. 
-     - [TheGraph](https://thegraph.com/) is used by the app to query published content.
+4. **Open Source**:
+
+   Transparency is our core value. Seedling's app and smart contracts are open source, allowing the community to review, contribute, and ensure the integrity of the platform. Dive into our codebase [here](https://github.com/Bubble-Protocol/seedling).
+
+## Getting Started
+
+Feel free to browse the content already available on the [Seedling App](https://seedling-d.app).
+
+To learn how to write and publish content or to find out how Seedling works, see the [Help Article](/article/0xe190ea61cd19683e4b18fac89d2511de737dab598c6b7853531c94aa05a5119b) here on Seedling.
 
 ## Beta Phase
 
@@ -40,15 +42,19 @@ Seedling is currently in a Beta phase, which means we're testing the waters, iro
 
 We're excited to invite users to explore Seedling, share feedback, and help us create a truly decentralized content-sharing space.
 
-## Join Us
+## Connect With Us
 
 Embark on a journey of decentralized content discovery and sharing with Seedling. Connect your wallet and GitHub account, and step into a realm where content ownership reigns supreme.
 
-Feel free to reach out with any questions, feedback, or suggestions on the [Bubble Protocol Discord server](https://discord.gg/sSnvK5C) or at support@seedling-d.app.
+[Follow Bubble Protocol on Seedling](https://seedling-d.app/user/github/Bubble-Protocol) for updates and other blog posts.
+
+For any enquiries, feedback, or suggestions, join us on the [Bubble Protocol Discord server](https://discord.gg/sSnvK5C), or send us an email at support@seedling-d.app.
+
+Twitter: [@BubbleProtocol](https://twitter.com/BubbleProtocol)
 
 Happy reading and writing on Seedling!
 
-_Last updated: 1-Oct-2023_
+_Last updated: 3-Oct-2023_
 
 
 
