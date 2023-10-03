@@ -34,24 +34,62 @@ Creating an account is a two step process:
 
 | :gear: **How It Works** |
 |:-|
-| *The secure Seedling OAuth server is trusted to register your username with Seedling's on-chain User Registry, linking your username with your wallet address. Once registered, you can use your wallet to publish content, held in any of your GitHub repositories, to Seedling's on-chain Content Registry.  The *Content Registry* prevents anyone else from publishing urls from your GitHub account.* |
+| *The secure Seedling OAuth server is trusted to register your username with Seedling's on-chain User Registry, linking your username with your wallet address. Once registered, you can use your wallet to publish content, held in any of your GitHub repositories, to Seedling's on-chain Content Registry.  The *Content Registry* prevents anyone else from publishing urls from your GitHub account.*|
+
+## Writing Content
+
+Articles on Seedling are written in [GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) and must be hosted in a public GitHub repository within your GitHub account.
+
+By default, Seedling will attempt to extract the title, description and image from the article content.  However, you can have greater control over these fields and others by including a header within the article.
+### Header
+
+To insert a header, place a block at the start of the article surrounded by three dashes `---`.  For example,
+
+```
+---
+title: Seedling Help
+description: How to create your account, publish content and tip authors.
+image: ./img/seedling.png
+image-caption: Made with Midjourney
+image-width: medium
+---
+```
+
+#### Available fields
+
+| Field | Header Field | Default if not given in the header |
+|-------|:------------ |:---------------------------------- |
+| Title | title | The first H1-level heading within the content |
+| Description | description | The first paragraph within the content |
+| Image URL | image | The first image within the content |
+| Image Caption | image-caption | n/a |
+| Image Width | image-width * | `default` (same width as text content) |
+
+\* Image width can be `full`, `medium` or `default`.
 
 
+### Relative Links
+
+Any relative links within your markdown will be expanded relative to the published url on `https://github.com`.
 ## Publishing Content
 
-Content on Seedling is written in markdown and hosted in a public GitHub repository within your GitHub account.  Publishing requires a blockchain transaction from your wallet, so you will need a small amount of funds in your wallet account.  Seedling does not charge a fee for publishing content.
+Content on Seedling is hosted on [GitHub](https://github.com), from a public repository in your GitHub account. This gives you full ownership and control of your content.
 
-1. **Write Your Content** in [GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+To publish content on Seedling you must have verified ownership of your GitHub account.  See [Creating Your Account](#creating-your-account) above.  You can only publish content hosted in your own GitHub account.
 
-2. **Publish Your Content** in a ***public*** repository in your GitHub account.
+Publishing requires a blockchain transaction from your wallet, so you will need a small amount of funds in your wallet account.  Seedling does not charge a fee for publishing content.
 
-3. **Create a Seedling Account** by connecting your wallet and verifying you are the owner of your GitHub account. You should now see your GitHub avatar in the top right corner of the app.
+### How To Publish
 
-4. **Click the *Publish* Button** to open the publish page.
+1. **Commit Your Content** in a ***public*** repository in your GitHub account.
 
-5. **Copy & Paste Your Content URL** from GitHub to the publish page. Seedling will accept the URL of the content's main page or its raw URL link.
+2. **Create a Seedling Account** by connecting your wallet and verifying you are the owner of your GitHub account. You should now see your GitHub avatar in the top right corner of the app.
 
-6. **Click Publish** to use your wallet to publish your content URL to the blockchain.  Optionally use the *Preview* button to see how your content will look before publishing. 
+3. **Click the *Publish* Button** to open the publish page.
+
+4. **Copy & Paste Your Content URL** from GitHub to the publish page. Seedling will accept the URL of the content's main page or its raw URL link.
+
+5. **Click Publish** to use your wallet to publish your content URL to the blockchain.  Optionally use the *Preview* button to see how your content will look before publishing. 
 
 It may take a few minutes before your published content is visible in the app.
  
