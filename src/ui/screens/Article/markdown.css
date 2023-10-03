@@ -27,7 +27,7 @@
   font-weight: 700;
   line-height: 40px;
   margin-top: 1.5em;
-  margin-bottom: 0;
+  margin-bottom: 0.5em;
 }
 
 .markdown h2 {
@@ -35,15 +35,19 @@
   font-weight: 700;
   line-height: 30px;
   margin-top: 1.4em;
-  margin-bottom: 0;
+  margin-bottom: 0.5em;
 }
 
-.markdown h3, .markdown h4, .markdown h5, .markdown h6 {
+.markdown h3, .markdown h4, .markdown h5, .markdown h6, .markdown h7, .markdown h8 {
   font-size: 20px;
   font-weight: 700;
   line-height: 25px;
   margin-top: 1.4em;
-  margin-bottom: 0;
+  margin-bottom: 0.5em;
+}
+
+.markdown p {
+  margin-block-start: 0;
 }
 
 .markdown img {
