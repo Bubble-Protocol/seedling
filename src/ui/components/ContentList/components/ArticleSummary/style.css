@@ -47,11 +47,11 @@
 
 .article-summary .summary-description {
   color: #242424;
-  font-family: Asar;
-  font-size: 16px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 140%;
 }
 
 .article-summary .summary-author-bar {
@@ -168,7 +168,7 @@
   }
 
   .article-summary .summary-description {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .article-summary .summary-author-bar {

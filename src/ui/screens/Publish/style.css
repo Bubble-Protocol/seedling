@@ -8,11 +8,11 @@
   text-align: center;
   gap: 48px;
   flex: 1 0 0;
-  font-family: Asar;
-  font-size: 18px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 19px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 140%;
   color: #242424;
   height: 100%;
   overflow-y: scroll;
@@ -88,4 +88,26 @@
 
 .publish-screen .error-text {
   font-size: 17px;
+}
+
+
+@media only screen and (max-width: 712px) {
+
+  .publish-screen {
+    font-size: 17px;
+  }
+
+  .publish-screen .summary-title {
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  .publish-screen text-link {
+    font-size: 17px;
+  }
+    
+  .publish-screen .error-text {
+    font-size: 15px;
+  }
+  
 }
