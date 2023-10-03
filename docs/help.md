@@ -59,13 +59,13 @@ image-width: medium
 
 | Field | Header Field | Default if not given in the header |
 |-------|:------------ |:---------------------------------- |
-| Title | title | The first H1-level heading within the content |
-| Description | description | The first paragraph within the content |
-| Image URL | image | The first image within the content |
-| Image Caption | image-caption | n/a |
-| Image Width | image-width * | `default` (same width as text content) |
+| Title | `title` | The first H1-level heading within the content |
+| Description | `description` | The first paragraph within the content |
+| Image URL | `image` | The first image within the content |
+| Image Caption | `image-caption` | n/a |
+| Image Width | `image-width` * | `default` (same width as text content) |
 
-\* Image width can be `full`, `medium` or `default`.
+\* `image-width` can be `full`, `medium` or `default`.
 
 
 ### Relative Links
@@ -132,7 +132,7 @@ For more information, questions, feedback or suggestions, feel free to contact u
 
 Happy reading and writing on Seedling!
 
-_Last updated: 1-Oct-2023_
+_Last updated: 3-Oct-2023_
 
 
 
