@@ -1,18 +1,22 @@
 .markdown {
   color: #242424;
-  font-family: Asar;
+  font-family: Georgia;
   font-size: 20px;
+  line-height: 160%;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
   width: 100%;
   box-sizing: border-box;
   max-width: 712px;
   padding: 12px 16px;
 }
 
+strong {
+  font-size: 90%;
+}
+
 .markdown title, .markdown h1, .markdown h2, .markdown h3, .markdown h4, .markdown h5, .markdown h6, .markdown h7, .markdown h8 {
-  font-family: Mukta;
+  font-family: Mukta, sans-serif;
   font-style: normal;
 }
 
@@ -31,7 +35,7 @@
 }
 
 .markdown h2 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   line-height: 30px;
   margin-top: 1.4em;
@@ -39,7 +43,7 @@
 }
 
 .markdown h3, .markdown h4, .markdown h5, .markdown h6, .markdown h7, .markdown h8 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   line-height: 25px;
   margin-top: 1.4em;
@@ -56,6 +60,7 @@
 
 .markdown a {
   color: #242424;
+  font-size: 90%;
   font-weight: 700;
   text-decoration: underline;
 }
@@ -91,12 +96,9 @@
 
 .markdown tbody, .markdown td, .markdown tfoot, .markdown th, .markdown thead, .markdown tr {
   border: 1px solid #c8c8c8;
-  padding: 2px 12px;
-  font-family: Asar;
+  padding: 8px 16px;
   font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  line-height: 160%;
 }
 
 .markdown th {
@@ -110,6 +112,10 @@
 
 @media only screen and (max-width: 712px) {
 
+  .markdown {
+    font-size: 18px;
+  }
+  
   .markdown title {
     font-size: 30px;
     font-weight: 700;
@@ -120,5 +126,5 @@
     font-size: 27px;
     line-height: 33px;
   }
-  
+
 }
