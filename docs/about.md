@@ -12,17 +12,19 @@ Seedling is currently in beta and runs on the Base Goerli testnet.
 
 ## Features
 
-1. **Direct Publishing From GitHub**: 
+1. **Authors Own Their Content**: 
    
    With Seedling, all content is directly hosted by authors on their GitHub accounts. Writers use the familiar [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) format to create their articles. Once written, the article URL is published on the blockchain making it discoverable by other users.  Seedling's smart contracts ensure only verified GitHub account holders can claim and publish their work.
 
-2. **Reading**: 
+2. **No Account Or Wallet Needed**: 
 
    *No wallet?  No GitHub account? No worries! Seedling is open for everyone to browse!* 
    
-   All content on Seedling is public. Seedling's purpose is to present content in a clean and common format and to make articles discoverable through its user interface.  Future publications will allow editors to curate content for readers to follow and subscribe.
+   All content on Seedling is public, shareable with anyone through its unique Seedling URL.  No wallet or account is needed to read shared content. Only tipping and publishing require knowledge of wallets or GitHub.
+   
+   Seedling's purpose is to present publicly available content from GitHub in a clean, accessible and consistent format, and to make articles discoverable through its user interface.  Future features, such as Publications, will add to Seedlings discovery capabilities by allowing editors to curate content for readers to follow and subscribe.
 
-3. **Engagement**:
+3. **Cryptocurrency Tipping**:
   
    By connecting their wallet, readers can follow their favourite authors and tip them to show appreciation.  These microtransactions directly reward authors for their valuable content.
 
