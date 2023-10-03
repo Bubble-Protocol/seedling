@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./style.css";
 import "./markdown.css";
 import ReactMarkdown from "react-markdown";
@@ -22,6 +22,7 @@ export const Article = () => {
   const [following, setFollowing] = useState(false);
   const [error, setError] = useState(null);
   const [tipModal, setTipModal] = useState();
+  const articleRef = useRef();
 
   useEffect(() => {
     const fetchArticle = async asPreview => {
@@ -29,6 +30,7 @@ export const Article = () => {
         const fetchedArticle = asPreview ? await getPreview(decodeURIComponent(preview)) : await getArticleById(id);
         if (!fetchedArticle.markdown) setError('Article Not Found!');
         else {
+          if (articleRef.current) articleRef.current.scrollTop = 0;
           setArticle(fetchedArticle);
           if (user.followingFunctions) setFollowing(user.followingFunctions.isFollowing(fetchedArticle.author.username));
         }
@@ -49,11 +51,11 @@ export const Article = () => {
   }, [user]);
 
 
-  const components = {
-    a: ({node, ...props}) => (
-      <a {...props} target="_blank" rel="noopener noreferrer" />
-    ),
-  };
+  // const components = {
+  //   a: ({node, ...props}) => (
+  //     <a {...props} target="_blank" rel="noopener noreferrer" />
+  //   ),
+  // };
 
   function openTipModal(event) {
     if (!id) return; // preview only
@@ -90,7 +92,7 @@ export const Article = () => {
   }
 
   return (
-      <div className="article">
+      <div className="article" ref={articleRef}>
       {tipModal && <TipModal x={tipModal.x} y={tipModal.y} article={article} onClose={() => setTipModal(null)} /> }
 
         {/* Image & Title */}
@@ -120,7 +122,7 @@ export const Article = () => {
         <ActivityBar article={article} openTipModal={openTipModal} />
 
         {/* Markdown */}
-        <ReactMarkdown className="markdown" remarkPlugins={[gfm, remarkEmoji]} components={components}>
+        <ReactMarkdown className="markdown" remarkPlugins={[gfm, remarkEmoji]} components={{a: CustomLinkRenderer}} >
           {article.markdown}
         </ReactMarkdown>
 
@@ -131,3 +133,12 @@ export const Article = () => {
   );
 
 };
+
+function CustomLinkRenderer(props) {
+  const url = new URL(props.href);
+  if (url.hostname === 'seedling-d.app') {
+    return <Link to={`${url.pathname}${url.search}${url.hash}`}>{props.children}</Link>;
+  } else {
+    return <a href={props.href} target="_blank" rel="noopener noreferrer">{props.children}</a>;
+  }
+}
