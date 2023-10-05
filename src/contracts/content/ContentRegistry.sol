@@ -82,26 +82,33 @@ contract ContentPublisher is ContentStorage {
   }
 
   function publish(bytes32 _contentHash, string memory _username, string memory _contentPath) external onlyProxy {
-    _publish(msg.sender, _contentHash, _username, _contentPath);
+    bytes32 userId = keccak256(bytes(_username));
+    _publish(userId, msg.sender, _contentHash, _username, _contentPath);
   }
 
   function unpublish(bytes32 _contentHash) external onlyProxy {
-    _unpublish(msg.sender, _contentHash);
+    ContentMetadata memory content = contentMetadata[_contentHash];
+    _unpublish(content, msg.sender, _contentHash);
   }
 
-  function publishOnBehalfOf(bytes32 _contentHash, string memory _username, string memory _contentPath, IOrganisation _org) external onlyProxy {
-    require(_org.hasRole(PUBLISHER_ROLE, msg.sender), "permission denied");
-    _publish(address(_org), _contentHash, _username, _contentPath);
+  function publishAsOrg(bytes32 _contentHash, string memory _username, string memory _contentPath) external onlyProxy {
+    bytes32 orgId = keccak256(bytes(_username));
+    address org = userRegistry.getUserAddress(orgId);
+    require(org != address(0), 'org not registered');
+    require(IOrganisation(org).hasRole(PUBLISHER_ROLE, msg.sender), "permission denied");
+    _publish(orgId, org, _contentHash, _username, _contentPath);
   }
 
-  function unpublishOnBehalfOf(bytes32 _contentHash, IOrganisation _org) external onlyProxy {
-    require(_org.hasRole(UNPUBLISHER_ROLE, msg.sender), "permission denied");
-    _unpublish(address(_org), _contentHash);
+  function unpublishAsOrg(bytes32 _contentHash) external onlyProxy {
+    ContentMetadata memory content = contentMetadata[_contentHash];
+    require(content.author != 0, 'content not found');
+    address org = userRegistry.getUserAddress(content.author);
+    require(org != address(0), 'org not registered');
+    require(IOrganisation(org).hasRole(UNPUBLISHER_ROLE, msg.sender), "permission denied");
+    _unpublish(content, org, _contentHash);
   }
 
-  function _publish(address _user, bytes32 _contentHash, string memory _username, string memory _contentPath) private {
-    require(address(this) == storageContract, 'only the storage contract can call this function');
-    bytes32 authorId = keccak256(bytes(_username));
+  function _publish(bytes32 authorId, address _user, bytes32 _contentHash, string memory _username, string memory _contentPath) private {
     string memory url = string.concat(_username, '/', _contentPath);
     bytes32 urlHash = keccak256(bytes(url));
     require(userRegistry.hasUsername(_user, authorId), 'user not registered or incorrect username');
@@ -113,9 +120,7 @@ contract ContentPublisher is ContentStorage {
     emit PublishedContent(_contentHash, url, authorId);
   }
 
-  function _unpublish(address _user, bytes32 _contentHash) private {
-    require(address(this) == storageContract, 'only the storage contract can call this function');
-    ContentMetadata memory content = contentMetadata[_contentHash];
+  function _unpublish(ContentMetadata memory content, address _user, bytes32 _contentHash) private {
     require(userRegistry.getUserAddress(content.author) == _user, 'permission denied');
     bytes32 urlHash = keccak256(bytes(content.url));
     delete contentUrlRegistry[urlHash];

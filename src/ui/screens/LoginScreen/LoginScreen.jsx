@@ -4,7 +4,6 @@ import { stateManager } from "../../../state-context";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Footer } from "../../components/Footer";
 import { CheckBox } from "../../components/CheckBox";
-import { TextBox } from "../../components/TextBox";
 
 export const LoginScreen = () => {
 
@@ -22,7 +21,7 @@ export const LoginScreen = () => {
   useEffect(() => {
     if (user.account && user.account === accountParam && usernameParam) {
       try {
-        setUsername(accountParam, usernameParam);
+        setUsername(accountParam, usernameParam, 'user');
         navigate('/');
       }
       catch(error) {

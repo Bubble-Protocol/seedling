@@ -49,11 +49,11 @@ export class Model {
     this.tipManager.initialise();
   }
 
-  setUsername(account, username) {
+  setUsername(account, username, type) {
     if (!this.session) throw new Error('wallet not connected');
     if (account !== this.session.id) throw new Error('incorrect account');
-    this.session.setUsername(username);
-    stateManager.dispatch('user', {account, username: this.session.username});
+    this.session.setUsername(username, type);
+    stateManager.dispatch('user', {account, username: this.session.username, isOrg: this.session.isOrg});
   }
 
   async getPreview(urlStr) {
@@ -63,7 +63,7 @@ export class Model {
 
   async publish(urlStr) {
     if (!this.session) throw new Error('wallet not connected');
-    return this.contentManager.publish(urlStr, this.session.username)
+    return this.contentManager.publish(urlStr, {isOrg: this.session.isOrg})
   }
 
   _handleAccountChanged(account) {
@@ -74,6 +74,7 @@ export class Model {
       const user = {
         account, 
         ...this.contentManager.parseUsername(this.session.username),
+        isOrg: this.session.isOrg,
         followingFunctions: {
           follow: this.session.following.follow,
           unfollow: this.session.following.unfollow,

@@ -95,11 +95,11 @@ export class Content {
       });
   }
 
-  async publish(urlStr) {
+  async publish(urlStr, options) {
     const {url, relLinkUrl} = this.parseContentUrl(urlStr);
     const {username, contentPath} = this.getUsernameAndContentPath(url);
     const content = await this._fetchContent('publish', url, relLinkUrl);
-    return this.blockchain.publishContent(content.contentHash, username, contentPath);
+    return this.blockchain.publishContent(content.contentHash, username, contentPath, options);
   }
 
   async isUserRegistered(username) {

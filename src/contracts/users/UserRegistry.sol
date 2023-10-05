@@ -76,6 +76,7 @@ contract UserManager is UserRegistryStorage {
   function initialise() external onlyOwner onlyProxy {
     _verifyEternalStorage(_endOfStorage);
     require(!initialised, 'already initialised');
+    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     initialised = true;
   }
 

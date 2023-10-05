@@ -75,7 +75,7 @@ export const OrgLoginScreen = () => {
 
   function reconnect() {
     if (!valid || !selectedOrg || !selectedOrgAlreadyRegistered) return;
-    setUsername(accountParam, selectedOrg.username);
+    setUsername(accountParam, selectedOrg.username, 'org');
     navigate('/');
   }
 
