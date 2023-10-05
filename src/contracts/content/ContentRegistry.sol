@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Proxy.sol";
 import "../IUserRegistry.sol";
 import "../EternalStorage.sol";
+import "../IOrganisation.sol";
 
 abstract contract ContentStorage is EternalStorage {
 
@@ -81,11 +82,29 @@ contract ContentPublisher is ContentStorage {
   }
 
   function publish(bytes32 _contentHash, string memory _username, string memory _contentPath) external onlyProxy {
+    _publish(msg.sender, _contentHash, _username, _contentPath);
+  }
+
+  function unpublish(bytes32 _contentHash) external onlyProxy {
+    _unpublish(msg.sender, _contentHash);
+  }
+
+  function publishOnBehalfOf(bytes32 _contentHash, string memory _username, string memory _contentPath, IOrganisation _org) external onlyProxy {
+    require(_org.hasRole(PUBLISHER_ROLE, msg.sender), "permission denied");
+    _publish(address(_org), _contentHash, _username, _contentPath);
+  }
+
+  function unpublishOnBehalfOf(bytes32 _contentHash, IOrganisation _org) external onlyProxy {
+    require(_org.hasRole(UNPUBLISHER_ROLE, msg.sender), "permission denied");
+    _unpublish(address(_org), _contentHash);
+  }
+
+  function _publish(address _user, bytes32 _contentHash, string memory _username, string memory _contentPath) private {
     require(address(this) == storageContract, 'only the storage contract can call this function');
     bytes32 authorId = keccak256(bytes(_username));
     string memory url = string.concat(_username, '/', _contentPath);
     bytes32 urlHash = keccak256(bytes(url));
-    require(userRegistry.hasUsername(msg.sender, authorId), 'user not registered or incorrect username');
+    require(userRegistry.hasUsername(_user, authorId), 'user not registered or incorrect username');
     require(_contentHash != 0, 'hash is zero');
     require(contentMetadata[_contentHash].author == 0x00, 'content already published');
     require(contentUrlRegistry[urlHash] == 0x00, 'content path already published');
@@ -94,10 +113,10 @@ contract ContentPublisher is ContentStorage {
     emit PublishedContent(_contentHash, url, authorId);
   }
 
-  function unpublish(bytes32 _contentHash) external onlyProxy {
+  function _unpublish(address _user, bytes32 _contentHash) private {
     require(address(this) == storageContract, 'only the storage contract can call this function');
-    ContentMetadata storage content = contentMetadata[_contentHash];
-    require(userRegistry.getUserAddress(content.author) == msg.sender, 'permission denied');
+    ContentMetadata memory content = contentMetadata[_contentHash];
+    require(userRegistry.getUserAddress(content.author) == _user, 'permission denied');
     bytes32 urlHash = keccak256(bytes(content.url));
     delete contentUrlRegistry[urlHash];
     delete contentMetadata[_contentHash];
@@ -105,4 +124,3 @@ contract ContentPublisher is ContentStorage {
   }
 
 }
-

@@ -1,6 +1,6 @@
 
 
-.login-screen {
+.org-login-screen {
   display: flex;
   max-width: 712px;
   padding: 48px 16px;
@@ -20,7 +20,7 @@
   box-sizing: border-box;
 }
 
-.login-screen .summary-title {
+.org-login-screen .summary-title {
   font-family: Mukta;
   font-size: 40px;
   font-style: normal;
@@ -28,17 +28,11 @@
   line-height: 48px;
 }
 
-.login-screen .step-title {
-  font-family: Mukta;
-  font-size: 22px;
-  font-weight: 700px;
-}
-
-.login-screen text-link {
+.org-login-screen text-link {
   font-size: 20px;
 }
 
-.login-screen .summary-content {
+.org-login-screen .summary-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,49 +40,63 @@
 }
 
 
-.login-screen .text-link, .login-screen .text-link:visited {
+.org-login-screen .text-link, .org-login-screen .text-link:visited {
   color: #0280D9;
   text-decoration: underline;
 }
 
-.login-screen .text-link:hover {
+.org-login-screen .text-link:hover {
   cursor: pointer;
 }
 
-.login-screen .user-connected-row {
+.org-login-screen .user-connected-row {
   display: flex;
   gap: 4px;
   align-items: center;
 }
 
-.login-screen .tick {
+.org-login-screen .tick {
   width: 40px;
   height: 40px;
 }
 
-.login-screen .username {
+.org-login-screen .username {
   font-family: Mukta;
   font-size: 22px;
   font-weight: 700px;
 }
 
-.login-screen .error-text {
+.org-login-screen .org-name {
+  font-family: Mukta;
+  font-size: 20px;
+  font-weight: 700px;
+}
+
+.org-login-screen .org-already-registered {
+  opacity: 50%;
+}
+
+.org-login-screen .error-text {
   font-size: 17px;
 }
 
-.login-screen .org-selector {
+.org-login-screen .org-selector {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-.login-screen .label {
+.org-login-screen .label {
   font-size: 16px;
   line-height: 20px;
   color: #aaa;
 }
 
-.login-screen .org-name-frame {
+.org-login-screen .light {
+  color: #aaa;
+}
+
+.org-login-screen .org-name-frame {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -97,16 +105,16 @@
 
 @media only screen and (max-width: 712px) {
 
-  .login-screen {
+  .org-login-screen {
     font-size: 17px;
   }
 
-  .login-screen .summary-title {
+  .org-login-screen .summary-title {
     font-size: 28px;
     line-height: 40px;
   }
 
-  .login-screen .error-text {
+  .org-login-screen .error-text {
     font-size: 15px;
   }
   

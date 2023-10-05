@@ -118,6 +118,10 @@ code {
   cursor: initial;
 }
 
+.test {
+  display: flex !important;
+}
+
 .App .app-content {
   flex: 1;
   display: flex;

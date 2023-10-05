@@ -13,8 +13,10 @@ export class StateManager {
 
   dispatch(name, newValue) {
     if (!this.listeners.hasEvent(name)) throw new Error('non-existent state data: '+name);
-    this.state[name] = newValue;
-    this.listeners.notifyListeners(name, newValue);
+    if (this.state[name] !== newValue) {
+      this.state[name] = newValue;
+      this.listeners.notifyListeners(name, newValue);
+    }
   }
 
   useStateData(name) {

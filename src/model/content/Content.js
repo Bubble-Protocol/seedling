@@ -102,6 +102,10 @@ export class Content {
     return this.blockchain.publishContent(content.contentHash, username, contentPath);
   }
 
+  async isUserRegistered(username) {
+    return this.blockchain.userRegistry.call('isRegistered', [keccak256(username)]);
+  }
+
   async _fetchContentAndAuthor(metadata) {
     const {url, relLinkUrl, sourceUrl} = this.parseContentUrl(metadata.url);
     const [content, author] = await Promise.all([

@@ -17,15 +17,25 @@ export class Session {
     return this.username !== undefined;
   }
 
-  connectToGithub() {
+  async connectToGithub(type) {
     if (this.username) return Promise.reject(new Error('already connected'));
-    console.trace('connecting to GitHub as', this.id);
+    console.trace('connecting to GitHub as', this.id, type);
     const config = DEFAULT_CONFIG.oauth.github;
     this.activeOauthConnect = 'github';
     this._saveState();
-    const state = encodeURIComponent(JSON.stringify({ account: this.id }));
-    window.location.href = `${config.uri}?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&state=${state}`;
-    return Promise.resolve();
+    const state = encodeURIComponent(JSON.stringify({ type, account: this.id }));
+    const scope = type === 'user-reg' ? '' : '&scope=read:org';
+    window.location.href = `${config.uri}?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&state=${state}${scope}`;
+  }
+
+  async deployOrg(orgManager, account, username) {
+    console.trace('deploying org', username);
+    if (account !== this.id) throw new Error('Login session mismatch. Did you change wallet accounts?')
+    const orgAddress = await orgManager.deployOrg();
+    console.trace('successfully deployed org at address:', orgAddress);
+    const config = DEFAULT_CONFIG.oauth.github;
+    const state = encodeURIComponent(JSON.stringify({ type: 'org-reg', account: account, org: {username, address: orgAddress} }));
+    window.location.href = `${config.uri}?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&state=${state}&scope=read:org`;
   }
 
   setUsername(username) {

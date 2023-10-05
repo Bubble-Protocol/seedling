@@ -52,6 +52,30 @@ export class RainbowKitWallet {
     else return undefined;
   }
 
+  async deploy(sourceCode, params=[], options={}) {
+    if (this.state !== WALLET_STATE.connected) throw {code: 'wallet-unavailable', message: 'wallet is not available'};
+
+    const chainId = this.getChain();
+    const walletClient = await getWalletClient({chainId});
+    const publicClient = getPublicClient({chainId});
+
+    const txHash = await walletClient.deployContract({
+      account: this.account,
+      abi: sourceCode.abi,
+      bytecode: sourceCode.bytecode || sourceCode.bin,
+      args: params,
+      ...options
+    });
+
+    console.trace('txHash', txHash);
+
+    const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
+
+    console.trace('receipt', receipt);
+
+    return receipt.contractAddress;
+  }
+
   async send(contractAddress, abi, method, params=[], options={}) { 
     if (this.state != WALLET_STATE.connected) throw {code: 'wallet-unavailable', message: 'wallet is not available'};
 

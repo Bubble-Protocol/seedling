@@ -3,6 +3,8 @@ import "./style.css";
 import { stateManager } from "../../../state-context";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Footer } from "../../components/Footer";
+import { CheckBox } from "../../components/CheckBox";
+import { TextBox } from "../../components/TextBox";
 
 export const LoginScreen = () => {
 
@@ -14,8 +16,8 @@ export const LoginScreen = () => {
   const user = stateManager.useStateData("user")();
   const { connectToGithub, setUsername } = stateManager.useStateData("account-functions")();
   const [connecting, setConnecting] = useState(!!usernameParam);
+  const [orgSelected, setOrgSelected] = useState(false);
   const [error, setError] = useState(errorParam);
-
   
   useEffect(() => {
     if (user.account && user.account === accountParam && usernameParam) {
@@ -31,7 +33,8 @@ export const LoginScreen = () => {
 
   function connect() {
     setConnecting(true);
-    connectToGithub()
+    const type = orgSelected ? 'org-list' : 'user-reg';
+    connectToGithub(type)
       .catch(error => setError(error))
       .finally(() => setConnecting(false));
   }
@@ -44,6 +47,10 @@ export const LoginScreen = () => {
       This action will publicly associate your wallet account with your GitHub account. 
       Please choose a wallet account that you are comfortable being linked to your identity.
       </p>
+      <div className="org-selector">
+        <CheckBox selected={orgSelected} setSelected={setOrgSelected} />
+        <span>Connect As GitHub Organisation</span>
+      </div>
       <div className="summary-content">
         {error && <div className="error-text">{error.message || error}</div>}
         {connecting && <div className="loader"></div>}

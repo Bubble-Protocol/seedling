@@ -13,6 +13,7 @@ import { UserHome } from "./screens/UserHome";
 import anonymousUserIcon from '../assets/img/user.png';
 import { DropdownMenu } from "./components/DropdownMenu/DropdownMenu";
 import { MobileMenu } from "./components/MobileMenu";
+import { OrgLoginScreen } from "./screens/OrgLoginScreen";
 
 export const App = () => {
 
@@ -41,7 +42,7 @@ export const App = () => {
         <img className="logo clickable" src={logo} onClick={() => window.innerWidth >= 910 ? navigate('/') : setMenuVisible(!menuVisible)} ></img>
         <span className="expander"></span>
         {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : navigate('/publish') }}>Publish</span>}
-        {!user.username && <ConnectButton showBalance={false} chainStatus="none" />}
+        {!user.username && <ConnectButton className="test" showBalance={false} />}
         {user.username && 
           <DropdownMenu direction="bottom-left" options={[
             {name: user.name},
@@ -60,6 +61,7 @@ export const App = () => {
           <Route path='/following' element={<HomeScreen key="following" filter="following" />} />
           <Route path='/user/:platform/:username' element={<UserHome/>} />
           <Route path='/login' element={<LoginScreen/>} />
+          <Route path='/org-login' element={<OrgLoginScreen/>} />
           <Route path='/article/:id' element={<Article />} />
           <Route path='/preview/:preview' element={<Article />} />
           <Route path='/publish' element={<Publish />} />

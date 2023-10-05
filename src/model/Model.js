@@ -4,6 +4,7 @@ import { stateManager } from "../state-context";
 import { RainbowKitWallet } from "./wallets/RainbowKitWallet";
 import { TipManager } from "./tips/TipManager";
 import { Session } from "./Session";
+import { OrgManager } from "./content/OrgManager";
 
 export class Model {
 
@@ -16,13 +17,16 @@ export class Model {
     this.wallet.on('connected', this._handleAccountChanged.bind(this));
     this.wallet.on('disconnected', this._handleAccountChanged.bind(this));
     this.wallet.on('account-changed', this._handleAccountChanged.bind(this));
-    this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG.contentRegistry, this.wallet);
+    this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG, this.wallet);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
+    this.orgManager = new OrgManager(this.wallet, DEFAULT_CONFIG.userRegistry.contract.address);
+    stateManager.register('wallet-connected', false);
     stateManager.register('user', {h:'h'});
     stateManager.register('account-functions', {
-      connectToGithub: () => this.session && this.session.connectToGithub(),
+      connectToGithub: (type) => this.session && this.session.connectToGithub(type),
       disconnect: this.wallet.disconnect.bind(this.wallet),
-      setUsername: this.setUsername.bind(this)
+      setUsername: this.setUsername.bind(this),
+      deployOrganisation: (...params) => this.session && this.session.deployOrg(this.orgManager, ...params)
     });
     stateManager.register('content-functions', {
       getArticleById: this.contentManager.fetchArticle.bind(this.contentManager),
@@ -31,7 +35,8 @@ export class Model {
       getUser: this.contentManager.fetchUserByUsername.bind(this.contentManager),
       getUserContent: this.contentManager.fetchContentByUserId.bind(this.contentManager),
       getLatestContent: this.contentManager.fetchLatestContent.bind(this.contentManager),
-      getFollowingContent: this.contentManager.fetchAuthorsContentByUsername.bind(this.contentManager)
+      getFollowingContent: this.contentManager.fetchAuthorsContentByUsername.bind(this.contentManager),
+      isUserRegistered: this.contentManager.isUserRegistered.bind(this.contentManager)
     });
     stateManager.register('tip-functions', {
       tip: this.tipManager.tip.bind(this.tipManager),
@@ -78,9 +83,11 @@ export class Model {
       };
       console.trace('user set to', this.session.username, user)
       stateManager.dispatch('user', user);
+      stateManager.dispatch('wallet-connected', true);
     }
     else {
       stateManager.dispatch('user', {account});
+      stateManager.dispatch('wallet-connected', false);
     }
   }
 
