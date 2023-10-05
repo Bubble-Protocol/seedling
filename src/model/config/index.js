@@ -32,5 +32,10 @@ export const DEFAULT_CONFIG = {
       clientId: "71b2165c311205b56efb",
       redirectUri: "https://vault.bubbleprotocol.com/github-callback",
     }
+  },
+  fees: {  // in dollars
+    orgManager: {
+      deployOrg: 0
+    }
   }
 }

@@ -34,8 +34,10 @@ export const LoginScreen = () => {
     setConnecting(true);
     const type = orgSelected ? 'org-list' : 'user-reg';
     connectToGithub(type)
-      .catch(error => setError(error))
-      .finally(() => setConnecting(false));
+      .catch(error => {
+        setError(error);
+        setConnecting(false)
+      });
   }
 
   return (

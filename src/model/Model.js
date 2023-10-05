@@ -19,7 +19,12 @@ export class Model {
     this.wallet.on('account-changed', this._handleAccountChanged.bind(this));
     this.contentManager = new Content(DEFAULT_CONFIG.graphUri, DEFAULT_CONFIG, this.wallet);
     this.tipManager = new TipManager(DEFAULT_CONFIG.tipJar, this.wallet);
-    this.orgManager = new OrgManager(this.wallet, DEFAULT_CONFIG.userRegistry.contract.address);
+    this.orgManager = new OrgManager({
+      wallet: this.wallet, 
+      userRegistryAddress: DEFAULT_CONFIG.userRegistry.contract.address, 
+      fees: DEFAULT_CONFIG.fees.orgManager, 
+      exchangeRate: this.tipManager.dollarExchangeRate
+    });
     stateManager.register('wallet-connected', false);
     stateManager.register('user', {h:'h'});
     stateManager.register('account-functions', {
@@ -46,7 +51,8 @@ export class Model {
   }
 
   async initialise() {
-    this.tipManager.initialise();
+    this.tipManager.initialise()
+      .then(() => this.orgManager.initialise(this.tipManager.dollarExchangeRate));
   }
 
   setUsername(account, username, type) {

@@ -32,14 +32,20 @@ export class Session {
   async deployOrg(orgManager, account, username) {
     console.trace('deploying org', username);
     if (account !== this.id) throw new Error('Login session mismatch. Did you change wallet accounts?')
-    const orgAddress = await orgManager.deployOrg();
-    console.trace('successfully deployed org at address:', orgAddress);
+    const {address, fee} = await orgManager.deployOrg();
+    console.trace('successfully deployed org at address:', address);
     this.isOrg = true;
     this.activeOauthConnect = 'github';
     this._saveState();
     const config = DEFAULT_CONFIG.oauth.github;
-    const state = encodeURIComponent(JSON.stringify({ type: 'org-reg', account: account, org: {username, address: orgAddress} }));
-    window.location.href = `${config.uri}?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&state=${state}&scope=read:org`;
+    const state = { 
+      type: 'org-reg', 
+      account: account, 
+      org: {username, address},
+      fee: '0x'+fee.toString(16)
+    };
+    const stateData = encodeURIComponent(JSON.stringify(state));
+    window.location.href = `${config.uri}?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&state=${stateData}&scope=read:org`;
   }
 
   setUsername(username, type) {
@@ -49,7 +55,7 @@ export class Session {
     if (this.username) throw new Error('setting of username denied: username already set');
     this.activeOauthConnect = undefined;
     this.username = username;
-    this.isOrg = type === 'org';
+    this.isOrg = this.isOrg || type === 'org';
     this._saveState();
   }
 

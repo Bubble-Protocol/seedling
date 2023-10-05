@@ -69,8 +69,10 @@ export const OrgLoginScreen = () => {
     if (!valid || !selectedOrg || selectedOrgAlreadyRegistered) return;
     setDeploying(true);
     deployOrganisation(accountParam, selectedOrg.username)
-      .catch(error => setError(error))
-      .finally(() => setDeploying(false));
+      .catch(error => {
+        setError(error);
+        setDeploying(false)
+      });
   }
 
   function reconnect() {
