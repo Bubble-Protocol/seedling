@@ -11,11 +11,14 @@ import { formatArticleDate } from "../../utils/date-utils";
 import { stateManager } from "../../../state-context";
 import { TipModal } from "../../components/TipModal";
 import { ActivityBar } from "./components/ActivityBar";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 export const Article = () => {
   const { id, preview } = useParams();
   const navigate = useNavigate();
 
+  const { openConnectModal } = useConnectModal();
+  const walletConnected = stateManager.useStateData("wallet-connected")();
   const user = stateManager.useStateData("user")();
   const { getArticleById, getPreview } = stateManager.useStateData("content-functions")();
   const [article, setArticle] = useState(null);
@@ -78,6 +81,7 @@ export const Article = () => {
   const canFollow = !!user.followingFunctions;
 
   function follow() {
+    if (!walletConnected) return openConnectModal();
     if (canFollow) {
       user.followingFunctions.follow(article.author.username);
       setFollowing(true);
@@ -111,7 +115,7 @@ export const Article = () => {
           <div className="selectorContent">
             <div className="selector-title-row">
               <span className="selector-title author-name" onClick={() => navigate(`/user/${article.author.username.replace(':','/')}`)}>{article.author.name}</span>
-              {!following && <span className={"selector-follow-link" + (canFollow ? '' : ' disabled')} onClick={follow}>Follow</span>}
+              {!following && <span className="selector-follow-link" onClick={follow}>Follow</span>}
               {following && <span className="selector-follow-link" onClick={unfollow}>Unfollow</span>}
             </div>
             <div className="selector-title-row">

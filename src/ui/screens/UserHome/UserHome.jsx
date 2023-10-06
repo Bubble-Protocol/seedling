@@ -5,10 +5,13 @@ import { stateManager } from "../../../state-context";
 import anonymousUserIcon from '../../../assets/img/user.png';
 import { formatArticleDate } from "../../utils/date-utils";
 import { ContentList } from "../../components/ContentList";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 export const UserHome = () => {
   const { platform, username } = useParams();
 
+  const { openConnectModal } = useConnectModal();
+  const walletConnected = stateManager.useStateData("wallet-connected")();
   const localUser = stateManager.useStateData("user")();
   const { getUser } = stateManager.useStateData("content-functions")();
   const [user, setUser] = useState();
@@ -39,6 +42,7 @@ export const UserHome = () => {
   const canFollow = user && !!localUser.followingFunctions;
 
   function follow() {
+    if (!walletConnected) return openConnectModal();
     if (canFollow) {
       localUser.followingFunctions.follow(user.username);
       setFollowing(true);
@@ -69,7 +73,7 @@ export const UserHome = () => {
               {!user && notMember && <span className="selector-time">Not A Member</span>}
             </div>
           </div>
-          {!following && <span className={"selector-follow-link" + (canFollow ? '' : ' disabled')} onClick={follow}>Follow</span>}
+          {!following && <span className="selector-follow-link" onClick={follow}>Follow</span>}
           {following && <span className="selector-follow-link" onClick={unfollow}>Unfollow</span>}
         </div>
         <div></div>
