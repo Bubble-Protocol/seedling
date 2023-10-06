@@ -7,12 +7,17 @@ import tipButtonIcon from '../../../../../assets/img/tip-button.png';
 import { formatArticleDate } from "../../../../utils/date-utils";
 import { formatTip } from "../../../../utils/tip-utils";
 import { TipModal } from "../../../../components/TipModal";
+import { stateManager } from "../../../../../state-context";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 export const ArticleSummary = ({article, displayUser=true, onClick, onUserClick}) => {
 
+  const { openConnectModal } = useConnectModal();
+  const walletConnected = stateManager.useStateData("wallet-connected")();
   const [tipModal, setTipModal] = useState();
 
   function openTipModal(event) {
+    if (!walletConnected) return openConnectModal();
     const rect = event.target.getBoundingClientRect();
     setTipModal({y: rect.top, x: rect.right + 8});
   }
