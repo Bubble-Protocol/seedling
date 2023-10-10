@@ -78,18 +78,16 @@ export const Article = () => {
     )
   }
 
-  const canFollow = !!user.followingFunctions;
-
   function follow() {
     if (!walletConnected) return openConnectModal();
-    if (canFollow) {
+    if (user.followingFunctions) {
       user.followingFunctions.follow(article.author.username);
       setFollowing(true);
     }
   }
 
   function unfollow() {
-    if (canFollow) {
+    if (user.followingFunctions) {
       user.followingFunctions.unfollow(article.author.username);
       setFollowing(false);
     }

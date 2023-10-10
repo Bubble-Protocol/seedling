@@ -39,18 +39,16 @@ export const UserHome = () => {
     else setFollowing(false);
   }, [localUser]);
 
-  const canFollow = user && !!localUser.followingFunctions;
-
   function follow() {
     if (!walletConnected) return openConnectModal();
-    if (canFollow) {
+    if (user && localUser.followingFunctions) {
       localUser.followingFunctions.follow(user.username);
       setFollowing(true);
     }
   }
 
   function unfollow() {
-    if (canFollow) {
+    if (user && localUser.followingFunctions) {
       localUser.followingFunctions.unfollow(user.username);
       setFollowing(false);
     }
