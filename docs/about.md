@@ -1,14 +1,29 @@
 ---
 title: About Seedling
-description: Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair sharing of written content. Seedling is inspired by the simplicity and user-friendly experience of content discovery platforms like Medium, but with a decentralized twist.
+description: Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair sharing of written content. Seedling is a fully decentralized digital publishing and discovery platform with direct user-to-author tipping.
 image: ./img/seedling2.png
 image-width: full
 ---
 # About Seedling
 
-Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair sharing of written content. Seedling is inspired by the simplicity and user-friendly experience of content discovery platforms like Medium, but with a decentralized twist. It's an arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
+Welcome to Seedling, a decentralized platform designed to embody the essence of free and fair sharing of written content. Seedling is a fully decentralized digital publishing and discovery platform with direct user-to-author tipping.  
 
-Seedling is currently in beta and runs on the Base Goerli testnet.
+Seedling gives authors the autonomy to publish without censorship and the ability to be rewarded directly through cryptocurrency.  Readers can discover diverse voices and perspectives, free from the influence of central algorithms, and directly support authors they believe in through tipping and subscriptions.
+
+Our goal is to create a sustainable model for content creation and consumption that aligns with the ethos of web3 - transparency, user governance and equitable distribution of value.
+
+*Seedling is currently in beta and runs on the Base Goerli testnet.*
+
+## Vision
+
+1. To empower independent authors and journalists with a
+decentralized platform that prioritizes freedom of
+expression and creative control.
+
+2. To foster a direct and rewarding connection between
+creators and their audience through cryptocurrency-based tipping, subscriptions and on-chain profit sharing
+models.
+
 
 ## Features
 
@@ -32,6 +47,25 @@ Seedling is currently in beta and runs on the Base Goerli testnet.
 
    Transparency is our core value. Seedling's app and smart contracts are open source, allowing the community to review, contribute, and ensure the integrity of the platform. Dive into our codebase [here](https://github.com/Bubble-Protocol/seedling).
 
+### Coming Soon...
+
+5. **Publications**:
+
+   Digital magazines, news outlets and blogs with editorial control and free or paid subscription models.
+
+6. **Different Hosting Options**:
+
+   Publish your content from other platforms or take full control of your content with fully decentralised hosting.
+
+7. **Novel Funding Options For Authors, Influencers & Publishers**:
+
+   Add subscriptions, donations and profit sharing models into your channel.  Open your channel to investors to raise funds for a share of tips and subscriptions.
+
+8. **Pseudonymous Login**:
+
+   Helps journalists around the world express themselves without fear of consequences.
+
+
 ## Getting Started
 
 Feel free to browse the content already available on the [Seedling App](https://seedling-d.app).
@@ -40,7 +74,7 @@ To learn how to write and publish content or to find out how Seedling works, see
 
 ## Beta Phase
 
-Seedling is currently in a Beta phase, which means we're testing the waters, ironing out bugs, and continually enhancing the platform. The beta version runs on the Base Goerli testnet. New features are in the pipeline to support GitHub organisations and to allow users to create publications with free or paid subscriptions and options for tip sharing.
+Seedling is currently in a Beta phase, which means we're testing the waters, ironing out bugs, and continually enhancing the platform. The beta version runs on the Base Goerli testnet.
 
 We're excited to invite users to explore Seedling, share feedback, and help us create a truly decentralized content-sharing space.
 
@@ -52,11 +86,11 @@ Embark on a journey of decentralized content discovery and sharing with Seedling
 
 For any enquiries, feedback, or suggestions, join us on the [Bubble Protocol Discord server](https://discord.gg/sSnvK5C), or send us an email at support@seedling-d.app.
 
-Twitter: [@BubbleProtocol](https://twitter.com/BubbleProtocol)
+X: [@SeedlingDapp](https://x.com/SeedlingDapp)
 
 Happy reading and writing on Seedling!
 
-_Last updated: 3-Oct-2023_
+_Last updated: 4-Dec-2023_
 
 
 
