@@ -136,7 +136,7 @@ For more information, questions, feedback or suggestions, feel free to contact u
 
 Happy reading and writing on Seedling!
 
-_Last updated: 3-Oct-2023_
+_Last updated: 4-Dec-2023_
 
 
 
