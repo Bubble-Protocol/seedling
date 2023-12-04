@@ -29,16 +29,14 @@ models.
 
 1. **Authors Own Their Content**: 
    
-   With Seedling, all content is directly hosted by authors on their GitHub accounts. Writers use the familiar [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) format to create their articles. Once written, the article URL is published on the blockchain making it discoverable by other users.  Seedling's smart contracts ensure only verified GitHub account holders can claim and publish their work.
+   With Seedling, all content is hosted under the direct control of the author. In this version, content is hosted on the author's GitHub account. Authors use the familiar [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) format to create their articles. Once written, the article URL is published on the blockchain making it discoverable by other users.  Seedling's smart contracts ensure only verified GitHub account holders can claim and publish their work.
 
 2. **No Account Or Wallet Needed**: 
 
-   *No wallet?  No GitHub account? No worries! Seedling is open for everyone to browse!* 
+   *No wallet? No GitHub account? No worries! Seedling is open for everyone to browse!* 
    
    All content on Seedling is public, shareable with anyone through its unique Seedling URL.  No wallet or account is needed to read shared content. Only tipping and publishing require knowledge of wallets or GitHub.
    
-   Seedling's purpose is to present publicly available content from GitHub in a clean, accessible and consistent format, and to make articles discoverable through its user interface.  Future features, such as Publications, will add to Seedlings discovery capabilities by allowing editors to curate content for readers to follow and subscribe.
-
 3. **Cryptocurrency Tipping**:
   
    By connecting their wallet, readers can follow their favourite authors and tip them to show appreciation.  These microtransactions directly reward authors for their valuable content.
@@ -55,7 +53,7 @@ models.
 
 6. **Different Hosting Options**:
 
-   Publish your content from other platforms or take full control of your content with decentralised hosting.
+   Publish your content from other platforms or take full ownership of your content with decentralised hosting.
 
 7. **Novel Funding Options**:
 
