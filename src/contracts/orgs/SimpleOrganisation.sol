@@ -1,3 +1,8 @@
+/**
+ * A basic IOrganisation implementation. Gives other users permission to publish on behalf of your
+ * organisation.
+ */
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 

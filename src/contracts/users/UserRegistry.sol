@@ -1,3 +1,19 @@
+/**
+ * User Registry
+ *
+ * Manages the app's user accounts.  
+ *
+ * Each Seedling account is a unique 32-byte number, nominally a keccak256 hash derived from the 
+ * platform and username of the user's chosed content host. The Seedling account is linked to the 
+ * user's wallet address. Note, that the same wallet address can be linked to multiple accounts
+ * allowing the user to publish from multiple hosts.
+ *
+ * The User Registry is an upgradeable smart contract designed to allow trusted registrars to 
+ * register new users and organisations. The contract is responsible for maintaining the set of
+ * registered users, emitting events when a user is registered or deregistered, and enforcing 
+ * unique usernames.
+ */
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
@@ -8,8 +24,9 @@ import "../IUserRegistry.sol";
 import "../EternalStorage.sol";
 import "../IOrganisation.sol";
 
+
 /**
- * Manages the app's user accounts.  Each account has 
+ * The registry data definition. Non-upgradeable eternal storage.
  */
 abstract contract UserRegistryStorage is EternalStorage, AccessControl {
 
@@ -20,6 +37,9 @@ abstract contract UserRegistryStorage is EternalStorage, AccessControl {
 }
 
 
+/**
+ * The registry storage contract. The eternal data plus getter functions. Non-upgradeable.
+ */
 contract UserRegistry is UserRegistryStorage, IUserRegistry, Proxy {
 
   constructor() {
@@ -57,6 +77,12 @@ contract UserRegistry is UserRegistryStorage, IUserRegistry, Proxy {
 }
 
 
+/**
+ * Upgradeable registry implementation. Implements register and deregister functions and emits 
+ * events. Charges a configurable fee for registering organisations. Only authorised registrars 
+ * can register a user or organisation. Deregistration can be completed by the user/org or 
+ * an authorised registrar.  
+ */
 contract UserManager is UserRegistryStorage {
 
   event UserRegistered (
@@ -72,7 +98,6 @@ contract UserManager is UserRegistryStorage {
   bytes32 public constant REGISTER_ROLE = keccak256("REGISTER_ROLE");
   bytes32 public constant COLLECTOR_ROLE = keccak256("COLLECTOR_ROLE");
 
-  // calldata: 0x592e6f59
   function initialise() external onlyOwner onlyProxy {
     _verifyEternalStorage(_endOfStorage);
     require(!initialised, 'already initialised');

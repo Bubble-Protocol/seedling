@@ -1,3 +1,20 @@
+/**
+ * Content Registry
+ *
+ * Manages the app's published content.  
+ *
+ * Each piece of content is identified by it's hash, nominally the keccak256 hash of the content
+ * itself. The registry records published content along with its URL path (a string derived
+ * from the user's host platform, username and content path) and the account id of the user who
+ * published it. Events are emmitted to allow the app to query for published content.
+ *
+ * On publishing, the registry enforces the following conditions:
+ *   - content hash has not been published before
+ *   - content URL path has not been published before
+ *   - user is registered with the User Registry
+ *   - user is permitted to publish the URL path
+ */
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
@@ -7,6 +24,9 @@ import "../IUserRegistry.sol";
 import "../EternalStorage.sol";
 import "../IOrganisation.sol";
 
+/**
+ * The registry data definition. Non-upgradeable eternal storage.
+ */
 abstract contract ContentStorage is EternalStorage {
 
   struct ContentMetadata {
@@ -23,6 +43,9 @@ abstract contract ContentStorage is EternalStorage {
 }
 
 
+/**
+ * The registry storage contract. The eternal data plus getter functions. Non-upgradeable.
+ */
 contract ContentRegistry is ContentStorage, Proxy {
 
   event UserRegistryChanged(address indexed registry);
@@ -64,6 +87,11 @@ contract ContentRegistry is ContentStorage, Proxy {
 }
 
 
+/**
+ * Upgradeable registry implementation. Implements the publish and unpublish functions and emits 
+ * events. Allows registered users to publish content held in their registered accounts or if
+ * permitted to publish on behalf of an organisation (see IOrganisation). 
+ */
 contract ContentPublisher is ContentStorage {
 
   event PublishedContent(

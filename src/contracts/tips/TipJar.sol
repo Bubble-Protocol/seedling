@@ -1,3 +1,10 @@
+/**
+ * Tip Jar
+ *
+ * Allows content to be tipped and records the total amount tipped for each piece of content.
+ * The Tip Jar is an upgradeable smart contract.
+ */
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
@@ -7,6 +14,9 @@ import "@openzeppelin/contracts/proxy/Proxy.sol";
 import "../EternalStorage.sol";
 
 
+/**
+ * The registry data definition. Non-upgradeable eternal storage.
+ */
 abstract contract TipJarStorage is EternalStorage {
 
   mapping (bytes32 => uint) public tipRegistry;
@@ -16,6 +26,9 @@ abstract contract TipJarStorage is EternalStorage {
 }
 
 
+/**
+ * The tip registry storage contract. Non-upgradeable.
+ */
 contract TipJar is TipJarStorage, Proxy {
 
   constructor() {
@@ -29,6 +42,10 @@ contract TipJar is TipJarStorage, Proxy {
 }
 
 
+/**
+ * Upgradeable tip registry implementation. Allows users to tip registered content subtracting a
+ * configurable fee. Emits a Tip event.
+ */
 contract TipJarImplementation is TipJarStorage {
 
   event Tip (

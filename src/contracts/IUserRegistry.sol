@@ -2,12 +2,13 @@
 pragma solidity ^0.8.9;
 
 /**
- * Manages the app's user accounts.  Each account has 
+ * Minimum interface for the User Registry. The getter functions declared in this interface can
+ * be used by the Content Registry and TipJar to query user information.
  */
 interface IUserRegistry {
 
   /**
-   * Returns the address associated with the given user id.  
+   * Returns the address associated with the given user account.  
    * Caller should check for address(0) to confirm the user is registered.
    */
   function getUserAddress(bytes32 _usernameHash) external view returns (address);
@@ -19,7 +20,7 @@ interface IUserRegistry {
   function getUserAddress(string memory _username) external view returns (address);
 
   /**
-   * Returns true if the given id has been registered
+   * Returns true if the given account has been registered
    */
   function isRegistered(bytes32 _usernameHash) external view returns (bool);
 
