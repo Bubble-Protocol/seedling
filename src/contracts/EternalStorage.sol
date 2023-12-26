@@ -65,7 +65,7 @@
  */
 
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.21;
 
 
 /*
@@ -81,7 +81,7 @@ bytes32 constant END_OF_STORAGE = 0x5e0bae09bc77084a1c2da319fa7b831af8e7eafcb51a
 abstract contract EternalStorage {
 
   modifier onlyOwner() {
-    require(msg.sender == owner, 'permission denied');
+    require(msg.sender == owner, "permission denied");
     _;
   }
 
@@ -90,7 +90,7 @@ abstract contract EternalStorage {
    * Contract's address space.
    */
   modifier onlyProxy() {
-    require(address(this) == storageContract, 'only the proxy can call this function');
+    require(address(this) == storageContract, "only proxy can call");
     _;
   }
 
@@ -99,7 +99,7 @@ abstract contract EternalStorage {
    * Contract's address space.
    */
   modifier notProxy() {
-    require(address(this) != storageContract, 'the proxy is not permitted to call this function');
+    require(address(this) != storageContract, "proxy call not permitted");
     _;
   }
 
@@ -113,7 +113,7 @@ abstract contract EternalStorage {
    * Marks the start of eternal storage properties. The end marker must be declared by the
    * developer after declaring the custom eternal data properties.
    */
-  bytes32 _startOfStorageSlotMarker = START_OF_STORAGE;
+  bytes32 internal _startOfStorageSlotMarker = START_OF_STORAGE;
 
   /**
    * Eternal data properties needed to support upgradeability.
@@ -151,8 +151,7 @@ abstract contract EternalStorage {
    * Should be called after an upgrade when the new Implementation Contract is initialised.
    */
   function _verifyEternalStorage(bytes32 _endMarker) internal view {
-    require(_startOfStorageSlotMarker == START_OF_STORAGE, 'storage slot error');
-    require(_endMarker == END_OF_STORAGE, 'storage slot error');
+    require(_startOfStorageSlotMarker == START_OF_STORAGE && _endMarker == END_OF_STORAGE, "storage slot error");
   }
 
   /**

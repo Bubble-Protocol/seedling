@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.21;
 
 /**
  * Minimum interface for the User Registry. The getter functions declared in this interface can

@@ -15,7 +15,7 @@
  */
 
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.21;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -32,7 +32,7 @@ abstract contract UserRegistryStorage is EternalStorage, AccessControl {
 
   mapping(bytes32 => address) public users;
 
-  bytes32 _endOfStorage = END_OF_STORAGE;
+  bytes32 internal _endOfStorage = END_OF_STORAGE;
 
 }
 
@@ -100,8 +100,8 @@ contract UserManager is UserRegistryStorage {
 
   function initialise() external onlyOwner onlyProxy {
     _verifyEternalStorage(_endOfStorage);
-    require(!initialised, 'already initialised');
-    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    require(!initialised, "already initialised");
+    _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     initialised = true;
   }
 

@@ -38,7 +38,7 @@ abstract contract ContentStorage is EternalStorage {
   mapping (bytes32 => ContentMetadata) public contentMetadata;
   mapping (bytes32 => bytes32) public contentUrlRegistry;
 
-  bytes32 _endOfStorage = END_OF_STORAGE;
+  bytes32 internal _endOfStorage = END_OF_STORAGE;
 
 }
 
@@ -122,34 +122,34 @@ contract ContentPublisher is ContentStorage {
   function publishAsOrg(bytes32 _contentHash, string memory _username, string memory _contentPath) external onlyProxy {
     bytes32 orgId = keccak256(bytes(_username));
     address org = userRegistry.getUserAddress(orgId);
-    require(org != address(0), 'org not registered');
+    require(org != address(0), "org not registered");
     require(IOrganisation(org).hasRole(PUBLISHER_ROLE, msg.sender), "permission denied");
     _publish(orgId, org, _contentHash, _username, _contentPath);
   }
 
   function unpublishAsOrg(bytes32 _contentHash) external onlyProxy {
     ContentMetadata memory content = contentMetadata[_contentHash];
-    require(content.author != 0, 'content not found');
+    require(content.author != 0, "content not found");
     address org = userRegistry.getUserAddress(content.author);
-    require(org != address(0), 'org not registered');
+    require(org != address(0), "org not registered");
     require(IOrganisation(org).hasRole(UNPUBLISHER_ROLE, msg.sender), "permission denied");
     _unpublish(content, org, _contentHash);
   }
 
   function _publish(bytes32 authorId, address _user, bytes32 _contentHash, string memory _username, string memory _contentPath) private {
-    string memory url = string.concat(_username, '/', _contentPath);
+    string memory url = string.concat(_username, "/", _contentPath);
     bytes32 urlHash = keccak256(bytes(url));
-    require(userRegistry.hasUsername(_user, authorId), 'user not registered or incorrect username');
-    require(_contentHash != 0, 'hash is zero');
-    require(contentMetadata[_contentHash].author == 0x00, 'content already published');
-    require(contentUrlRegistry[urlHash] == 0x00, 'content path already published');
+    require(userRegistry.hasUsername(_user, authorId), "user not registered or incorrect username");
+    require(_contentHash != 0, "hash is zero");
+    require(contentMetadata[_contentHash].author == 0x00, "content already published");
+    require(contentUrlRegistry[urlHash] == 0x00, "content path already published");
     contentMetadata[_contentHash] = ContentMetadata(url, authorId);
     contentUrlRegistry[urlHash] = keccak256(abi.encodePacked(_contentHash, authorId));
     emit PublishedContent(_contentHash, url, authorId);
   }
 
   function _unpublish(ContentMetadata memory content, address _user, bytes32 _contentHash) private {
-    require(userRegistry.getUserAddress(content.author) == _user, 'permission denied');
+    require(userRegistry.getUserAddress(content.author) == _user, "permission denied");
     bytes32 urlHash = keccak256(bytes(content.url));
     delete contentUrlRegistry[urlHash];
     delete contentMetadata[_contentHash];
