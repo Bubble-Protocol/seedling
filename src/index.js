@@ -8,37 +8,33 @@ import { App } from "./ui/App";
 import { Model } from "./model/Model";
 import { initialiseLocalStorage } from "./model/utils/LocalStorage";
 
-//
-// Application
-//
-
+// Basic Config
 const APP_ID = 'Seedling-DApp';
 const TRACE_ON = true;
 const DEBUG_ON = true;
 
+// Console trace and debug functions
 console.stackTrace = console.trace;
 console.trace = TRACE_ON ? Function.prototype.bind.call(console.info, console, "[trace]") : function() {};
 console.debug = DEBUG_ON ? Function.prototype.bind.call(console.info, console, "[debug]") : function() {};
 
+// Fix BigInt JSON issue
+/* global BigInt */
+BigInt.prototype.toJSON = function() {       
+  return this.toString()
+}
+
+
+//
+// Application
+//
+
 await initialiseLocalStorage(APP_ID);
-
-// stateManager.register('url-params');
-
-// const model = new MessengerApp(stateManager);
-// model.initialise()
-//   .then(() => {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     const params = {
-//       article: urlParams.get('article')
-//     }
-//     stateManager.dispatch('url-params', params);
-//   })
-//   .catch(console.error);
-
 
 const model = new Model();
 model.initialise()
   .catch(console.error);
+
 
 //
 // UI
