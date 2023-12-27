@@ -3,7 +3,7 @@ import * as contentRegistryAbi from "../../contracts/the-graph/abis/ContentRegis
 import * as userRegistryAbi from "../../contracts/the-graph/abis/UserRegistry.json";
 
 export const DEFAULT_CONFIG = {
-  graphUri: "https://api.studio.thegraph.com/query/53709/seedling/v0.1.0",
+  graphUri: "https://api.studio.thegraph.com/query/53709/seedling-base/v0.1.0",
   userRegistry: {
     contract: {
       address: "0x04C2973Ab533B1eBe60ba608C026B37799BC5983",
