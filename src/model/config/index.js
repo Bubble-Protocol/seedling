@@ -3,27 +3,28 @@ import * as contentRegistryAbi from "../../contracts/the-graph/abis/ContentRegis
 import * as userRegistryAbi from "../../contracts/the-graph/abis/UserRegistry.json";
 
 export const DEFAULT_CONFIG = {
-  graphUri: "https://api.studio.thegraph.com/query/53709/seedling/v0.1.0",
+  chain: "polygon",
+  graphUri: "https://api.studio.thegraph.com/query/53709/seedling/version/latest",
   userRegistry: {
     contract: {
-      address: "0x04C2973Ab533B1eBe60ba608C026B37799BC5983",
+      address: "0x5Ec6A3284049E8b3e5966882fd3D40FCFB839501",
       abi: userRegistryAbi.default
     }
   },
   contentRegistry: {
     contract: {
-      address: "0x038ADdfd80f722E4826A467690Ab50EEbE1cfFb7",
+      address: "0xF86eFfA878F484DF4a2D2d1703AE59030F365131",
       abi: contentRegistryAbi.default
     }
   },
   tipJar: {
     contract: {
-      address: "0x778629c02e8Fe1Eb10e2149e017a20D519e55D6e",
+      address: "0x1c4a6b233DABf5566Ae719665755B4F8551ebAe3",
       abi: tipJarAbi.default
     },
     exchangeRateLookupServices: [
-      async () => { return fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD").then(response => response.json()).then(data => data["USD"])},
-      async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=ETH").then(response => response.json()).then(data => parseFloat(data["data"]["rates"]["USD"])) }
+      async () => { return fetch("https://min-api.cryptocompare.com/data/price?fsym=MATIC&tsyms=USD").then(response => response.json()).then(data => data["USD"])},
+      async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=MATIC").then(response => response.json()).then(data => parseFloat(data["data"]["rates"]["USD"])) }
     ]
   },
   oauth: {

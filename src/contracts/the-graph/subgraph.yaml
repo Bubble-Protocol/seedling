@@ -1,14 +1,14 @@
-specVersion: 0.0.5
+specVersion: 0.0.8
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
     name: UserRegistry
-    network: base-testnet
+    network: matic
     source:
-      address: "0x04C2973Ab533B1eBe60ba608C026B37799BC5983"
+      address: "0x5Ec6A3284049E8b3e5966882fd3D40FCFB839501"
       abi: UserRegistry
-      startBlock: 10406103
+      startBlock: 51586039
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -27,11 +27,11 @@ dataSources:
       file: ./src/user-registry.ts
   - kind: ethereum
     name: ContentRegistry
-    network: base-testnet
+    network: matic
     source:
-      address: "0x038ADdfd80f722E4826A467690Ab50EEbE1cfFb7"
+      address: "0xF86eFfA878F484DF4a2D2d1703AE59030F365131"
       abi: ContentRegistry
-      startBlock: 10406103
+      startBlock: 51586039
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -50,11 +50,11 @@ dataSources:
       file: ./src/content-registry.ts
   - kind: ethereum
     name: TipJar
-    network: base-testnet
+    network: matic
     source:
-      address: "0x778629c02e8Fe1Eb10e2149e017a20D519e55D6e"
+      address: "0x1c4a6b233DABf5566Ae719665755B4F8551ebAe3"
       abi: TipJar
-      startBlock: 10406103
+      startBlock: 51586039
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

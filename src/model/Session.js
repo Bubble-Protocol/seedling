@@ -8,10 +8,11 @@ export class Session {
   isOrg;
   tempState = {};
 
-  constructor(id) {
-    this.id = id;
+  constructor(chain, account) {
+    this.id = chain + '-' + account;
+    this.account = account;
     this._loadState();
-    this.following = new FollowManager(id);
+    this.following = new FollowManager(account);
   }
 
   hasAccount() {
@@ -20,18 +21,18 @@ export class Session {
 
   async connectToGithub(type) {
     if (this.username) return Promise.reject(new Error('already connected'));
-    console.trace('connecting to GitHub as', this.id, type);
+    console.trace('connecting to GitHub as', this.account, type);
     this.tempState.activeOauthConnect = 'github';
     this._saveState();
     const config = DEFAULT_CONFIG.oauth.github;
-    const state = encodeURIComponent(JSON.stringify({ type, account: this.id }));
+    const state = encodeURIComponent(JSON.stringify({ type, account: this.account }));
     const scope = type === 'user-reg' ? '' : '&scope=read:org';
     window.location.href = `${config.uri}?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&state=${state}${scope}`;
   }
 
   async deployOrg(orgManager, account, username) {
     console.trace('deploying org', username);
-    if (account !== this.id) throw new Error('Login session mismatch. Did you change wallet accounts?')
+    if (account !== this.account) throw new Error('Login session mismatch. Did you change wallet accounts?')
     const {address, fee} = this.tempState.deployOrg || await orgManager.deployOrg();
     console.log('Org', this.tempState.deployOrg ? 'previously' : 'successfully', 'deployed at address', address, 'with fee', fee, '(wei)');
     this.isOrg = true;
@@ -54,7 +55,7 @@ export class Session {
     if (type !== 'user' && type !== 'org') throw new Error('invalid type');
     if (!this.tempState.activeOauthConnect) throw new Error('setting of username denied: not user initiated');
     if (this.username) throw new Error('setting of username denied: username already set');
-    console.log('Account', this.id, 'successfully set up as type', type, 'with username', username);
+    console.log('Account', this.account, 'successfully set up as type', type, 'with username', username);
     this.tempState.activeOauthConnect = undefined;
     this.tempState.deployOrg = undefined;
     this.username = username;
@@ -63,6 +64,7 @@ export class Session {
   }
 
   _loadState() {
+    console.trace('loading session state', this.id);
     const json = localStorage.read(this.id);
     if (json) {
       const state = JSON.parse(json);
@@ -73,7 +75,7 @@ export class Session {
   }
 
   _saveState() {
-    console.trace('saving session state');
+    console.trace('saving session state', this.id);
     const state = {
       username: this.username,
       isOrg: this.isOrg,
