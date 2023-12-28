@@ -36,7 +36,7 @@ export const DEFAULT_CONFIG = {
   },
   fees: {  // in dollars
     orgManager: {
-      deployOrg: 0
+      deployOrg: 20
     }
   }
 }
