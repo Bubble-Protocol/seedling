@@ -8,7 +8,7 @@ image-width: medium
 
 Seedling is a decentralised platform for publishing, discovering and engaging with written content. It is designed to directly link readers to authors and their content without a central organisation in the middle, creating an open arena for writers and readers to interact, share insights, and reward captivating narratives through cryptocurrency tipping.
 
-For a full description of Seedling, it's features and it's vision, see the [About article](https://seedling-d.app/article/0x3787761e72c5c246e0a296b4704af7db4ab80631465b4eed0e7732eebdf437d6) right here on Seedling.
+For a full description of Seedling, it's features and it's vision, see the [About article](https://seedling-d.app/article/0x3d1733d3a0635a790df5eb6012e5af6b14ad0333c42b5bb6d9c4298971ae4241) right here on Seedling.
 
 In this version all content is public, hosted by its author in their account on GitHub.  Content is written in [markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) and made discoverable by publishing its url on the blockchain under the author's Seedling account. Seedling's smart contracts ensure that only authors with verified GitHub accounts can publish and take credit for their content.
 
@@ -136,7 +136,7 @@ For more information, questions, feedback or suggestions, feel free to contact u
 
 Happy reading and writing on Seedling!
 
-_Last updated: 4-Dec-2023_
+_Last updated: 28-Dec-2023_
 
 
 

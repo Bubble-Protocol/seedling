@@ -10,9 +10,9 @@ Welcome to Seedling, a decentralized platform designed to embody the essence of 
 
 Seedling gives authors the autonomy to publish articles, news and blog posts without censorship, and the ability to be rewarded directly through cryptocurrency.  Readers can discover diverse voices and perspectives, free from the influence of central algorithms, and directly support authors they believe in through tipping and subscriptions.
 
-Our goal is to create a sustainable model for content creation and consumption that aligns with the ethos of web3 - transparency, user governance and equitable distribution of value.
+Our ultimate goal is to empower independent authors and journalists with a decentralized platform that prioritizes freedom of expression and creative control.
 
-*Seedling is currently in beta and runs on the Base Goerli testnet.*
+*Seedling runs on the Polygon blockchain.*
 
 ## Vision
 
@@ -68,7 +68,7 @@ models.
 
 Feel free to browse the content already available on the [Seedling App](https://seedling-d.app).
 
-To learn how to write and publish content or to find out how Seedling works, see the [Help Article](https://seedling-d.app/article/0xe190ea61cd19683e4b18fac89d2511de737dab598c6b7853531c94aa05a5119b) here on Seedling.
+To learn how to write and publish content or to find out how Seedling works, see the [Help Article](https://seedling-d.app/article/0x16919da1e9ef808fe7bd016697a1b2b2869185ca266bc1ebd763bdd899b33614) here on Seedling.
 
 ## Beta Phase
 
@@ -88,7 +88,7 @@ X: [@SeedlingDapp](https://x.com/SeedlingDapp)
 
 Happy reading and writing on Seedling!
 
-_Last updated: 4-Dec-2023_
+_Last updated: 28-Dec-2023_
 
 
 

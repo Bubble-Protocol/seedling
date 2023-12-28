@@ -21,7 +21,7 @@ abstract contract TipJarStorage is EternalStorage {
 
   mapping (bytes32 => uint) public tipRegistry;
 
-  bytes32 _endOfStorage = END_OF_STORAGE;
+  bytes32 internal _endOfStorage = END_OF_STORAGE;
 
 }
 
@@ -73,7 +73,7 @@ contract TipJarImplementation is TipJarStorage {
 
   function _initialise(ContentRegistry _contentRegistry, uint256 _protocolFeeRate) external onlyOwner onlyProxy {
     _verifyEternalStorage(_endOfStorage);
-    require(!initialised, 'already initialised');
+    require(!initialised, "already initialised");
     content = _contentRegistry;
     protocolFeeRecipient = payable(msg.sender);
     protocolFeeRate = _protocolFeeRate;
@@ -90,13 +90,13 @@ contract TipJarImplementation is TipJarStorage {
   }
 
   function tip(bytes32 _contentHash) external payable onlyProxy {
-    require(content.isRegistered(_contentHash), 'content does not exist');
+    require(content.isRegistered(_contentHash), "content does not exist");
     address payable authorAddress = payable(content.getAuthorAddress(_contentHash));
     uint256 protocolFee = msg.value * protocolFeeRate / 1000;
     uint256 authorFee = msg.value - protocolFee;
+    tipRegistry[_contentHash] += msg.value;
     protocolFeeRecipient.transfer(protocolFee);
     authorAddress.transfer(authorFee);
-    tipRegistry[_contentHash] += msg.value;
     emit Tip(_contentHash, msg.sender, msg.value, tipRegistry[_contentHash]);
   }
 

@@ -57,7 +57,7 @@ export class Model {
 
   setUsername(account, username, type) {
     if (!this.session) throw new Error('wallet not connected');
-    if (account !== this.session.id) throw new Error('incorrect account');
+    if (account !== this.session.account) throw new Error('incorrect account');
     this.session.setUsername(username, type);
     stateManager.dispatch('user', {account, username: this.session.username, isOrg: this.session.isOrg});
   }
@@ -76,7 +76,7 @@ export class Model {
     console.trace('wallet account changed to', account);
     this.session = undefined;
     if (account) {
-      this.session = new Session(account);
+      this.session = new Session(DEFAULT_CONFIG.chain, account);
       const user = {
         account, 
         ...this.contentManager.parseUsername(this.session.username),

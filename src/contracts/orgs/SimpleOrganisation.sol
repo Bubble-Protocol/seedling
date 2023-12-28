@@ -11,7 +11,7 @@ import "../IOrganisation.sol";
 
 contract SimpleOrganisation is IOrganisation, AccessControl {
 
-  address registry;
+  address public registry;
 
   constructor(address _registry) payable {
     registry = _registry;
@@ -25,7 +25,7 @@ contract SimpleOrganisation is IOrganisation, AccessControl {
   }
 
   function claimFee() external {
-    require(msg.sender == registry || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'permission denied');
+    require(msg.sender == registry || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "permission denied");
     payable(msg.sender).transfer(address(this).balance);
   }
 
