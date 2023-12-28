@@ -136,4 +136,6 @@ contract UserManager is UserRegistryStorage {
     payable(_msgSender()).transfer(balance);
   }
 
+  receive() external payable {}
+
 }
