@@ -14,6 +14,7 @@ export const ArticleSummary = ({article, displayUser=true, onClick, onUserClick}
 
   const { openConnectModal } = useConnectModal();
   const walletConnected = stateManager.useStateData("wallet-connected")();
+  const exchangeRate = stateManager.useStateData("exchange-rate")();
   const [tipModal, setTipModal] = useState();
 
   function openTipModal(event) {
@@ -48,7 +49,7 @@ export const ArticleSummary = ({article, displayUser=true, onClick, onUserClick}
           <div className="summary-bar-date">{formatArticleDate(article.publishedAt)}</div>
           <div className="expander"></div>
           <img className="summary-bar-tip-button" src={tipButtonIcon} onClick={openTipModal}></img>
-          <div className="summary-bar-tips">{formatTip(article.totalTips)}</div>
+          <div className="summary-bar-tips">{formatTip(article.totalTips, exchangeRate)}</div>
         </div>
       </div>
     </div>

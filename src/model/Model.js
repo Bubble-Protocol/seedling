@@ -48,11 +48,15 @@ export class Model {
       tipDollars: this.tipManager.tipDollars.bind(this.tipManager),
       canTipInDollars: this.tipManager.canTipInDollars.bind(this.tipManager)
     });
+    stateManager.register('exchange-rate');
   }
 
   async initialise() {
     this.tipManager.initialise()
-      .then(() => this.orgManager.initialise(this.tipManager.dollarExchangeRate));
+      .then(() => {
+        stateManager.dispatch('exchange-rate', this.tipManager.dollarExchangeRate);
+        this.orgManager.initialise(this.tipManager.dollarExchangeRate);
+      });
   }
 
   setUsername(account, username, type) {
