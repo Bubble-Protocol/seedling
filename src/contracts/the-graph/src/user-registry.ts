@@ -1,8 +1,10 @@
+import { UserTransferred } from './../generated/UserRegistry/UserRegistry';
 // Import necessary classes, types and functions
 import { store } from '@graphprotocol/graph-ts'
 import {
   UserRegistered as UserRegisteredEvent,
   UserDeregistered as UserDeregisteredEvent,
+  UserTransferred as UserTransferredEvent,
 } from "../generated/UserRegistry/UserRegistry"
 import { User } from "../generated/schema"
 
@@ -23,3 +25,12 @@ export function handleDeregisteredUser(event: UserDeregisteredEvent): void {
     store.remove("User", user.id);
   }
 }
+
+// Handler for the UserTransferred event
+export function handleTransferredUser(event: UserTransferredEvent): void {
+  let user = new User(event.params.id.toHex())
+  user.address = event.params.user
+  user.save();
+}
+
+

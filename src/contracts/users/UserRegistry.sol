@@ -95,6 +95,11 @@ contract UserManager is UserRegistryStorage {
     bytes32 indexed id
   );
 
+  event UserTransferred (
+    bytes32 indexed id,
+    address indexed user
+  );
+
   bytes32 public constant REGISTER_ROLE = keccak256("REGISTER_ROLE");
   bytes32 public constant COLLECTOR_ROLE = keccak256("COLLECTOR_ROLE");
 
@@ -109,12 +114,6 @@ contract UserManager is UserRegistryStorage {
     _register(_username, _user);
   }
 
-  function deregister(bytes32 _usernameHash) external onlyProxy {
-    require(hasRole(REGISTER_ROLE, msg.sender) || users[_usernameHash] == msg.sender, "permission denied");
-    delete users[_usernameHash];
-    emit UserDeregistered(_usernameHash);
-  }
-
   function registerOrg(string memory _username, IOrganisation _org, uint _fee) external onlyRole(REGISTER_ROLE) onlyProxy {
     uint initialBalance = address(this).balance;
     _org.claimFee();
@@ -123,11 +122,43 @@ contract UserManager is UserRegistryStorage {
     _register(_username, address(_org));
   }
 
+  function deregister(bytes32 _usernameHash) external onlyProxy {
+    require(users[_usernameHash] == msg.sender, "permission denied");
+    _deregister(_usernameHash);
+  }
+
+  function deregisterOrg(bytes32 _usernameHash) external onlyProxy {
+    IOrganisation org = IOrganisation(users[_usernameHash]);
+    require(org.hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "permission denied");
+    _deregister(_usernameHash);
+  }
+
+  function transfer(bytes32 _usernameHash, address _newUser) external onlyProxy {
+    require(users[_usernameHash] == msg.sender, "permission denied");
+    _transfer(_usernameHash, _newUser);
+  }
+
+  function transferOrg(bytes32 _usernameHash, address _newOrg) external onlyProxy {
+    IOrganisation org = IOrganisation(users[_usernameHash]);
+    require(org.hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "permission denied");
+    _transfer(_usernameHash, _newOrg);
+  }
+
   function _register(string memory _username, address _user) private {
     bytes32 uHash = keccak256(bytes(_username));
     require(users[uHash] == address(0), "username already registered");
     users[uHash] = _user;
     emit UserRegistered(uHash, _username, _user);
+  }
+
+  function _deregister(bytes32 _usernameHash) private {
+    delete users[_usernameHash];
+    emit UserDeregistered(_usernameHash);
+  }
+
+  function _transfer(bytes32 _usernameHash, address _newAddress) private {
+    users[_usernameHash] = _newAddress;
+    emit UserTransferred(_usernameHash, _newAddress);
   }
 
   function withdraw() external onlyRole(COLLECTOR_ROLE) {

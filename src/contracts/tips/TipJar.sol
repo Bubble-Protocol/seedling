@@ -93,10 +93,12 @@ contract TipJarImplementation is TipJarStorage {
     require(content.isRegistered(_contentHash), "content does not exist");
     address payable authorAddress = payable(content.getAuthorAddress(_contentHash));
     uint256 protocolFee = msg.value * protocolFeeRate / 1000;
-    uint256 authorFee = msg.value - protocolFee;
+    uint256 authorTip = msg.value - protocolFee;
     tipRegistry[_contentHash] += msg.value;
-    protocolFeeRecipient.transfer(protocolFee);
-    authorAddress.transfer(authorFee);
+    (bool sentFee, ) = payable(protocolFeeRecipient).call{value: protocolFee}("");
+    require(sentFee, "Failed to send fee");
+    (bool sentTip, ) = payable(authorAddress).call{value: authorTip}("");
+    require(sentTip, "Failed to send tip");
     emit Tip(_contentHash, msg.sender, msg.value, tipRegistry[_contentHash]);
   }
 
