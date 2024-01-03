@@ -2,7 +2,6 @@ import { formatEther, parseEther } from "viem";
 
 export function formatTip(tip, exchangeRate) {
   // Convert tip to a floating-point number (assuming tip might be a string)
-  console.debug('tip', tip, exchangeRate)
   const amount = exchangeRate ? parseFloat(formatEther(tip)) / exchangeRate * 1000_000_000 : parseFloat(formatEther(tip));
 
   if (isNaN(amount) || amount === 0) {

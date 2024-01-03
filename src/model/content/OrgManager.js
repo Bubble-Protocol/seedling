@@ -21,8 +21,7 @@ export class OrgManager {
   async deployOrg() {
     const feeGwei = this.fees.deployOrg * this.exchangeRate;
     const fee = parseGwei(feeGwei.toString());
-    console.debug('fee', fee, this.fees.deployOrg, this.exchangeRate)
-    // return {address: "0x3108e692053bec9988b8d257b843ee658a810804", fee};
+    console.trace('deploying org with fee', fee, this.fees.deployOrg, this.exchangeRate)
     return this.wallet.deploy(simpleOrganisation, [this.userRegistry, fee], {value: fee})
       .then(address => { return {address, fee} });
   }
