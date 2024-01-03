@@ -72,7 +72,7 @@ To learn how to write and publish content or to find out how Seedling works, see
 
 ## Beta Phase
 
-Seedling is currently in a Beta phase, which means we're testing the waters, ironing out bugs, and continually enhancing the platform. The beta version runs on the Base Goerli testnet.
+Seedling is currently in a Beta phase, which means we're testing the waters, ironing out bugs, and continually enhancing the platform.
 
 We're excited to invite users to explore Seedling, share feedback, and help us create a truly decentralized content-sharing space.
 
@@ -88,7 +88,7 @@ X: [@SeedlingDapp](https://x.com/SeedlingDapp)
 
 Happy reading and writing on Seedling!
 
-_Last updated: 28-Dec-2023_
+_Last updated: 3-Jan-2023_
 
 
 
