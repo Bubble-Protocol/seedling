@@ -4,6 +4,7 @@
   font-size: 20px;
   line-height: 160%;
   font-style: normal;
+  font-style: normal;
   font-weight: 400;
   width: 100%;
   box-sizing: border-box;
@@ -55,7 +56,8 @@ strong {
 }
 
 .markdown img {
-  max-width: 680px;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .markdown a {
@@ -82,7 +84,8 @@ strong {
   display: block;
   background-color: #f2f4f8;
   padding: 16px;
-  width: 680px;
+  box-sizing: border-box;
+  max-width: 100%;
   overflow-x: scroll;
 }
 
