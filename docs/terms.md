@@ -35,7 +35,7 @@ Seedling is not responsible for any losses, damages, or claims that may result f
 
 ## Privacy
 
-For information about how we collect and use your personal information, please review our [Privacy Policy](./privacy-policy.md).
+For information about how we collect and use your personal information, please review our [Privacy Policy](https://seedling-d.app/article/0x0e28db1f70c9482835bbc47a9333f75b3f24c2edef15227e737eed2654814b26).
 
 ## Changes
 

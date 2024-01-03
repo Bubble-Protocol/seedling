@@ -5,10 +5,10 @@ export const Footer = () => {
 
   return (
     <div className="footer" >
-      <a className="footer-button" href="/article/0xe190ea61cd19683e4b18fac89d2511de737dab598c6b7853531c94aa05a5119b">Help</a>
+      <a className="footer-button" href="/article/0x16919da1e9ef808fe7bd016697a1b2b2869185ca266bc1ebd763bdd899b33614">Help</a>
       <a className="footer-button" href="/user/github/Bubble-Protocol">Blog</a>
-      <a className="footer-button" href="/article/0x93efbe9f6fe1c63f1700adc6fc6c7b26dd7d0926ecb3815d3b4dd9fef89f6a1d">Terms</a>
-      <a className="footer-button" href="/article/0x3787761e72c5c246e0a296b4704af7db4ab80631465b4eed0e7732eebdf437d6">About</a>
+      <a className="footer-button" href="/article/0xb42117a47b714bde79462b2df6a6cec230d14f60cf78a95d411ed531c6510593">Terms</a>
+      <a className="footer-button" href="/article/0x3d1733d3a0635a790df5eb6012e5af6b14ad0333c42b5bb6d9c4298971ae4241">About</a>
       <a className="footer-button" href="https://github.com/Bubble-Protocol/seedling">Code</a>
     </div>
   );
