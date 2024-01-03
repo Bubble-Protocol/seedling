@@ -30,7 +30,7 @@ export class GraphClient {
             registeredAt
           }
           publishedAt
-          tips {
+          tips(first: 1) {
             id
             tipper
             amount
@@ -65,7 +65,7 @@ export class GraphClient {
             registeredAt
           }
           publishedAt
-          tips {
+          tips(first: 1) {
             id
             tipper
             amount
@@ -100,7 +100,7 @@ export class GraphClient {
             registeredAt
           }
           publishedAt
-          tips {
+          tips(first: 1) {
             id
             tipper
             amount
@@ -145,7 +145,7 @@ export class GraphClient {
           contentHash
           url
           publishedAt
-          tips {
+          tips(first: 1) {
             id
             tipper
             amount

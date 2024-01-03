@@ -118,7 +118,7 @@ export class Content {
     result.author = {...result.author};
     result.author.name = author.name;
     result.author.icon = author.icon;
-    result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
+    result.totalTips = result.tips.length === 0 ? 0 : result.tips[0].total;
     return result;
   }
 
@@ -129,7 +129,7 @@ export class Content {
     result.expandedUrl = url;
     result.sourceUrl = sourceUrl;
     result.author = author;
-    result.totalTips = result.tips.length === 0 ? 0 : result.tips[result.tips.length-1].total;
+    result.totalTips = result.tips.length === 0 ? 0 : result.tips[0].total;
     return result;
   }
 
