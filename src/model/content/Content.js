@@ -8,7 +8,7 @@ export class Content {
 
   theGraph;
   blockchain;
-  cache = [];
+  cache = {};
 
   constructor(graphUri, blockchainConfig, wallet) {
     this.theGraph = new GraphClient(graphUri);
@@ -221,22 +221,22 @@ export class Content {
   }
 
   async _fetch(url, asType='text') {
-    if (this.cache[url]) {
-      console.trace('Fetching from cache:', url);
-      return this.cache[url];
+    if (!url.href) url = new URL(url);
+    if (this.cache[url.href]) {
+      // console.trace('Fetching from cache:', url);
+      return this.cache[url.href];
     }
 
-    console.trace('Fetching:', url);
-    const response = await fetch(url);
-    if (!response.ok) {
-      console.warn('Failed to fetch', url.href, ':', response);
-      throw new Error(`Network response was not ok ${response.statusText}`);
-    }
-    const data = asType === 'blob' ? await response.blob() : await response.text();
-    // Cache the fetched data
-    this.cache[url] = data;
-    return data;
-
+    console.trace('Fetching:', url.href);
+    this.cache[url.href] = fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          console.warn('Failed to fetch', url.href, ':', response);
+          throw new Error(`Network response was not ok ${response.statusText}`);
+        }
+        return asType === 'blob' ? response.blob() : response.text();
+      });
+    return this.cache[url.href];
   }
 
   _filenameToTitle(filename) {
