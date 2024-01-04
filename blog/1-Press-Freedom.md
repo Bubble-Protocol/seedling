@@ -3,10 +3,8 @@ title: A New Frontier for Press Freedom in a Censored World
 description: In recent years, the landscape of journalism has been marred by increasing censorship and threats to media freedom. This article explores the potential of Seedling, a decentralized platform, to address these challenges.
 image: ./img/journalism.jpeg
 image-caption: Photo by Sam McGhee on Unsplash
-image-width: full
+image-width: medium
 ---
-# Seedling: A New Frontier for Press Freedom in a Censored World
-
 In recent years, the landscape of journalism has been marred by increasing censorship and threats to media freedom. This article explores the potential of Seedling, a decentralized platform, to address these challenges.
 
 ## The Problem: A World of Censored Voices
