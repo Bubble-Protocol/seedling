@@ -55,7 +55,7 @@ export const Publish = () => {
         <span>
           To publish an article, add it to your GitHub account and enter the URL below.
         </span>
-        <div className="help-link" onClick={() => navigate('/article/0xe190ea61cd19683e4b18fac89d2511de737dab598c6b7853531c94aa05a5119b')}>How to Write and Publish Seedling Articles</div>
+        <div className="help-link" onClick={() => navigate('/article/0x16919da1e9ef808fe7bd016697a1b2b2869185ca266bc1ebd763bdd899b33614')}>How to Write and Publish Seedling Articles</div>
       </div>
       <div className="summary-content">
         <TextBox className="url-textbox" text={text} onChange={setText} placeholder="Your article URL..." />
