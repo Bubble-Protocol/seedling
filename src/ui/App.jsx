@@ -14,6 +14,7 @@ import anonymousUserIcon from '../assets/img/user.png';
 import { DropdownMenu } from "./components/DropdownMenu/DropdownMenu";
 import { MobileMenu } from "./components/MobileMenu";
 import { OrgLoginScreen } from "./screens/OrgLoginScreen";
+import { PublishGithub } from "./screens/Publish/Hosts/Github";
 
 export const App = () => {
 
@@ -41,7 +42,7 @@ export const App = () => {
       <div className="header">
         <img className="logo clickable" src={logo} onClick={() => window.innerWidth >= 910 ? navigate('/') : setMenuVisible(!menuVisible)} ></img>
         <span className="expander"></span>
-        {isConnected && <span className="header-link" onClick={() => {return !user.username ? navigate('/login') : navigate('/publish') }}>Publish</span>}
+        {isConnected && <span className="header-link" onClick={() => navigate('/publish')}>Publish</span>}
         {!user.username && <ConnectButton className="test" showBalance={false} />}
         {user.username && 
           <DropdownMenu direction="bottom-left" options={[
@@ -65,6 +66,7 @@ export const App = () => {
           <Route path='/article/:id' element={<Article />} />
           <Route path='/preview/:preview' element={<Article />} />
           <Route path='/publish' element={<Publish />} />
+          <Route path='/publish-github' element={<PublishGithub />} />
           <Route path='*' element={<HomeScreen key="latest" />} />
         </Routes>
       </div>

@@ -19,13 +19,6 @@
   box-sizing: border-box;
 }
 
-.publish-screen .title-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
 .publish-screen .summary-title {
   font-family: Mukta;
   font-size: 40px;
@@ -95,31 +88,6 @@
 
 .publish-screen .error-text {
   font-size: 17px;
-}
-
-.publish-screen .host-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  width: 300px;
-}
-
-.publish-screen .host, .publish-screen .host-disabled {
-  width: 100%;
-  box-sizing: border-box;
-  height: 60px;
-  border: 1px solid #DFDFDF;
-  border-radius: 4px;
-}
-
-.publish-screen .host:hover {
-  cursor: pointer;
-}
-
-.publish-screen .coming-soon-text {
-  font-size: 20px;
-  padding-top: 32px;
 }
 
 
