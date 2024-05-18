@@ -50,10 +50,10 @@ export const PublishGithub = () => {
 
   return (
     <div className="publish-screen" >
-      <div className="summary-title">Publish {window.innerWidth < 410 && <br/>} a New Article</div>
+      <div className="summary-title">Publish {window.innerWidth < 410 && <br/>} from Github</div>
       <div className="description-section">
         <span>
-          To publish an article, add it to your GitHub account and enter the URL below.
+          Enter the URL of your Github article below. The article must be written in markdown format and hosted on your own Github account.
         </span>
         <div className="help-link" onClick={() => navigate('/article/0x16919da1e9ef808fe7bd016697a1b2b2869185ca266bc1ebd763bdd899b33614')}>How to Write and Publish Seedling Articles</div>
       </div>
