@@ -7,10 +7,14 @@ import { formatTip } from "../../../../utils/tip-utils";
 import "./style.css";
 import { stateManager } from "../../../../../state-context";
 
-export const ActivityBar = ({ article, openTipModal }) => {
+export const ActivityBar = ({ article, isAuthor, openTipModal, unpublish }) => {
 
   const exchangeRate = stateManager.useStateData("exchange-rate")();
+
   const tip = formatTip(article.totalTips, exchangeRate);
+  const authorActions = !isAuthor ? [] : [
+    {name: "Unpublish", onClick: unpublish}
+  ];
 
   return (
     <div className="activity-bar">
@@ -24,7 +28,8 @@ export const ActivityBar = ({ article, openTipModal }) => {
       </DropdownMenu>   
       <DropdownMenu direction="bottom-left" options={[
         {name: "Open Source", onClick: () => window.open(article.sourceUrl, '_blank')},
-        {name: "Open Raw Source", onClick: () => window.open(article.expandedUrl, '_blank')}
+        {name: "Open Raw Source", onClick: () => window.open(article.expandedUrl, '_blank')},
+        ...authorActions
       ]}>
         <img className="icon-button" src={moreIcon}></img>
       </DropdownMenu>   

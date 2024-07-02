@@ -102,6 +102,10 @@ export class Content {
     return this.blockchain.publishContent(content.contentHash, username, contentPath, options);
   }
 
+  async unpublish(contentHash, options) {
+    return this.blockchain.unpublishContent(contentHash, options);
+  }
+
   async isUserRegistered(username) {
     return this.blockchain.userRegistry.call('isRegistered', [keccak256(username)]);
   }

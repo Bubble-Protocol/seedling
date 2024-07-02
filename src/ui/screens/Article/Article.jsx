@@ -20,7 +20,7 @@ export const Article = () => {
   const { openConnectModal } = useConnectModal();
   const walletConnected = stateManager.useStateData("wallet-connected")();
   const user = stateManager.useStateData("user")();
-  const { getArticleById, getPreview } = stateManager.useStateData("content-functions")();
+  const { getArticleById, getPreview, unpublish } = stateManager.useStateData("content-functions")();
   const [article, setArticle] = useState(null);
   const [following, setFollowing] = useState(false);
   const [error, setError] = useState(null);
@@ -54,12 +54,6 @@ export const Article = () => {
   }, [user]);
 
 
-  // const components = {
-  //   a: ({node, ...props}) => (
-  //     <a {...props} target="_blank" rel="noopener noreferrer" />
-  //   ),
-  // };
-
   function openTipModal(event) {
     if (!id) return; // preview only
     const rect = event.target.getBoundingClientRect();
@@ -78,6 +72,11 @@ export const Article = () => {
     )
   }
 
+  function setTemporaryError(error) {
+    setError(error);
+    setTimeout(() => setError(null), 5000);
+  }
+
   function follow() {
     if (!walletConnected) return openConnectModal();
     if (user.followingFunctions) {
@@ -92,6 +91,15 @@ export const Article = () => {
       setFollowing(false);
     }
   }
+
+  async function unpublishArticle() {
+    return unpublish(article.id)
+    .then(() => navigate('/'))
+    .catch(error => setTemporaryError(formatError(error)));
+  }
+
+  // Determine if the logged in account is the author of the article
+  const isAuthor = (user.username === article.author.username) || (user.account.toLowerCase() === article.author.address.toLowerCase());
 
   return (
       <div className="article" ref={articleRef}>
@@ -121,7 +129,9 @@ export const Article = () => {
             </div>
           </div>
         </div>
-        <ActivityBar article={article} openTipModal={openTipModal} />
+        <ActivityBar article={article} isAuthor={isAuthor} openTipModal={openTipModal} unpublish={unpublishArticle} />
+
+        {error && <div className="error-text">{error.message || error}</div>}
 
         {/* Markdown */}
         <ReactMarkdown className="markdown" remarkPlugins={[gfm, remarkEmoji]} components={{a: CustomLinkRenderer}} >
@@ -129,7 +139,8 @@ export const Article = () => {
         </ReactMarkdown>
 
         {/* Footer Section */}
-        <ActivityBar article={article} openTipModal={openTipModal} />
+        {error && <div className="error-text">{error.message || error}</div>}
+        <ActivityBar article={article} isAuthor={isAuthor} openTipModal={openTipModal} unpublish={unpublishArticle} />
         <Footer/>
       </div>
   );
@@ -143,4 +154,8 @@ function CustomLinkRenderer(props) {
   } else {
     return <a href={props.href} target="_blank" rel="noopener noreferrer">{props.children}</a>;
   }
+}
+
+function formatError(error) {
+  return error.details || error.message || error;
 }

@@ -19,6 +19,15 @@ export class Blockchain {
     return this.wallet.send(contract.address, contract.abi, method, params);
   }
 
+  async unpublishContent(contentHash, options={}) {
+    console.trace('unpublishing content:', contentHash, options);
+    const contract = this.config.contentRegistry.contract;
+    const method = options.isOrg ? 'unpublishAsOrg' : 'unpublish';
+    const params = [contentHash];
+    await this.wallet.estimateGas(contract.address, contract.abi, method, params);
+    return this.wallet.send(contract.address, contract.abi, method, params);
+  }
+
   userRegistry = {
     call: (method, params=[]) => this.wallet.call(this.config.userRegistry.contract.address, this.config.userRegistry.contract.abi, method, params)
   }

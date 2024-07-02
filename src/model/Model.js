@@ -37,6 +37,7 @@ export class Model {
       getArticleById: this.contentManager.fetchArticle.bind(this.contentManager),
       getPreview: this.getPreview.bind(this),
       publish: this.publish.bind(this),
+      unpublish: this.unpublish.bind(this),
       getUser: this.contentManager.fetchUserByUsername.bind(this.contentManager),
       getUserContent: this.contentManager.fetchContentByUserId.bind(this.contentManager),
       getLatestContent: this.contentManager.fetchLatestContent.bind(this.contentManager),
@@ -74,6 +75,11 @@ export class Model {
   async publish(urlStr) {
     if (!this.session) throw new Error('wallet not connected');
     return this.contentManager.publish(urlStr, {isOrg: this.session.isOrg})
+  }
+
+  async unpublish(contentId) {
+    if (!this.session) throw new Error('wallet not connected');
+    return this.contentManager.unpublish(contentId, {isOrg: this.session.isOrg})
   }
 
   _handleAccountChanged(account) {
