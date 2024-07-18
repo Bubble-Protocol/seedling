@@ -11,12 +11,14 @@ import dropboxLogo from "./images/dropbox-host-logo.png";
 import { useNavigate } from "react-router-dom";
 import { stateManager } from "../../../state-context";
 import { useAccount } from "wagmi";
+import { useConnectModal, ConnectButton } from "@rainbow-me/rainbowkit";
 
 
 export const Publish = () => {
 
   const user = stateManager.useStateData("user")();
   const { isConnected } = useAccount()
+  const { openConnectModal } = useConnectModal();
 
   const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export const Publish = () => {
       </div>
       <div className="summary-content">
         <div className="host-list">
-          {!isConnected && <h3>Connect your wallet above to begin</h3>}
+          {!isConnected && <ConnectButton className="test" showBalance={false} label="Connect wallet to begin" />}
           {!isConnected && <span className="coming-soon-text">Supported Hosts</span>}
           {isConnected && <h3>Choose a host</h3>}
           <img className={isConnected ? "host" : "host-disabled"} src={githubLogo} alt="github" onClick={!isConnected ? null : () => { return !user.username ? navigate('/login') : navigate('/publish-github') }}></img>
