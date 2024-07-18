@@ -9,11 +9,13 @@ import amazonS3Logo from "./images/amazon-s3-host-logo.png";
 import dropboxLogo from "./images/dropbox-host-logo.png";
 import { useNavigate } from "react-router-dom";
 import { stateManager } from "../../../state-context";
+import { useAccount } from "wagmi";
 
 
 export const Publish = () => {
 
   const user = stateManager.useStateData("user")();
+  const { isConnected } = useAccount()
 
   const navigate = useNavigate();
 
@@ -25,8 +27,10 @@ export const Publish = () => {
       </div>
       <div className="summary-content">
         <div className="host-list">
-          <h3>Choose a host</h3>
-          <img className="host" src={githubLogo} alt="github" onClick={() => { return !user.username ? navigate('/login') : navigate('/publish-github') }}></img>
+          {!isConnected && <h3>Connect your wallet above to begin</h3>}
+          {!isConnected && <span className="coming-soon-text">Supported Hosts</span>}
+          {isConnected && <h3>Choose a host</h3>}
+          <img className={isConnected ? "host" : "host-disabled"} src={githubLogo} alt="github" onClick={!isConnected ? null : () => { return !user.username ? navigate('/login') : navigate('/publish-github') }}></img>
           <span className="coming-soon-text">Coming Soon...</span>
           <img className="host-disabled" src={bubbleLogo} alt="Bubble Protocol"></img>
           <img className="host-disabled" src={ipfsLogo} alt="IPFS"></img>

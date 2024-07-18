@@ -4,7 +4,6 @@ import "./style.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo from "../assets/img/logo.png";
 import { HomeScreen } from "./screens/HomeScreen";
-import { useAccount } from "wagmi";
 import { Article } from "./screens/Article";
 import { LoginScreen } from "./screens/LoginScreen";
 import { stateManager } from "../state-context";
@@ -18,7 +17,6 @@ import { PublishGithub } from "./screens/Publish/Hosts/Github";
 
 export const App = () => {
 
-  const { isConnected } = useAccount()
   const user = stateManager.useStateData("user")();
   const { getUser } = stateManager.useStateData("content-functions")();
   const { disconnect } = stateManager.useStateData("account-functions")();
@@ -42,7 +40,7 @@ export const App = () => {
       <div className="header">
         <img className="logo clickable" src={logo} onClick={() => window.innerWidth >= 910 ? navigate('/') : setMenuVisible(!menuVisible)} ></img>
         <span className="expander"></span>
-        {isConnected && <span className="header-link" onClick={() => navigate('/publish')}>Publish</span>}
+        <span className="header-link" onClick={() => navigate('/publish')}>Publish</span>
         {!user.username && <ConnectButton className="test" showBalance={false} />}
         {user.username && 
           <DropdownMenu direction="bottom-left" options={[
