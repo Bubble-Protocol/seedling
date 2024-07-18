@@ -3,6 +3,7 @@ import "./style.css";
 import { Footer } from "../../components/Footer";
 import githubLogo from "./images/github-host-logo.png";
 import bubbleLogo from "./images/bubble-host-logo.png";
+import protonLogo from "./images/proton-host-logo.png";
 import ipfsLogo from "./images/ipfs-host-logo.png";
 import googleDriveLogo from "./images/google-drive-host-logo.png";
 import amazonS3Logo from "./images/amazon-s3-host-logo.png";
@@ -33,6 +34,7 @@ export const Publish = () => {
           <img className={isConnected ? "host" : "host-disabled"} src={githubLogo} alt="github" onClick={!isConnected ? null : () => { return !user.username ? navigate('/login') : navigate('/publish-github') }}></img>
           <span className="coming-soon-text">Coming Soon...</span>
           <img className="host-disabled" src={bubbleLogo} alt="Bubble Protocol"></img>
+          <img className="host-disabled" src={protonLogo} alt="Proton Drive"></img>
           <img className="host-disabled" src={ipfsLogo} alt="IPFS"></img>
           <img className="host-disabled" src={googleDriveLogo} alt="Google Drive"></img>
           <img className="host-disabled" src={amazonS3Logo} alt="Amazon S3"></img>
