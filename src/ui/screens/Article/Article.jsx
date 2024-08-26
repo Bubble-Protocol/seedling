@@ -99,7 +99,7 @@ export const Article = () => {
   }
 
   // Determine if the logged in account is the author of the article
-  const isAuthor = (user.username === article.author.username) || (user.account.toLowerCase() === article.author.address.toLowerCase());
+  const isAuthor = (user.username === article.author.username) || (article.author.address && (user.account.toLowerCase() === article.author.address.toLowerCase()));
 
   return (
       <div className="article" ref={articleRef}>
