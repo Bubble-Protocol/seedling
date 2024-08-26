@@ -1,6 +1,6 @@
 import * as tipJarAbi from "../../contracts/the-graph/abis/TipJar.json";
 import * as contentRegistryAbi from "../../contracts/the-graph/abis/ContentRegistry.json";
-import * as userRegistryAbi from "../../contracts/the-graph/abis/UserRegistry.json";
+import * as userRegistryAbi from "../../contracts/the-graph/abis/UserRegistry-modified.json";
 
 export const DEFAULT_CONFIG = {
   chain: "polygon",
