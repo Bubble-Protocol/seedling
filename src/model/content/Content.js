@@ -3,16 +3,19 @@ import { expandRelativeLinks, extractImage, extractSummary, extractTitle, stripM
 import { keccak256 } from "viem";
 import { Blockchain } from "./Blockchain";
 import { AppError } from "../utils/errors";
+import { GithubHost } from "./hosts/github";
 
 export class Content {
 
   theGraph;
   blockchain;
   cache = {};
+  hosts = [];
 
   constructor(graphUri, blockchainConfig, wallet) {
     this.theGraph = new GraphClient(graphUri);
     this.blockchain = new Blockchain(blockchainConfig, wallet);
+    this.hosts.push(new GithubHost());
   }
 
   parseUsername(username) {
@@ -35,7 +38,7 @@ export class Content {
   }
 
   async fetchPreview(urlStr, user) {
-    const {url, relLinkUrl} = this.parseContentUrl(urlStr);
+    const {url, relLinkUrl} = this._parseContentUrl(urlStr);
     return this._fetchContent('preview', url, relLinkUrl)
       .then(content => {
         return {
@@ -96,8 +99,8 @@ export class Content {
   }
 
   async publish(urlStr, options) {
-    const {url, relLinkUrl} = this.parseContentUrl(urlStr);
-    const {username, contentPath} = this.getUsernameAndContentPath(url);
+    const {host, url, relLinkUrl} = this._parseContentUrl(urlStr);
+    const {username, contentPath} = host.getUsernameAndContentPath(url)
     const content = await this._fetchContent('publish', url, relLinkUrl);
     return this.blockchain.publishContent(content.contentHash, username, contentPath, options);
   }
@@ -111,7 +114,7 @@ export class Content {
   }
 
   async _fetchContentAndAuthor(metadata) {
-    const {url, relLinkUrl, sourceUrl} = this.parseContentUrl(metadata.url);
+    const {url, relLinkUrl, sourceUrl} = this._parseContentUrl(metadata.url);
     const [content, author] = await Promise.all([
       this._fetchContent(metadata.id, url, relLinkUrl),
       this._fetchUserByMetadata(metadata.author)
@@ -127,7 +130,7 @@ export class Content {
   }
 
   async _fetchContentOnly(author, metadata) {
-    const {url, relLinkUrl, sourceUrl} = this.parseContentUrl(metadata.url);
+    const {url, relLinkUrl, sourceUrl} = this._parseContentUrl(metadata.url);
     const content = await this._fetchContent(metadata.id, url, relLinkUrl);
     const result = {...metadata, ...content};
     result.expandedUrl = url;
@@ -172,8 +175,9 @@ export class Content {
   async _fetchUserByMetadata(metadata) {
     const user = {...metadata, ...parseUsername(metadata.username)};
     if (this.cache[user.id]) return this.cache[user.id];
-    return this.getUserIconUrl(user.username)
-      .then(iconUrl => this._fetch(iconUrl, 'blob'))
+    const host = this._getHost(metadata.username);
+    const {iconUrl} = await host.getUserMetadata(metadata.username, this._fetch.bind(this));
+    return this._fetch(iconUrl, 'blob')
       .then(URL.createObjectURL)
       .then(icon => user.icon = icon)
       .catch(console.warn)
@@ -183,45 +187,15 @@ export class Content {
       });
   }
 
-  parseContentUrl(urlStr) {
-    let url = new URL(urlStr);
-    if (urlStr.startsWith('github:')) url = new URL(url.pathname, 'https://raw.githubusercontent.com/');
-    const relLinkUrl = new URL(url.href.slice(0, url.href.lastIndexOf('/')));
-    const sourceUrl = this._parseRawContentUrl(url.toString());
-    return {url, relLinkUrl, sourceUrl};
+  _parseContentUrl(urlStr) {
+    const host = this._getHost(urlStr);
+    return {host, ...host.parseContentUrl(urlStr)};
   }
 
-  _parseRawContentUrl(urlStr) {
-    const url = new URL(urlStr);
-    if (url.hostname.toLowerCase() === 'raw.githubusercontent.com') {
-      url.hostname = 'github.com';
-      const paths = url.pathname.split('/').filter(segment => segment);
-      url.pathname = paths.slice(0,2).join('/') + '/blob/' + paths.slice(2).join('/');
-    }
-    return url;
-  }
-  
-
-  getUsernameAndContentPath(url) {
-    const paths = url.pathname.split('/');
-    const username = paths[1];
-    const contentPath = paths.slice(2).join('/');
-    switch (url.hostname) {
-      case 'raw.githubusercontent.com': return {username: 'github:'+username, contentPath};
-      default: throw new Error('Unsupported url host');
-    }
-  }
-
-  async getUserIconUrl(username) {
-    let url = new URL(username);
-    if (username.startsWith('github:')) {
-      return this._fetch("https://api.github.com/users/"+url.pathname)
-        .then(json => {
-          const githubMetadata = JSON.parse(json);
-          return githubMetadata['avatar_url'].replace(/\?.*/, '')+'?size=48';
-        })
-    }
-    return Promise.resolve(url);
+  _getHost(urlStr) {
+    const host = this.hosts.find(h => h.isHostStr(urlStr));
+    if (!host) throw new Error('Unsupported url host');
+    return host;
   }
 
   async _fetch(url, asType='text') {
