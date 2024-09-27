@@ -56,6 +56,7 @@ export const Article = () => {
 
   function openTipModal(event) {
     if (!id) return; // preview only
+    if (!walletConnected) return openConnectModal();
     const rect = event.target.getBoundingClientRect();
     setTipModal({y: rect.top, x: rect.right + 8});
   }
