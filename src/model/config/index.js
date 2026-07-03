@@ -23,8 +23,11 @@ export const DEFAULT_CONFIG = {
       abi: tipJarAbi.default
     },
     exchangeRateLookupServices: [
-      async () => { return fetch("https://min-api.cryptocompare.com/data/price?fsym=MATIC&tsyms=USD").then(response => response.json()).then(data => data["USD"])},
-      async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=MATIC").then(response => response.json()).then(data => parseFloat(data["data"]["rates"]["USD"])) }
+      async () => { return fetch("https://api.coinbase.com/v2/exchange-rates?currency=POL").then(response => response.json()).then(data => parseFloat(data["data"]["rates"]["USD"])).catch(error => exchangeRateCatchFn(error, 'Coinbase')) },
+      async () => { return fetch("https://api.binance.com/api/v3/ticker/price?symbol=POLUSDT").then(response => response.json()).then(data => parseFloat(data["price"])).catch(error => exchangeRateCatchFn(error, 'Binance')) },
+      async () => { return fetch("https://api.gateio.ws/api/v4/spot/tickers?currency_pair=POL_USDT").then(response => response.json()).then(data => parseFloat(data[0]["last"])).catch(error => exchangeRateCatchFn(error, 'Gate.io')) },
+      async () => { return fetch("https://api.bybit.com/v5/market/tickers?category=spot&symbol=POLUSDT").then(response => response.json()).then(data => parseFloat(data["result"]["list"][0]["lastPrice"])).catch(error => exchangeRateCatchFn(error, 'Bybit')) },
+      async () => { return fetch("https://api.diadata.org/v1/assetQuotation/Ethereum/0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6").then(response => response.json()).then(data => parseFloat(data["Price"])).catch(error => exchangeRateCatchFn(error, 'Diadata')) }
     ]
   },
   oauth: {
@@ -40,3 +43,8 @@ export const DEFAULT_CONFIG = {
     }
   }
 }
+
+const exchangeRateCatchFn = (error, serviceName) => {
+  console.warn(`Error fetching exchange rate from ${serviceName}:`, error);
+  return undefined;
+};

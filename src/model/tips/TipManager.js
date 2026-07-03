@@ -14,7 +14,7 @@ export class TipManager {
 
   async initialise() {
     try {
-      const rates = await Promise.all(this.config.exchangeRateLookupServices.map(service => service()));
+      const rates = await Promise.all(this.config.exchangeRateLookupServices.map(service => service())).then(results => results.filter(rate => rate !== undefined));
       console.trace('fetched dollar exchange rates', rates);
       if (rates.length < 2) throw new Error('Cannot rely on an exchange rate from only', rates.length, 'source(s)');
       const mean = rates.reduce((acc, rate) => acc + rate, 0) / rates.length;
