@@ -9,6 +9,9 @@ export class GraphClient {
   constructor(uri) {
     this.client = new ApolloClient({
       uri: uri,
+      headers: {
+        'Authorization': `Bearer ${process.env.REACT_APP_THEGRAPH_API_KEY}`,
+      },
       cache: new InMemoryCache(),
     });
   }

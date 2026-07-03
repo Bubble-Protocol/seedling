@@ -4,7 +4,7 @@ import * as userRegistryAbi from "../../contracts/the-graph/abis/UserRegistry-mo
 
 export const DEFAULT_CONFIG = {
   chain: "polygon",
-  graphUri: "https://api.studio.thegraph.com/query/53709/seedling/version/latest",
+  graphUri: "https://gateway.thegraph.com/api/subgraphs/id/6Qng8q4uRPvHoeDwzvzVxPE7FdwhaJ4PPtWbT71Yjw7F",
   userRegistry: {
     contract: {
       address: "0x5Ec6A3284049E8b3e5966882fd3D40FCFB839501",
